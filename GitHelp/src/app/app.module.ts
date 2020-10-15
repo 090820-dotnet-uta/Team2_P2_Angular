@@ -11,6 +11,8 @@ import { ClientListComponent } from './client-list/client-list.component';
 import { ContractorListComponent } from './contractor-list/contractor-list.component';
 import { ContractorProfileComponent } from './contractor-profile/contractor-profile.component';
 import { ClientProfileComponent } from './client-profile/client-profile.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ClientProfileComponent } from './client-profile/client-profile.componen
     ClientListComponent,
     ContractorListComponent,
     ContractorProfileComponent,
-    ClientProfileComponent
+    ClientProfileComponent,
+    HomePageComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

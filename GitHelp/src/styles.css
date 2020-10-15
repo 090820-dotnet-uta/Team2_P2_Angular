@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+.button{
+    Border: 3px outset #0f3dbd;
+    border-radius: 20px;
+    background-color: #0f3dbd;
+    text-align: center;
+    color: black;
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px;
+}
+
+.button:hover{
+    border-style: outset;
+    border-color: #2f5edd;
+    background-color: #2f5edd;
+    cursor: pointer;
+}
+
+div{
+    margin: 5px;
+    padding:5px;
+}
