@@ -6,7 +6,8 @@ import { ClientProfileComponent } from './client-profile/client-profile.componen
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: 'home', component: HomePageComponent},
-  {path: 'clientProfile/:id', component: ClientProfileComponent}
+  // {path: 'clientProfile/:id', component: ClientProfileComponent}
+  {path: 'clientProfile', component: ClientProfileComponent}
 ];
 
 @NgModule({

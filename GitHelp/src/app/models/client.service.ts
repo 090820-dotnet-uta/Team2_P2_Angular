@@ -11,7 +11,8 @@ import { MessageService } from '../message.service';
 })
 export class ClientService {
 
-  private dbUrl = 'api/clients';  // URL to web api
+  // private dbUrl = 'api/clients';  // URL to web api
+  private dbUrl = "https://githelp.azurewebsites.net/api/ApplicationUser";
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -51,43 +52,44 @@ export class ClientService {
   }
   
   /** GET client by id. Will 404 if id not found */
-  getClient(id: number): Observable<Client> {
-    const url = `${this.dbUrl}/?ClientId=${id}`;
+  getClient(): Observable<Client> {
+    // const url = `${this.dbUrl}/?ClientId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
-    // const url = `${this.dbUrl}/?name=aa`;
-    console.log("aaa")
-    console.log(url)
-    // console.log(this.http.get<Client>(url))
+    let currentUserName = localStorage.getItem("currentUserName");
+    const url = `${this.dbUrl}/${currentUserName}`;
+    console.log("Getting from "+ url);
+    // return this.http.get<Client>(url);
     return this.http.get<Client>(url).pipe(
-      tap(_ => this.log(`fetched client id=${id}`)),
-      catchError(this.handleError<Client>(`getClient ClientId=${id}`))
+      tap(_ => this.log(`fetched client username=${currentUserName}`)),
+      catchError(this.handleError<Client>(`getClient username=${currentUserName}`))
     );
   }
 
-  /** PUT: update the client on the server */
-  updateHero(client: Client): Observable<any> {
-    return this.http.put(this.dbUrl, client, this.httpOptions).pipe(
-      tap(_ => this.log(`updated client ClientId=${client.ClientId}`)),
-      catchError(this.handleError<any>('updateHero'))
-    );
-  }
+  // /** PUT: update the client on the server */
+  // updateClient(client: Client): Observable<any> {
+  //   return this.http.put(this.dbUrl, client, this.httpOptions).pipe(
+  //     tap(_ => this.log(`updated client ClientId=${client.clientId}`)),
+  //     catchError(this.handleError<any>('updateHero'))
+  //   );
+  // }
 
-  /** POST: add a new client to the server */
-  addClient(client: Client): Observable<Client> {
-    return this.http.post<Client>(this.dbUrl, client, this.httpOptions).pipe(
-      tap((newClient: Client) => this.log(`added client w/ ClientId=${newClient.ClientId}`)),
-      catchError(this.handleError<Client>('addClient'))
-    );
-  }
+  // /** POST: add a new client to the server */
+  // addClient(client: Client): Observable<Client> {
+  //   return this.http.post<Client>(this.dbUrl, client, this.httpOptions).pipe(
+  //     tap((newClient: Client) => this.log(`added client w/ ClientId=${newClient.clientId}`)),
+  //     catchError(this.handleError<Client>('addClient'))
+  //   );
+  // }
 
-  /** DELETE: delete the client from the server */
-  deleteClient(client: Client | number): Observable<Client> {
-    const id = typeof client === 'number' ? client : client.ClientId;
-    const url = `${this.dbUrl}/${id}`;
+  // /** DELETE: delete the client from the server */
+  // deleteClient(client: Client | number): Observable<Client> {
+  //   const id = typeof client === 'number' ? client : client.clientId;
+  //   const url = `${this.dbUrl}/${id}`;
 
-    return this.http.delete<Client>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted client ClientId=${id}`)),
-      catchError(this.handleError<Client>('deleteClient'))
-    );
-  }
+  //   return this.http.delete<Client>(url, this.httpOptions).pipe(
+  //     tap(_ => this.log(`deleted client ClientId=${id}`)),
+  //     catchError(this.handleError<Client>('deleteClient'))
+  //   );
+  // }
+
 }

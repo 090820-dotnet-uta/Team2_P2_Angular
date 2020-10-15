@@ -19,19 +19,27 @@ export class ClientProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    localStorage.setItem('currentUserName', 'user');
     this.getClient();
   }
   
   getClient(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.clientService.getClient(id)
-      .subscribe(c => this.client = c);
+    // const id = +this.route.snapshot.paramMap.get('id');
+    this.clientService.getClient()
+      .subscribe(
+        c => {
+          console.log("Got result:");
+          console.log(c);
+          // console.log(c[0]);
+          this.client = c;
+        });
+      
   }
 
-  save(): void {
-    this.clientService.updateHero(this.client)
-      .subscribe(() => this.goBack());
-  }
+  // save(): void {
+  //   this.clientService.updateClient(this.client)
+  //     .subscribe(() => this.goBack());
+  // }
 
   goBack(): void {
     this.location.back();
