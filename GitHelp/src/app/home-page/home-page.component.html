@@ -1,0 +1,48 @@
+<!--Shared content-->
+<!--Search component will go here-->
+<app-search></app-search>
+<div>
+    <a class="button">
+        Profile
+    </a>
+</div>
+
+<!--If the user is a client-->
+<div *ngIf = 'userType === 1'>
+    <div>
+        <a class="button">
+            Post a New Project
+        </a>
+    </div>
+    <div>
+        <a class = "button">
+            View Active Projects
+        </a>
+    </div>
+    <div>
+        <a class = "button">
+            View Past Projects
+        </a>
+    </div>
+</div>
+
+<!--If the user is a Contractor-->
+<div *ngIf = 'userType === 2'>
+    <div>
+        <a class="button">
+            View Active Projects
+        </a>
+    </div>
+    <div>
+        <a class = "button">
+            View Requests
+        </a>
+    </div>
+    <div>
+        <a class = "button">
+            View Past Projects
+        </a>
+    </div>
+</div>
+
+
