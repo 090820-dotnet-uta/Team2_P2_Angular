@@ -8,7 +8,9 @@ const routes: Routes = [
   {path: '', component: SignUpFormComponent},
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: 'home', component: HomePageComponent},
-  {path: 'clientProfile/:id', component: ClientProfileComponent}
+  
+  // {path: 'clientProfile/:id', component: ClientProfileComponent}
+  {path: 'clientProfile', component: ClientProfileComponent}
 
 ];
 

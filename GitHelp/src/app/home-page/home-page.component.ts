@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     //Dummy data, remove later!
     let user = new Client();
-    user.FirstName = 'bob';
+    user.firstName = 'bob';
 
     this.userType = this.CliOrCon(user);
     console.log(this.userType),

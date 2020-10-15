@@ -1,8 +1,8 @@
 export class Client {
-    ClientId: number;
-    Username: string;
-    FirstName: string;
-    LastName: string;
-    Description: string;
-    Email: string;
+    clientId: number;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    description: string;
+    email: string;
   }
