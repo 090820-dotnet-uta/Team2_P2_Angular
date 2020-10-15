@@ -23,6 +23,8 @@ import { MessageComponent } from './message/message.component';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectListComponent } from './project-list/project-list.component';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { InMemoryDataService } from './in-memory-data.service';
 
     HomePageComponent,
     SearchComponent,
-    MessageComponent
+    MessageComponent,
+    ProjectsComponent,
+    ProjectListComponent
 
   ],
     imports: [
@@ -49,8 +53,7 @@ import { InMemoryDataService } from './in-memory-data.service';
     AppRoutingModule,
 
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
     HttpClientModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

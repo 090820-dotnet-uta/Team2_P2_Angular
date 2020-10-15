@@ -6,9 +6,11 @@ import { ClientProfileComponent } from './client-profile/client-profile.componen
 
 const routes: Routes = [
   {path: '', component: SignUpFormComponent},
+  //Maybe, login/signup page should be the landing page 
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: 'home', component: HomePageComponent},
-  {path: 'clientProfile/:id', component: ClientProfileComponent}
+  {path: 'clientProfile/:id', component: ClientProfileComponent},
+  {path: 'makeProject'}
 
 ];
 

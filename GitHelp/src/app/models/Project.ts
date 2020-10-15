@@ -1,9 +1,10 @@
+import { DatePipe } from '@angular/common';
+
 export class Project {
     ProjectId: number;
     ClientId: number;
-    StartDate: Date;
-    EndDate: Date;
-    ProjectName: number;
+    StartDate: string = new Date().toDateString();
+    EndDate: string = new Date().toDateString();
+    ProjectName: string;
     Description: string;
-    Email: string;
   }

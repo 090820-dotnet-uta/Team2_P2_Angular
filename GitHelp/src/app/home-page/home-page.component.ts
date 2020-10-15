@@ -13,6 +13,7 @@ export class HomePageComponent implements OnInit {
   Clients: Client[] = [];
   Contractors: Contractor[] = [];
   LoginInfos: LoginInfo[] =[];
+  //Dummy data, remove! Replace with loggedInUser localstorage
   userType : number;
   loggedInUser: Client | Contractor;
   
