@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,9 @@ import { ClientListComponent } from './client-list/client-list.component';
 import { ContractorListComponent } from './contractor-list/contractor-list.component';
 import { ContractorProfileComponent } from './contractor-profile/contractor-profile.component';
 import { ClientProfileComponent } from './client-profile/client-profile.component';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -22,11 +26,15 @@ import { ClientProfileComponent } from './client-profile/client-profile.componen
     ClientListComponent,
     ContractorListComponent,
     ContractorProfileComponent,
-    ClientProfileComponent
+    ClientProfileComponent,
+    
   ],
-  imports: [
+    imports: [
+    RouterModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
