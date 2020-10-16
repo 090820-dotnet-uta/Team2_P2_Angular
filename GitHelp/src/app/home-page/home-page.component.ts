@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Contractor } from '../models/Contractor';
-import{ Client } from '../models/client';
+import{ Client } from '../models/Client';
 import { LoginInfo } from '../models/LoginInfo';
 //TODO Import user service when it's created
 @Component({
