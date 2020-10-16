@@ -1,1 +1,20 @@
-<p>projects works!</p>
+<div *ngIf="this.project">
+    {{ this.project.ProjectId }} | {{ this.project.ProjectName }} | {{ this.project.Description }} | {{ this.project.StartDate }} | {{ this.project.EndDate }}
+    <hr>
+    <br/>
+    <form [formGroup]="projectEditForm">
+      <input formControlName="projectName" type="text" name="ProjectName id="projectName" min="0" max="150"/>
+        <hr>
+        <br/>
+      <input formControlName="Description" type="text" name="Description" id="Description" min="0" max="2000" />
+        <hr>
+        <br/>
+      <input formControlName="startDate" type="date" name="StartDate" id="StartDate" />
+        <hr>
+        <br/>
+      <input formControlName="endDate" type="date" name="EndDate" id="EndDate" />
+        <hr>
+        <br/>
+      <button class="button" (click)="updateProject()" type="submit">Submit</button>
+    </form>
+</div>

@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { distinct } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Project } from '../models/Project';
@@ -9,10 +11,18 @@ import { ProjectService } from '../models/project.service';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, OnChanges {
 
   //Represents the selected project that is passed from the HTML
-  @Input() project : Project;
+  @Input() project: Project;
+  projectEditForm: FormGroup;
+  projectName: string;
+  Description: string;
+  startDate: number;
+  endDate: number;
+  //What is returned from the edit project form 
+  @Output() editedProject = new EventEmitter<Project>();
+  proj : Project;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,19 +34,32 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.getProject();
   }
+
+  ngOnChanges(): void{
+    if (this.project) {
+      this.projectEditForm = new FormGroup(
+        {
+          projectName: new FormControl(this.project.ProjectName),
+          Description: new FormControl(this.project.Description),
+          startDate: new FormControl(this.project.StartDate),
+          endDate: new FormControl(this.project.EndDate)
+        }
+      );
+    }
+  }
   
   getProject(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.projectService.getProject(id)
+    this.projectService.requestProject(id)
       .subscribe(p => this.project = p);
   }
 
   //Run the update method from service to save project changes
-  save(): void {
+  updateProject(): void {
     this.projectService.updateProject(this.project)
       .subscribe(() => this.goBack());
   }
-  
+
   goBack(): void {
     this.location.back();
   }

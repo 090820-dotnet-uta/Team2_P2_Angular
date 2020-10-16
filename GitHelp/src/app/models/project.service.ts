@@ -14,7 +14,13 @@ import { MessageService } from '../message.service';
 export class ProjectService {
 
   //URL links us to the needed model
-  private dbUrl = 'api/projects'; 
+  //private dbUrl = 'api/projects'; 
+  private projectURL = "https://githelp.azurewebsites.net/api/Projects";
+  private positionURL = "https://githelp.azurewebsites.net/api/Positions";
+  private skillURL = "https://githelp.azurewebsites.net/api/Skills";
+  private clientURL = "https://githelp.azurewebsites.net/api/ApplicationUser";
+
+  allProjects: Array<Project>;
 
   //What kind of info to return with http
   httpOptions = {
@@ -49,7 +55,7 @@ export class ProjectService {
 
    /** GET all Projects from the server (for use with the search method)*/
    getAllProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.dbUrl)
+    return this.http.get<Project[]>(this.projectURL)
       .pipe(
         tap(_ => this.log('fetched Projects')),
         catchError(this.handleError<Project[]>('getAllProjects', []))
@@ -57,8 +63,8 @@ export class ProjectService {
   }
 
   /** GET a project by project id. Will 404 if id not found.*/
-  getProject(id: number): Observable<Project> {
-    const url = `${this.dbUrl}/?ProjectId=${id}`;
+  requestProject(id: number): Observable<Project> {
+    const url = `${this.projectURL}/?ProjectId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
     // const url = `${this.dbUrl}/?name=aa`;
     console.log("made it into getProject")
@@ -70,10 +76,17 @@ export class ProjectService {
     );
   }
 
+   /** GET a project by project id. NOT HTTP, Used in project-list!.*/
+   getProject(id: number): Project {
+    console.log("made it into getProject")
+    // console.log(this.http.get<Client>(url))
+    return this.allProjects.find(p => p.ProjectId === id);
+  }
+
   //TODO COMBINE getClientProject AND getContractorProjects INTO ONE METHOD!! 
   /** GET a project by client id. Will 404 if id not found. (use with getting client's projects) */
   getClientProjects(id: number): Observable<Project> {
-    const url = `${this.dbUrl}/?ClientId=${id}`;
+    const url = `${this.projectURL}/?ClientId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
     // const url = `${this.dbUrl}/?name=aa`;
     console.log("made it into getClientProjects")
@@ -86,7 +99,7 @@ export class ProjectService {
   }
   /** GET a project by contractor id. Will 404 if id not found. (use with getting contractor's projects) */
   getContractorProjects(id: number): Observable<Project> {
-    const url = `${this.dbUrl}/?ContractorId=${id}`;
+    const url = `${this.projectURL}/?ContractorId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
     // const url = `${this.dbUrl}/?name=aa`;
     console.log("made it into getContractorProjects")
@@ -100,7 +113,7 @@ export class ProjectService {
 
   /** GET position by contractor id. Will 404 if id not found. (use with getting contractor's positions) */
   getContractorPositions(id: number): Observable<Project> {
-    const url = `${this.dbUrl}/?ContractorId=${id}`;
+    const url = `${this.positionURL}/?ContractorId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
     // const url = `${this.dbUrl}/?name=aa`;
     console.log("made it into getContractorPositions")
@@ -114,14 +127,14 @@ export class ProjectService {
 
   /** PUT: update the PROJECT on the server (Only available to Clients) */
   updateProject(project: Project): Observable<any> {
-    return this.http.put(this.dbUrl, project, this.httpOptions).pipe(
+    return this.http.put(this.projectURL, project, this.httpOptions).pipe(
       tap(_ => this.log(`updated project ProjectId=${project.ProjectId}`)),
       catchError(this.handleError<any>('updateProject'))
     );
   }
   /** PUT: update the POSITION on the server (Only available to Clients) */
   updatePosition(position: Position): Observable<any> {
-    return this.http.put(this.dbUrl, position, this.httpOptions).pipe(
+    return this.http.put(this.positionURL, position, this.httpOptions).pipe(
       tap(_ => this.log(`updated project ProjectId=${position.PositionId}`)),
       catchError(this.handleError<any>('updatePosition'))
     );
@@ -129,14 +142,14 @@ export class ProjectService {
 
   /** POST: add a new PROJECT to the server */
   addProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.dbUrl, project, this.httpOptions).pipe(
+    return this.http.post<Project>(this.projectURL, project, this.httpOptions).pipe(
       tap((newProject: Project) => this.log(`added client w/ ClientId=${newProject.ProjectId}`)),
       catchError(this.handleError<Project>('addProject'))
     );
   }
   /** POST: add a new POSITION to the server */
   addPosition(position: Position): Observable<Position> {
-    return this.http.post<Position>(this.dbUrl, position, this.httpOptions).pipe(
+    return this.http.post<Position>(this.positionURL, position, this.httpOptions).pipe(
       tap((newPosition: Position) => this.log(`added position w/ ClientId=${newPosition.PositionId}`)),
       catchError(this.handleError<Position>('addPosition'))
     );
@@ -145,7 +158,7 @@ export class ProjectService {
   /** DELETE: delete the PROJECT from the server */
   deleteProject(project: Project | number): Observable<Project> {
     const id = typeof project === 'number' ? project : project.ClientId;
-    const url = `${this.dbUrl}/${id}`;
+    const url = `${this.projectURL}/${id}`;
 
     return this.http.delete<Project>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted project ProjectId=${id}`)),
@@ -155,7 +168,7 @@ export class ProjectService {
   /** DELETE: delete the POSITION from the server */
   deletePosition(position: Position | number): Observable<Position> {
     const id = typeof position === 'number' ? position : position.PositionId;
-    const url = `${this.dbUrl}/${id}`;
+    const url = `${this.positionURL}/${id}`;
 
     return this.http.delete<Position>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted position PositionId=${id}`)),
