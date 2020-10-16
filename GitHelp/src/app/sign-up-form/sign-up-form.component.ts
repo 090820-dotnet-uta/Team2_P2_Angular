@@ -1,60 +1,43 @@
+import { UserService } from '../services/services';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-//import { Service } from '../services';
 
 @Component({
-  selector: 'app-sign-up-form',
+  selector: 'app-registration',
   templateUrl: './sign-up-form.component.html',
-  styleUrls: ['./sign-up-form.component.css']
+  styles: ['./sign-up-form.component.css']
 })
-
 export class SignUpFormComponent implements OnInit {
-  form: FormGroup;
-  loading = false;
-  submitted = false;
 
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    //private service: Service
-  ) {
-   
-   }
+  constructor(public service: UserService) { }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]]
-    });
+    this.service.formModel.reset();
   }
-  get f() { return this.form.controls; }
 
   onSubmit() {
-      this.submitted = true;
+    this.service.register().subscribe(
+      (res: any) => {
+        if (res.succeeded) {
+          this.service.formModel.reset();
+          console.log('New user created!', 'Registration successful.');
+        } else {
+          res.errors.forEach(element => {
+            switch (element.code) {
+              case 'DuplicateUserName':
+                console.log('Username is already taken','Registration failed.');
+                break;
 
-      // this.service.register(this.form.value).subscribe(
-      //   (res: any) => {
-      //     if(res.success){
-      //       console.log('success');
-      //     }else
-      //     console.log('shit');
-      //   }
-    //  )
-      
-
-    
-      if (this.form.invalid) {
-          return;
+              default:
+              console.log(element.description,'Registration failed.');
+                break;
+            }
+          });
+        }
+      },
+      err => {
+        console.log(err);
       }
-
-      this.loading = true;
-     
+    );
   }
-  
 
 }
