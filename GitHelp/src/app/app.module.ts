@@ -49,7 +49,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MessageComponent,
     ProjectsComponent,
     ProjectListComponent,
-    AddProjectFormComponent
+    AddProjectFormComponent,
     NavbarComponent
   ],
     imports: [
