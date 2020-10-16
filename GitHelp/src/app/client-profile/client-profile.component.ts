@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { UtilmethodsService } from '../utilmethods.service';
 import { Client } from '../models/Client';
 import { ClientService } from '../models/client.service';
 
@@ -13,14 +15,18 @@ export class ClientProfileComponent implements OnInit {
   @Input() client: Client;
   
   constructor(
+    private utilmethodsService: UtilmethodsService,
     private route: ActivatedRoute,
     private clientService: ClientService,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    localStorage.setItem('currentUserName', 'user');
-    this.getClient();
+    let loginTypeDesired = 'client';
+    let loginChecksOut = this.utilmethodsService.loginCheck(loginTypeDesired);
+    if(loginChecksOut){
+      this.getClient();
+    }
   }
   
   getClient(): void {

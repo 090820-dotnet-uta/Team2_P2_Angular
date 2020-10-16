@@ -1,0 +1,20 @@
+<span id="titlespan">{{title}}</span>
+<span [ngSwitch]="loginStatus">
+    <span *ngSwitchCase="1">
+        |
+        <span class="navusername">Logged in as client {{currentuserName}}</span>
+        |
+        <button (click)="gotoclientprofile()">Profile</button>
+        |
+        <button (click)="logout()">Log Out</button>
+    </span>
+    <span *ngSwitchDefault>
+        |
+        <button (click)="gotologin()">Login</button>
+        |
+        <button (click)="gotoregister()">Register (placeholder)</button>
+    </span>
+</span>
+
+
+<hr>
