@@ -26,6 +26,7 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { AddProjectFormComponent } from './add-project-form/add-project-form.com
     ProjectsComponent,
     ProjectListComponent,
     AddProjectFormComponent
-
+    NavbarComponent
   ],
     imports: [
     RouterModule,
@@ -56,13 +57,14 @@ import { AddProjectFormComponent } from './add-project-form/add-project-form.com
       
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    HttpClientModule
+    // ,
+    // // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // // and returns simulated server responses.
+    // // Remove it when a real server is ready to receive requests.
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, { dataEncapsulation: false }
+    // )
 
   ],
   providers: [],

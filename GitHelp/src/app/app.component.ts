@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Welcome to GitHelp';
+// title = 'Placeholder Title Front End'; // title moved to Navbar component
 }
