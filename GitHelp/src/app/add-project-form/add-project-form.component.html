@@ -4,9 +4,9 @@
         <form [formGroup]="projectAddForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="ProjectName">Project Title</label>
-                <input type="text" formControlName="ProjectName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ProjectName.errors }" />
-                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                    <div *ngIf="f.firstName.errors.required">Enter a valid title!</div>
+                <input type="text" formControlName="projectName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ProjectName.errors }" />
+                <div *ngIf="submitted && f.ProjectName.errors" class="invalid-feedback">
+                    <div *ngIf="f.ProjectName.errors.required">Enter a valid title!</div>
                 </div>
             </div>
             <div class="form-group">
@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label for="StartDate">Start Date</label>
-                <input type="date" formControlName="StartDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.StartDate.errors }" />
+                <input type="date" formControlName="startDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.StartDate.errors }" />
                 <div *ngIf="submitted && f.StartDate.errors" class="invalid-feedback">
                     <div *ngIf="f.StartDate.errors.required">Enter a starting date!</div>
                     <div *ngIf="f.StartDate.errors.arguments">Your project can't be due before it starts!</div>
@@ -28,13 +28,20 @@
             </div>
             <div class="form-group">
                 <label for="EndDate">Due Date</label>
-                <input type="date" formControlName="EndDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.EndDate.errors }" />
+                <input type="date" formControlName="endDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.EndDate.errors }" />
                 <div *ngIf="submitted && f.EndDate.errors" class="invalid-feedback">
                     <div *ngIf="f.EndDate.errors.required">Enter a due date!</div>
                 </div>
             </div>
             <div class="form-group">
-                <button [disabled]="loading" class="button" (click)="onSubmit()">
+                <label for="PaymentOffered">Payment Offered</label>
+                <input type="number" formControlName="paymentOffered" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.PaymentOffered.errors }" />
+                <div *ngIf="submitted && f.PaymentOffered.errors" class="invalid-feedback">
+                    <div *ngIf="f.PaymentOffered.errors.required">You have to pay people for their work!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" class="button">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     <a >Create</a>
                 </button>

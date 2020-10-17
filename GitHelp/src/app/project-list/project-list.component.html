@@ -1,13 +1,18 @@
 <div>
-    <ul>
-      Project ID | Project Title | Description | Start Date | End Date
-      <li *ngFor="let p of projects">
-        {{p.ProjectId}} | c {{p.StartDate}} | {{p.Description}} | {{p.EndDate}} |
-        <button (click)="delete(p.ProjectId)">Delete Project</button> |
-        <button (click)="EditProject(p.ProjectId)">Edit Project</button>
+    <ul *ngFor="let p of projects">
+      Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
+      <li >
+        {{ p.projectId}} | {{p.clientId}} | {{p.startDate}} | {{p.Description}} | {{p.endDate}} | {{p.paymentOffered}} 
+        <button (click)="delete(p.projectId)">Delete Project</button> |
+        <button (click)="EditProject(p.projectId)">Edit Project</button>
       </li>
     </ul>
   </div>
-
+<!-- <div>
+  {{projects}}
+</div> -->
   <!--Displays the information about each of the projects displayed so it can be deleted or editted-->
-  <app-projects [project] = 'this.selectedProject' (editedProject)="HandleEditProject($event)"></app-projects>
+  <!--
+     <app-projects [project] = 'this.selectedProject' (editedProject)="HandleEditProject($event)"></app-projects>
+  -->
+   
