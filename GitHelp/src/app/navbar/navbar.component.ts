@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
     
   }
 
-  gotoclientprofile(): void {
+  gotouserprofile(): void {
     console.log("Going to client profile");
     this.router.navigate(['/clientProfile']);
   }

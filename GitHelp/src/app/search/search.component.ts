@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import {
    debounceTime, distinctUntilChanged, switchMap
  } from 'rxjs/operators';
-import { Client } from '../models/Client';
+import { User } from '../models/User';
 import { Contractor } from '../models/Contractor';
 import { Project } from '../models/Project';
 //TODO Import User service once it is created to use search method 
@@ -16,7 +16,7 @@ import { Project } from '../models/Project';
 })
 export class SearchComponent implements OnInit {
 
-  Clients$: Observable<Client[]>;
+  Users$: Observable<User[]>;
   Contractors$: Observable<Contractor[]>;
   Projects$: Observable<Project[]>;
 
@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
 
   //TODO Create the search method in User service
   ngOnInit(): void {
-    //this.Clients$ = this.searchTerms.pipe(
+    //this.Users$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       //debounceTime(300),
 

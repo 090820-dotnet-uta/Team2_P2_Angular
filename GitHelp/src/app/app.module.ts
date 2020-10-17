@@ -11,7 +11,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { ContractorListComponent } from './contractor-list/contractor-list.component';
 import { ContractorProfileComponent } from './contractor-profile/contractor-profile.component';
-import { ClientProfileComponent } from './client-profile/client-profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -41,7 +41,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     ClientListComponent,
     ContractorListComponent,
     ContractorProfileComponent,
-    ClientProfileComponent,
+    UserProfileComponent,
 
 
     HomePageComponent,
