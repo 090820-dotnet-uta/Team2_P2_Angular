@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { Client } from './Client';
+import { Client } from './client';
 import { MessageService } from '../message.service';
 
 @Injectable({
@@ -13,6 +13,7 @@ export class ClientService {
 
   // private dbUrl = 'api/clients';  // URL to web api
   private dbUrl = "https://githelp.azurewebsites.net/api/ApplicationUser";
+  // private dbUrl = "https://localhost:5001/api/ApplicationUser";
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -65,12 +66,16 @@ export class ClientService {
     );
   }
 
-  // /** PUT: update the client on the server */
-  // updateClient(client: Client): Observable<any> {
-  //   return this.http.put(this.dbUrl, client, this.httpOptions).pipe(
-  //     tap(_ => this.log(`updated client ClientId=${client.clientId}`)),
-  //     catchError(this.handleError<any>('updateHero'))
-  //   );
+  /** PUT: update the client on the server */
+  updateClient(client: Client): Observable<any> {
+    console.log("aaa");
+    return this.http.put(this.dbUrl, client, this.httpOptions).pipe(
+      tap(_ => this.log(`updated client username=${client.userName}`)),
+      catchError(this.handleError<any>('updateClient'))
+    );
+  }
+  // UpdatePlayer(p: Player): Observable<void> {
+  //   return this.http.put<void>(`${this.url}EditPlayer`, p, this.options);
   // }
 
   // /** POST: add a new client to the server */

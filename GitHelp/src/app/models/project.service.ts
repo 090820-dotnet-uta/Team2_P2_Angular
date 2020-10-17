@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 
 import { Project } from './Project';
 import { Position} from './Position';
-import { Client} from './Client';
+import { Client} from './client';
 import { MessageService } from '../message.service';
 
 @Injectable({

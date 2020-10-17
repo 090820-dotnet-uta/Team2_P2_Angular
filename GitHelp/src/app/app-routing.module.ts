@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'Home', component: HomePageComponent},
   {path: 'AddProject', component: AddProjectFormComponent },
   {path: 'ProjectEdit/:id', component: ProjectsComponent},
-  {path: 'ProjectList', component: ProjectListComponent}
+  {path: 'ProjectList', component: ProjectListComponent},
   {path: 'clientProfile', component: ClientProfileComponent}
 ];
 
