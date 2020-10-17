@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Client } from './models/Client';
+import { User } from './models/User';
 import { Contractor } from './models/Contractor';
 import { Project } from './models/Project';
 import { Position } from './models/Position';
@@ -31,20 +31,20 @@ export class InMemoryDataService implements InMemoryDbService {
     const clients =[
       {
         id: 1,
-        ClientId: 1,
+        UserId: 1,
         Username: "aa",
         FirstName: "Afn",
         LastName: "Aln",
-        Description: "Test Client A",
+        Description: "Test User A",
         Email: "Email Placeholder"
       },
       {
         id: 2,
-        ClientId: 2,
+        UserId: 2,
         Username: "bb",
         FirstName: "Bfn",
         LastName: "Bln",
-        Description: "Test Client B",
+        Description: "Test User B",
         Email: "Email Placeholder"
       }
     ];

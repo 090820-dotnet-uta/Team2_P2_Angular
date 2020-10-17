@@ -1,11 +1,11 @@
 <app-navbar></app-navbar>
 
-    <!-- <h2>Client Profile</h2> -->
-<div *ngIf="client">
+    <!-- <h2>User Profile</h2> -->
+<div *ngIf="user">
     <span [ngSwitch]="editModeStatus">
         <span *ngSwitchCase="1">
-            <h1>Editing Profile for {{client.userName}}</h1>
-            <form [formGroup]="clientEditForm">
+            <h1>Editing Profile for {{user.userName}}</h1>
+            <form [formGroup]="userEditForm">
                 <label>First Name </label>
                 <input formControlName="firstName" type="text" name="firstName" id="firstName" />
                 <br/>
@@ -15,30 +15,30 @@
                 <label>Email </label>
                 <input formControlName="email" type="text" name="email" id="email" />
                 <br/>
-                <button (click)="updateClient()" type="submit">Save</button>
+                <button (click)="updateUser()" type="submit">Save</button>
               </form>
             <button (click)="editOff()">Cancel Edit</button>
             
-        <pre *ngIf="clientEditForm">{{clientEditForm.value | json}}</pre>
+        <pre *ngIf="userEditForm">{{userEditForm.value | json}}</pre>
         </span>
         <span *ngSwitchDefault>
-            <h1>Profile for {{client.userName}}</h1>
-            <div><span>email: </span>{{client.email}}</div>
+            <h1>Profile for {{user.userName}}</h1>
+            <div><span>email: </span>{{user.email}}</div>
             <br>
             <button (click)="editOn()">Edit Profile</button>
         </span>
     </span>
     <!-- <div>
         <label>name:
-        <input [(ngModel)]="client.userName" placeholder="name"/>
+        <input [(ngModel)]="user.userName" placeholder="name"/>
         </label>
     </div> -->
 </div>
 <button (click)="goBack()">go back</button>
 
-<!-- <span *ngFor="let thisclient of client">
-    <p>Username: {{thisclient.Username }}</p>
-    <p>Description: {{thisclient.Description}}</p>
+<!-- <span *ngFor="let thisuser of user">
+    <p>Username: {{thisuser.Username }}</p>
+    <p>Description: {{thisuser.Description}}</p>
     <div>
     </div>
     <button (click)="save()">save</button>
