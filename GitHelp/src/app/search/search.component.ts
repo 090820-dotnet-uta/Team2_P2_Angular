@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import {
    debounceTime, distinctUntilChanged, switchMap
  } from 'rxjs/operators';
-import { Client } from '../models/Client';
+import { Client } from '../models/client';
 import { Contractor } from '../models/Contractor';
 import { Project } from '../models/Project';
 //TODO Import User service once it is created to use search method 

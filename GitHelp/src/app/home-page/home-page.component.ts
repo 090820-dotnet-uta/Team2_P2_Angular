@@ -22,12 +22,12 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     //Dummy data, remove later!
-    let user = new Client();
-    user.firstName = 'bob';
+    // let user = new Client();
+    // user.firstName = 'bob';
 
-    this.userType = this.CliOrCon(user);
-    console.log(this.userType),
-    console.log(user instanceof Client)
+    // this.userType = this.CliOrCon(user);
+    // console.log(this.userType),
+    // console.log(user instanceof Client)
   }
 
   CliOrCon(loggedInUser: Client | Contractor) : number

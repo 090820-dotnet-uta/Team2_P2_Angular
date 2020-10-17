@@ -1,20 +1,40 @@
 <app-navbar></app-navbar>
 
-
-    <h2>Client Profile</h2>
-
+    <!-- <h2>Client Profile</h2> -->
 <div *ngIf="client">
-    <h2>{{client.userName }} Details</h2>
-    <div><span>email: </span>{{client.email}}</div>
+    <span [ngSwitch]="editModeStatus">
+        <span *ngSwitchCase="1">
+            <h1>Editing Profile for {{client.userName}}</h1>
+            <form [formGroup]="clientEditForm">
+                <label>First Name </label>
+                <input formControlName="firstName" type="text" name="firstName" id="firstName" />
+                <br/>
+                <label>Last Name </label>
+                <input formControlName="lastName" type="text" name="lastName" id="lastName" />
+                <br/>
+                <label>Email </label>
+                <input formControlName="email" type="text" name="email" id="email" />
+                <br/>
+                <button (click)="updateClient()" type="submit">Save</button>
+              </form>
+            <button (click)="editOff()">Cancel Edit</button>
+            
+        <pre *ngIf="clientEditForm">{{clientEditForm.value | json}}</pre>
+        </span>
+        <span *ngSwitchDefault>
+            <h1>Profile for {{client.userName}}</h1>
+            <div><span>email: </span>{{client.email}}</div>
+            <br>
+            <button (click)="editOn()">Edit Profile</button>
+        </span>
+    </span>
     <!-- <div>
         <label>name:
         <input [(ngModel)]="client.userName" placeholder="name"/>
         </label>
     </div> -->
-    <button (click)="save()">save</button>
-    <br>
-    <button (click)="goBack()">go back</button>
 </div>
+<button (click)="goBack()">go back</button>
 
 <!-- <span *ngFor="let thisclient of client">
     <p>Username: {{thisclient.Username }}</p>
