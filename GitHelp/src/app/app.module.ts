@@ -28,6 +28,8 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { PositionsComponent } from './positions/positions.component';
+import { PositionListComponent } from './position-list/position-list.component';
 
 
 
@@ -50,7 +52,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     ProjectsComponent,
     ProjectListComponent,
     AddProjectFormComponent,
-    NavbarComponent
+    NavbarComponent,
+    PositionsComponent,
+    PositionListComponent,
   ],
     imports: [
     RouterModule,

@@ -15,11 +15,11 @@ const routes: Routes = [
   {path: 'signup', component: SignUpFormComponent},
   //Maybe, login/signup page should be the landing page 
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {path: 'Home', component: HomePageComponent},
+  {path: 'home', component: HomePageComponent},
   {path: 'AddProject', component: AddProjectFormComponent },
   {path: 'ProjectEdit/:id', component: ProjectsComponent},
   {path: 'ProjectList', component: ProjectListComponent},
-  {path: 'Profile', component: UserProfileComponent}
+  {path: 'clientProfile', component: UserProfileComponent},
 ];
 
 @NgModule({
