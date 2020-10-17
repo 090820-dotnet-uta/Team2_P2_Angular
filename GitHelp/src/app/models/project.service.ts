@@ -4,7 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { Project } from './Project';
-import { Client} from './Client';
+import { User } from './user';
 import { Contractor} from './Contractor';
 import { MessageService } from '../message.service';
 
@@ -108,7 +108,7 @@ export class ProjectService {
 
   //TODO COMBINE getClientProject AND getContractorProjects INTO ONE METHOD!! 
   /** GET a project by client id. Will 404 if id not found. (use with getting client's projects) */
-  getClientProjects(id: Client | number): Observable<Project> {
+  getClientProjects(id: User | number): Observable<Project> {
     const url = `${this.projectURL}/?ClientId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
     // const url = `${this.dbUrl}/?name=aa`;

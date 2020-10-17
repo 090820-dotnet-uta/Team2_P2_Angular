@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
     
   }
 
-  gotoclientprofile(): void {
+  gotouserprofile(): void {
     console.log("Going to client profile");
     this.router.navigate(['/clientProfile']);
   }
@@ -45,8 +45,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  gotoregister(): void {
-    console.log("Going to register");
-    // this.router.navigate(['/register']);
+  gotosignup(): void {
+    console.log("Going to signup");
+    this.router.navigate(['/signup']);
   }
 }

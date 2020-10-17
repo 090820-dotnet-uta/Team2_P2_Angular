@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { Project } from '../models/Project';
 import { ProjectService } from '../models/project.service';
 import { Contractor } from '../models/Contractor';
-import { Client } from '../models/Client';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-projects',

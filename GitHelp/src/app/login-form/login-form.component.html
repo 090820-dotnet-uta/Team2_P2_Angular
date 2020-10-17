@@ -1,8 +1,17 @@
 <app-navbar></app-navbar>
 <H2>Log In</H2>
 
-<p>Client Login (dummy)</p>
-<button (click)="loginasclient()">Login as Client</button>
+<p>Proceed as Client of Contractor:</p>
+<button (click)="selectclient()">Client</button>
+ | 
+<button (click)="selectcontractor()">Contractor</button>
 
-<p>Not implemented</p>
-<button (click)="loginascontractor()">Login as Contractor</button>
+<div *ngIf="clientSelected">
+    <p>Client Login (dummy)</p>
+    <button (click)="loginasclient()">Login as Client</button>
+</div>
+
+<div *ngIf="contractorSelected">
+    <p>Contractor Login (dummy)</p>
+    <button (click)="loginascontractor()">Login as Contractor</button>
+</div>
