@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { UtilmethodsService } from '../utilmethods.service';
-import { Client } from '../models/client';
-import { ClientService } from '../models/client.service';
+import { Client } from '../models/Client';
+import { ClientService } from '../models/Client.service';
 
 @Component({
   selector: 'app-client-profile',
