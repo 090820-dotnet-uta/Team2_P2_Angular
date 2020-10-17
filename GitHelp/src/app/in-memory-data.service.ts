@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Client } from './models/client';
+import { Client } from './models/Client';
 import { Contractor } from './models/Contractor';
 import { Project } from './models/Project';
 import { Position } from './models/Position';
