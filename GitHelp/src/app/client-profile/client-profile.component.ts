@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 
 import { UtilmethodsService } from '../utilmethods.service';
 import { Client } from '../models/Client';
-import { ClientService } from '../models/Client.service';
+import { ClientService } from '../models/client.service';
 
 @Component({
   selector: 'app-client-profile',
