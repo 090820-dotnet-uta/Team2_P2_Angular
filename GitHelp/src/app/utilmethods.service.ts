@@ -12,16 +12,16 @@ export class UtilmethodsService {
     private router: Router
   ){ }
 
-  loginCheck(checkinType: string): boolean {
-    let loginType = localStorage.getItem("loginType");
-    if(checkinType == "any" && (loginType == "client" || loginType == "contractor")){
-      return true;
-    }else if(loginType != checkinType){
-      console.log(`Login type mismatch of ${loginType} vs ${checkinType}; redirecting to login`);
-      this.router.navigate(['/login']);
-      return false;
-    }
-    return true;
-  }
+  // loginCheck(checkinType: string): boolean {
+  //   let loginType = localStorage.getItem("loginType");
+  //   if(checkinType == "any" && (loginType == "client" || loginType == "contractor")){
+  //     return true;
+  //   }else if(loginType != checkinType){
+  //     console.log(`Login type mismatch of ${loginType} vs ${checkinType}; redirecting to login`);
+  //     this.router.navigate(['/login']);
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
 }
