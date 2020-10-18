@@ -8,41 +8,84 @@ import { ProjectService } from '../models/project.service';
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.css']
+  styleUrls: ['./project-list.component.css'],
+  providers: [ProjectService],
 })
 export class ProjectListComponent implements OnInit {
 
+  //Will hold either all projects, all of a client's projects or all of a contractor's projects
   projects : Project[];
-  //testProj: string[] = ["blah", "test", "boo"];
+
   selectedProject: Project;
   EditedProject: Project = new Project();
 
-  //DUMMY DATA REMOVE LATER, REPLACED WITH LOGGEDINUSER
+  //This dictates the type of list to be displayed 
+  listType: number;
+  userId: string;
 
+  //DUMMY DATA REMOVE LATER, REPLACED WITH LOGGEDINUSER FROM LOCAL STORAGE
+  //let userId = localStorage.getItem('currentId');
+  //let userType = localStorage.getItem('userType');
 
   
   constructor(private projectService: ProjectService) {
-    this.projectService.getAllProjects().subscribe(projects => {this.projects = projects
-    console.log("Logging projects after constructor:")
-    console.log(this.projects)});
+
+    
    }
 
   //OnInit
   ngOnInit(): void {
+
+    //DUMMY DATA, CHANGE LATER
+        this.listType = 1;
+        this.userId = "1";
+        // console.log("List type: " + this.listType);
+        // console.log("User id: " + this.userId);
+        // //TEST
+        // this.getCliProjects(this.userId);
+
+
+        //Determine what kind of list to output 
+        // if(this.listType === 1)
+        // {
+        //   this.getCliProjects(this.userId);
+        // }
+        // else if(this.listType === 2)
+        // {
+        //   this.getConProjects(this.userId);
+        // }
+        // else
+        // {
+        //   this.getAllProjects();
+        // }
+
     console.log("Logging projects inside ngOnInit (before getAllProjects component):")
     console.log(this.projects)
-    this.getAllProjects();
+    //this.getAllProjects();
     console.log("Logging projects inside ngOnInit (after getAllProjects component):")
     console.log(this.projects)
 
-    // console.log("Projects inside NgonInit:")
-    // console.log(this.projects)
+    this.getClientProjects(this.userId);
+
+    
+  }
+
+  getClientProjects(id: string){
+    console.log("Entering getCliProjects with userId: #" + id);
+
+    this.projectService.getCliProjects(id).subscribe(projects => {this.projects = projects
+      console.log("Logging projects after leaving getAllProjects:")
+      console.log(this.projects)}
+    );
   }
 
   getAllProjects(){
-    console.log("Inside getAllProjects (component)")
-    console.log(this.projects)
-    return this.projects;
+    //console.log("Inside getAllProjects (component)")
+    //console.log(this.projects)
+    this.projectService.getAllProjects().subscribe(projects => {this.projects = projects
+      console.log("Logging projects after leaving getAllProjects:")
+      console.log(this.projects)}
+    );
   }
 
   // get Projs(): Project[] {
@@ -75,7 +118,7 @@ export class ProjectListComponent implements OnInit {
     this.projectService.updateProject(emittedProject).subscribe(() => {
       this.projects.forEach(proj => {
         if (proj.projectId === emittedProject.projectId) {
-          proj.clientId = emittedProject.clientId;
+          proj.userId = emittedProject.userId;
           proj.projectName = emittedProject.projectName;
           proj.Description = emittedProject.Description;
           proj.startDate = emittedProject.startDate;

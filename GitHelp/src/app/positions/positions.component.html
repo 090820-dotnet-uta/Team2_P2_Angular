@@ -1,1 +1,16 @@
-<p>positions works!</p>
+<div>
+    Viewing Project# {{projId}}
+</div>
+<div *ngFor = "let pos of allPositions">
+    <div class="tooltip">
+        {{pos.positionTitle}}
+        <input type="checkbox" name = {{pos.positionId}} value={{pos.positionTitle}}>
+        <label for = {{pos.positionId}} >
+            <span class="tooltiptext">
+                ABC 
+                {{pos.Description}}
+            </span>
+        </label>
+        
+    </div>
+</div>

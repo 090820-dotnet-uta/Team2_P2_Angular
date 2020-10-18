@@ -3,7 +3,8 @@ import { DatePipe } from '@angular/common';
 export class Project {
   constructor() {}
     projectId?: number;
-    clientId?: number;
+    //ID of the Client 
+    userId?: string;
     startDate: string = new Date().toDateString();
     endDate: string = new Date().toDateString();
     paymentOffered: number;

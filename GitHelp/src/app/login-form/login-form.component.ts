@@ -34,6 +34,7 @@ export class LoginFormComponent implements OnInit {
     console.log("Dummy client login");
     localStorage.setItem('currentUserName', 'user');
     localStorage.setItem('loginType', 'client');
+    //Need to have this navigating to home page after login (same for contractor)
     this.router.navigate(['/Profile']);
   }
 

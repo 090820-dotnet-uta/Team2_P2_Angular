@@ -8,6 +8,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectListComponent } from './project-list/project-list.component';
+import { PositionsComponent } from './positions/positions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,9 +18,10 @@ const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   {path: 'home', component: HomePageComponent},
   {path: 'AddProject', component: AddProjectFormComponent },
-  {path: 'ProjectEdit/:id', component: ProjectsComponent},
+  {path: 'ProjectEdit', component: ProjectsComponent},
   {path: 'ProjectList', component: ProjectListComponent},
   {path: 'clientProfile', component: UserProfileComponent},
+  {path: 'Positions/:id', component: PositionsComponent}
 ];
 
 @NgModule({

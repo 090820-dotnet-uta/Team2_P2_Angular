@@ -41,7 +41,7 @@ export class ProjectsComponent implements OnInit, OnChanges {
     if (this.project) {
       this.projectEditForm = new FormGroup(
         {
-          clientId: new FormControl(this.project.clientId),
+          userId: new FormControl(this.project.userId),
           projectName: new FormControl(this.project.projectName),
           Description: new FormControl(this.project.Description),
           startDate: new FormControl(this.project.startDate),
@@ -54,7 +54,7 @@ export class ProjectsComponent implements OnInit, OnChanges {
   
   getProject(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.projectService.requestProject(id)
+    this.projectService.requestProject("id")
       .subscribe(p => this.project = p);
   }
 
