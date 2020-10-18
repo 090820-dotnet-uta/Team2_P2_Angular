@@ -30,12 +30,12 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     let loginTypeDesired = 'any';
-    let loginChecksOut = this.utilmethodsService.loginCheck(loginTypeDesired);
+   // let loginChecksOut = this.utilmethodsService.loginCheck(loginTypeDesired);
     this.editModeStatus = "0";
-    if(loginChecksOut){
-      this.getUser();
-    }
-  }
+    //  if(loginChecksOut){
+    //    this.getUser();
+    //  }
+   }
     
   getUser(): void {
     // const id = +this.route.snapshot.paramMap.get('id');
