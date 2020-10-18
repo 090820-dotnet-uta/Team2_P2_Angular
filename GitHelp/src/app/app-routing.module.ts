@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'AddProject', component: AddProjectFormComponent },
   {path: 'ProjectEdit/:id', component: ProjectsComponent},
   {path: 'ProjectList', component: ProjectListComponent},
-  {path: 'clientProfile', component: UserProfileComponent},
+  {path: 'Profile', component: UserProfileComponent},
 ];
 
 @NgModule({
