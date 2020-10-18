@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Contractor } from '../models/Contractor';
 import{ User } from '../models/User';
 import { LoginInfo } from '../models/LoginInfo';
+
+import { UtilmethodsService } from '../utilmethods.service';
 //TODO Import user service when it's created
 @Component({
   selector: 'app-home-page',
@@ -17,10 +19,13 @@ export class HomePageComponent implements OnInit {
   userType : number;
   loggedInUser: User | Contractor;
   
-  constructor() { }
+  constructor(
+    private utilmethodsService: UtilmethodsService
+  ) { }
   
 
   ngOnInit(): void {
+    let loginChecksOut = this.utilmethodsService.loginCheck("any");
     //Dummy data, remove later!
     // let user = new User();
     // user.firstName = 'bob';

@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class LoginService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = 'https://githelp.azurewebsites.net/api';
@@ -18,7 +18,8 @@ export class UserService {
     Passwords: this.fb.group({
       Password: ['', [Validators.required, Validators.minLength(4)]],
       ConfirmPassword: ['', Validators.required]
-    }, { validator: this.comparePasswords })
+    }, { validator: this.comparePasswords }),
+    AccountType: ['', Validators.required]
 
   });
 
@@ -40,8 +41,13 @@ export class UserService {
       Email: this.formModel.value.Email,
       FirstName: this.formModel.value.FirstName,
       LastName: this.formModel.value.FirstName,
-      Password: this.formModel.value.Passwords.Password
+      Password: this.formModel.value.Passwords.Password,
+      AccountType: this.formModel.value.AccountType
     };
     return this.http.post(this.BaseURI + '/ApplicationUser/Register', body);
+  }
+
+  login (formData){
+    return this.http.post(this.BaseURI + '/ApplicationUser/Login', formData);
   }
 }
