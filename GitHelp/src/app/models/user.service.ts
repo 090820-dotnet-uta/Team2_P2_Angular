@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -21,6 +22,7 @@ export class UserService {
 
   // constructor(private messageService: MessageService) { }
   constructor(
+    private router: Router, 
     private http: HttpClient,
     private messageService: MessageService
   ) { }
@@ -66,9 +68,25 @@ export class UserService {
     );
   }
 
+  setUserType(){
+    this.getUser()
+    .subscribe(
+      c => {
+        console.log("Got result:");
+        console.log(c);
+        if(c.accountType == "client"){
+          localStorage.setItem('loginType', "client");
+          this.router.navigate(['/home']);
+        }else if(c.accountType == "contractor"){
+          localStorage.setItem('loginType', "contractor");
+          this.router.navigate(['/home']);
+        }
+      });
+  }
+
   /** PUT: update the user on the server */
   updateUser(user: User): Observable<any> {
-    console.log("aaa");
+    console.log("aAa");
     return this.http.put(this.dbUrl, user, this.httpOptions).pipe(
       tap(_ => this.log(`updated user username=${user.userName}`)),
       catchError(this.handleError<any>('updateUser'))

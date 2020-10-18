@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class LoginService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = 'https://githelp.azurewebsites.net/api';

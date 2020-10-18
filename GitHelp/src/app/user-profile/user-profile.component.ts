@@ -24,22 +24,21 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private utilmethodsService: UtilmethodsService,
     private route: ActivatedRoute,
-    private clientService: UserService,
+    private userService: UserService,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    let loginTypeDesired = 'any';
-   // let loginChecksOut = this.utilmethodsService.loginCheck(loginTypeDesired);
+    let loginChecksOut = this.utilmethodsService.loginCheck("any");
     this.editModeStatus = "0";
-    //  if(loginChecksOut){
-    //    this.getUser();
-    //  }
+     if(loginChecksOut){
+       this.getUser();
+     }
    }
     
   getUser(): void {
     // const id = +this.route.snapshot.paramMap.get('id');
-    this.clientService.getUser()
+    this.userService.getUser()
       .subscribe(
         c => {
           console.log("Got result:");
@@ -78,7 +77,7 @@ export class UserProfileComponent implements OnInit {
     console.log(this.changedUser);
     
     // this.editedUserEvent.emit(this.changedUser);
-    this.clientService.updateUser(this.changedUser);
+    this.userService.updateUser(this.changedUser);
     //   .subscribe(() => this.goBack());
   }
 

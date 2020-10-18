@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('currentUserName', '');
     localStorage.setItem('loginType', '');
     localStorage.setItem('currentUserId', '');
+    localStorage.setItem('token', '');
     this.router.navigate(['/login']);
   }
 

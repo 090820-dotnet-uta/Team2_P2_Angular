@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { UserService } from '../services/services';
-
+import { LoginService } from '../services/services';
+import { UserService } from '../models/user.service';
 
 @Component({
   selector: 'app-login-form',
@@ -16,7 +16,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   constructor(
-    private router: Router, private service: UserService) {
+    private router: Router, private service: LoginService, private userservice: UserService) {
       // this.clientSelected = false;
       // this.contractorSelected = false;
     }
@@ -60,9 +60,10 @@ export class LoginFormComponent implements OnInit {
   onSubmit(form:NgForm){
     this.service.login(form.value).subscribe(
       (res:any) => {
-       // console.log(res);
+        localStorage.setItem('currentUserName', form.value.UserName);
         localStorage.setItem('token', res.token);
-        this.router.navigate(['/Profile']);
+        this.userservice.setUserType();
+        // this.router.navigate(['/Profile']);
       }, err =>{
 
       if (err.status == 400){
@@ -70,8 +71,28 @@ export class LoginFormComponent implements OnInit {
       }
     }
     )
-
 }
+
+// getUserType(){
+//   console.log("a");
+//   this.userservice.getUser()
+//   .subscribe(
+//     c => {
+//       console.log("Got result:");
+//       console.log(c);
+//       if(c.accountType == "client"){
+//         localStorage.setItem('loginType', "client");
+//         this.router.navigate(['/Profile']);
+//       }else if(c.accountType == "contractor"){
+//         localStorage.setItem('loginType', "contractor");
+//         this.router.navigate(['/Profile']);
+//       }
+//       // console.log(this.user);
+//       // console.log(c[0]);
+//       // this.user = c;
+//     });
+//   // this.router.navigate(['/Profile']);
+// }
 
 
 }

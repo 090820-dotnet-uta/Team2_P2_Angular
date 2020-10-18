@@ -1,4 +1,4 @@
-import { UserService } from '../services/services';
+import { LoginService } from '../services/services';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpFormComponent implements OnInit {
 
-  constructor(public service: UserService) { }
+  constructor(public service: LoginService) { }
 
   ngOnInit() {
     this.service.formModel.reset();
