@@ -18,7 +18,8 @@ export class UserService {
     Passwords: this.fb.group({
       Password: ['', [Validators.required, Validators.minLength(4)]],
       ConfirmPassword: ['', Validators.required]
-    }, { validator: this.comparePasswords })
+    }, { validator: this.comparePasswords }),
+    AccountType: ['', Validators.required]
 
   });
 
@@ -40,7 +41,8 @@ export class UserService {
       Email: this.formModel.value.Email,
       FirstName: this.formModel.value.FirstName,
       LastName: this.formModel.value.FirstName,
-      Password: this.formModel.value.Passwords.Password
+      Password: this.formModel.value.Passwords.Password,
+      AccountType: this.formModel.value.AccountType
     };
     return this.http.post(this.BaseURI + '/ApplicationUser/Register', body);
   }
