@@ -4,6 +4,8 @@
         |
         <span class="navusername">Logged in as client {{currentuserName}}</span>
         |
+        <button (click)="gotohomepage()">Home</button>
+        |
         <button (click)="gotouserprofile()">Profile</button>
         |
         <button (click)="logout()">Log Out</button>
@@ -11,6 +13,8 @@
     <span *ngSwitchCase="2">
         |
         <span class="navusername">Logged in as Contractor {{currentuserName}}</span>
+        |
+        <button (click)="gotohomepage()">Home</button>
         |
         <button (click)="gotouserprofile()">Profile</button>
         |
