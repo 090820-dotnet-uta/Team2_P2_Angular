@@ -30,6 +30,7 @@ import { AddProjectFormComponent } from './add-project-form/add-project-form.com
 import { NavbarComponent } from './navbar/navbar.component';
 import { PositionsComponent } from './positions/positions.component';
 import { PositionListComponent } from './position-list/position-list.component';
+import { ProjectService } from './models/project.service';
 
 
 
@@ -73,7 +74,7 @@ import { PositionListComponent } from './position-list/position-list.component';
     // )
 
   ],
-  providers: [],
+  providers: [ProjectService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

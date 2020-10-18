@@ -36,8 +36,8 @@ export class LoginFormComponent implements OnInit {
   // selectclient(): void{
   //   this.clientSelected = true;
   //   this.contractorSelected = false;
-  // }
-
+  // 
+  
   // selectcontractor(): void{
   //   this.clientSelected = false;
   //   this.contractorSelected = true;
@@ -93,6 +93,7 @@ export class LoginFormComponent implements OnInit {
 //     });
 //   // this.router.navigate(['/Profile']);
 // }
+
 
 
 }

@@ -4,7 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { Project } from './Project';
-import { User } from './user';
+import { User } from './User';
 import { Contractor} from './Contractor';
 import { MessageService } from '../message.service';
 
@@ -16,9 +16,13 @@ export class ProjectService {
   //URL links us to the needed model
   //private dbUrl = 'api/projects'; 
   private projectURL = "https://githelp.azurewebsites.net/api/Projects";
+  private projIdURL = "https://githelp.azurewebsites.net/api/Projects/userId";
+  private latestProjURL = "https://githelp.azurewebsites.net/api/Projects/Latest"
   private skillURL = "https://githelp.azurewebsites.net/api/Skills";
 
   allProjects: Array<Project>;
+  allClientProjects: Project[];
+  newProject : Project;
   constructorProj: Project[] = [];
   //What kind of info to return with http
   httpOptions = {
@@ -84,7 +88,7 @@ export class ProjectService {
   // }
 
   /** GET a project by project id (HTTP REQUEST). Will 404 if id not found.*/
-  requestProject(id: number): Observable<Project> {
+  requestProject(id: string): Observable<Project> {
     const url = `${this.projectURL}/ProjectId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
     // const url = `${this.dbUrl}/?name=aa`;
@@ -106,7 +110,34 @@ export class ProjectService {
     return this.allProjects.find(p => p.projectId === id);
   }
 
+
+  //Method gets either all a client's projects or all a contractor's projects 
+  getCliProjects(id: string, title?: string) : Observable<Project[]> {
+      
+    console.log("Inside getCliProjects (service)");
+    console.log("Id =" + id);
+    const url = `${this.projIdURL}/${id}`;
+    console.log(url)
+    // if(title != null)
+    // {
+    //   this.http.get<Project[]>(url);
+
+    // }
+    return this.http.get<Project[]>(url);
+
+  }
+
+  //Gets the latest project for a client 
+  getLatestCliProject(userId: string): Observable<Project>{
+    const url = `${this.latestProjURL}/${userId}`;
+    console.log("Inside getLatestCliProject (service)");
+    console.log("Id =" + userId);
+    return this.http.get<Project>(url);
+  }
+
+
   //TODO COMBINE getClientProject AND getContractorProjects INTO ONE METHOD!! 
+
   /** GET a project by client id. Will 404 if id not found. (use with getting client's projects) */
   getClientProjects(id: User | number): Observable<Project> {
     const url = `${this.projectURL}/?ClientId=${id}`;
@@ -120,6 +151,7 @@ export class ProjectService {
       catchError(this.handleError<Project>(`getClientProjects ClientId=${id}`))
     );
   }
+  
   /** GET a project by contractor id. Will 404 if id not found. (use with getting contractor's projects) */
   getContractorProjects(id: Contractor | number): Observable<Project> {
     const url = `${this.projectURL}/?ContractorId=${id}`;
@@ -159,7 +191,7 @@ export class ProjectService {
 
   /** DELETE: delete the PROJECT from the server (Only available to Clients) */
   deleteProject(project: Project | number): Observable<Project> {
-    const id = typeof project === 'number' ? project : project.clientId;
+    const id = typeof project === 'number' ? project : project.userId;
     const url = `${this.projectURL}/${id}`;
 
     return this.http.delete<Project>(url, this.httpOptions).pipe(
