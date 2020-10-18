@@ -4,7 +4,19 @@
         |
         <span class="navusername">Logged in as client {{currentuserName}}</span>
         |
-        <button (click)="gotoclientprofile()">Profile</button>
+        <button (click)="gotohomepage()">Home</button>
+        |
+        <button (click)="gotouserprofile()">Profile</button>
+        |
+        <button (click)="logout()">Log Out</button>
+    </span>
+    <span *ngSwitchCase="2">
+        |
+        <span class="navusername">Logged in as Contractor {{currentuserName}}</span>
+        |
+        <button (click)="gotohomepage()">Home</button>
+        |
+        <button (click)="gotouserprofile()">Profile</button>
         |
         <button (click)="logout()">Log Out</button>
     </span>
@@ -12,7 +24,7 @@
         |
         <button (click)="gotologin()">Login</button>
         |
-        <button (click)="gotoregister()">Register (placeholder)</button>
+        <button (click)="gotosignup()">Sign Up </button>
     </span>
 </span>
 

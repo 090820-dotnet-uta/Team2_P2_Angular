@@ -15,6 +15,13 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     let loginType = localStorage.getItem("loginType");
+    if(loginType == "Client"){
+      loginType = "client";
+      localStorage.setItem('loginType', loginType);
+    }else if(loginType == "Contractor"){
+      loginType = "contractor";
+      localStorage.setItem('loginType', loginType);
+    }
     if(loginType == "client"){
       this.loginStatus = "1";
       this.currentuserName = localStorage.getItem("currentUserName");
@@ -28,15 +35,21 @@ export class NavbarComponent implements OnInit {
     
   }
 
-  gotoclientprofile(): void {
-    console.log("Going to client profile");
-    this.router.navigate(['/clientProfile']);
+  gotohomepage(): void {
+    console.log("Going to home component");
+    this.router.navigate(['/home']);
+  }
+
+  gotouserprofile(): void {
+    console.log("Going to user profile");
+    this.router.navigate(['/Profile']);
   }
 
   logout(): void {
     console.log("Logging out");
     localStorage.setItem('currentUserName', '');
     localStorage.setItem('loginType', '');
+    localStorage.setItem('currentUserId', '');
     this.router.navigate(['/login']);
   }
 
@@ -45,8 +58,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  gotoregister(): void {
-    console.log("Going to register");
-    // this.router.navigate(['/register']);
+  gotosignup(): void {
+    console.log("Going to signup");
+    this.router.navigate(['/signup']);
   }
 }

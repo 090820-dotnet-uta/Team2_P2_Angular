@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Project } from '../models/Project';
 import { ProjectService } from '../models/project.service';
+import { Contractor } from '../models/Contractor';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-projects',
@@ -39,10 +41,12 @@ export class ProjectsComponent implements OnInit, OnChanges {
     if (this.project) {
       this.projectEditForm = new FormGroup(
         {
-          projectName: new FormControl(this.project.ProjectName),
+          clientId: new FormControl(this.project.clientId),
+          projectName: new FormControl(this.project.projectName),
           Description: new FormControl(this.project.Description),
-          startDate: new FormControl(this.project.StartDate),
-          endDate: new FormControl(this.project.EndDate)
+          startDate: new FormControl(this.project.startDate),
+          endDate: new FormControl(this.project.endDate),
+          paymentOffered: new FormControl(this.project.paymentOffered),
         }
       );
     }
