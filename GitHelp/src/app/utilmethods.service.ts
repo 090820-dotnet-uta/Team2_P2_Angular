@@ -14,7 +14,6 @@ export class UtilmethodsService {
 
   loginCheck(checkinType: string): boolean {
     let loginToken = localStorage.getItem("token");
-    console.log(loginToken);
     if(loginToken == ""){
         console.log('No login token found');
         this.router.navigate(['/login']);

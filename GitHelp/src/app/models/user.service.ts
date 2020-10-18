@@ -74,6 +74,7 @@ export class UserService {
       c => {
         console.log("Got result:");
         console.log(c);
+        localStorage.setItem('currentUserId', c.id);
         if(c.accountType == "client"){
           localStorage.setItem('loginType', "client");
           this.router.navigate(['/home']);
