@@ -45,6 +45,11 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/Profile']);
   }
 
+  gotohirerequests(): void {
+    console.log("Going to hire requests");
+    this.router.navigate(['/HireRequests']);
+  }
+
   logout(): void {
     console.log("Logging out");
     localStorage.setItem('currentUserName', '');

@@ -9,6 +9,7 @@ import { AddProjectFormComponent } from './add-project-form/add-project-form.com
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { PositionsComponent } from './positions/positions.component';
+import { HireRequestsComponent } from './hire-requests/hire-requests.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'ProjectEdit', component: ProjectsComponent},
   {path: 'ProjectList', component: ProjectListComponent},
   {path: 'clientProfile', component: UserProfileComponent},
-  {path: 'Positions/:id', component: PositionsComponent}
+  {path: 'Positions/:id', component: PositionsComponent},
+  {path: 'HireRequests', component: HireRequestsComponent}
 ];
 
 @NgModule({

@@ -23,16 +23,13 @@
         </span>
         <span *ngSwitchDefault>
             <h1>Profile for {{user.userName}}</h1>
-            <div><span>email: </span>{{user.email}}</div>
+            <div><span>First Name: </span>{{user.firstName}}</div>
+            <div><span>Last Name: </span>{{user.lastName}}</div>
+            <div><span>Email: </span>{{user.email}}</div>
             <br>
-            <button (click)="editOn()">Edit Profile</button>
+            <!-- <button (click)="editOn()">Edit Profile</button> -->
         </span>
     </span>
-    <!-- <div>
-        <label>name:
-        <input [(ngModel)]="user.userName" placeholder="name"/>
-        </label>
-    </div> -->
 </div>
 <button (click)="goBack()">go back</button>
 
