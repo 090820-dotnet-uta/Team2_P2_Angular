@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<form #form='ngForm' class="mb-4" autocomplete="off" (submit)="onSubmit(form)">
+<form #form='ngForm' class="mb-4" autocomplete="off">
     <div class="form-group">
       <label>Username</label>
       <input class="form-control" #UserName="ngModel" name="UserName" [(ngModel)]="formModel.UserName" required>

@@ -128,7 +128,14 @@ export class ProjectService {
   }
 
   //Gets the latest project for a client 
-  getLatestCliProject(userId: string): Observable<Project>{
+  // getLatestCliProject(userId: string): Observable<Project>{
+  //   const url = `${this.latestProjURL}/${userId}`;
+  //   console.log("Inside getLatestCliProject (service)");
+  //   console.log("Id =" + userId);
+  //   return this.http.get<Project>(url);
+  // }
+
+  getLatestCliProject(userId: string) : Observable<Project>{
     const url = `${this.latestProjURL}/${userId}`;
     console.log("Inside getLatestCliProject (service)");
     console.log("Id =" + userId);

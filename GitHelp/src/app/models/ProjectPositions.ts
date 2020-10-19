@@ -1,8 +1,8 @@
 export class ProjectPositions {
-    projectId: number;
+    projectId: string;
     positionId: number;
     contractorId?:number;
-    constructor(projectId: number, positionId : number, contractorId = 0){
+    constructor(projectId: string, positionId : number, contractorId = 0){
         this.projectId = projectId;
         this.positionId = positionId;
     }
