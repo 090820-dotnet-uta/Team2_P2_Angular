@@ -3,7 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import {Observable, of} from 'rxjs';
 import { Project } from '../models/Project';
+import { ProjectVM } from '../models/ProjectVM';
 import { ProjectService } from '../models/project.service';
+import { Position } from '../models/Position';
 import{ PositionService } from '../models/position.service';
 
 @Component({
@@ -15,8 +17,8 @@ import{ PositionService } from '../models/position.service';
 export class ProjectListComponent implements OnInit {
 
   //Will hold either all projects, all of a client's projects or all of a contractor's projects
-  projects : Project[];
-  allPositions: Position[];
+  projectVMs : ProjectVM[];
+  positionDict: Object;
 
   selectedProject: Project;
   EditedProject: Project = new Project();
@@ -41,7 +43,6 @@ export class ProjectListComponent implements OnInit {
 
   //OnInit
   ngOnInit(): void {
-    this.getAllPositions();
 
     //DUMMY DATA, CHANGE LATER
         this.listType = 1;
@@ -75,6 +76,8 @@ export class ProjectListComponent implements OnInit {
     // //this.getAllProjects();
     // console.log("Logging projects inside ngOnInit (after getAllProjects component):")
     // console.log(this.projects)
+    
+    this.makePositionDict();
 
     if(this.loginType == "client"){
       this.getClientProjects(this.userId);
@@ -85,34 +88,63 @@ export class ProjectListComponent implements OnInit {
     
   }
 
-  getAllPositions(): void {
+  makePositionDict(): void {
     this.positionService.getAllPositions().subscribe(allPositions => {
-      // this.allPositions = allPositions
-      // console.log("Logging positions after leaving getAllPositions:")
-      // console.log(this.allPositions)
-      // this.positionAddForm.patchValue({
-      //   allPositions: this.allPositions
-      //   // formControlName2: myValue2 (can be omitted)
-      // });
+      this.positionDict = new Object();
+      for(let pInc = 0; pInc < allPositions.length; pInc ++){
+        let thisPosId = allPositions[pInc].positionId;
+        this.positionDict[thisPosId] = allPositions[pInc].positionTitle;
+      }
+      console.log("Made dictionary of positions")
+      console.log(this.positionDict)
     })
   }
 
   getClientProjects(id: string){
     console.log("Entering getCliProjects with userId: #" + id);
 
-    this.projectService.getCliProjects(id).subscribe(projects => {this.projects = projects
-      console.log("Logging projects after leaving getClientProjects:")
-      console.log(this.projects)}
-    );
+    this.projectService.getCliProjects(id).subscribe(projects => {
+      this.assembleProjectVMsList(projects);
+    });
   }
 
   getAllProjects(){
     //console.log("Inside getAllProjects (component)")
     //console.log(this.projects)
-    this.projectService.getAllProjects().subscribe(projects => {this.projects = projects
-      console.log("Logging projects after leaving getAllProjects:")
-      console.log(this.projects)}
-    );
+    this.projectService.getAllProjects().subscribe(projects => {
+      this.assembleProjectVMsList(projects);
+    });
+  }
+
+  assembleProjectVMsList(projects: Project[]){
+      this.projectVMs= [];
+      for(let pInc = 0; pInc < projects.length; pInc ++){
+        this.projectVMs.push( new ProjectVM(
+          projects[pInc].projectId,
+          projects[pInc].userId,
+          projects[pInc].startDate,
+          projects[pInc].endDate,
+          projects[pInc].paymentOffered,
+          projects[pInc].Description
+        ));
+      }
+      console.log("Gotten Projects:");
+      console.log(this.projectVMs);
+      this.getProjectPositions();
+  }
+
+  getProjectPositions(){
+    console.log("Getting project positions")
+    for(let pInc = 0; pInc < this.projectVMs.length; pInc ++){
+      this.positionService.getProjectPositionsByProject(this.projectVMs[pInc].projectId).subscribe(theseProjectPositions => {
+        if(theseProjectPositions.length == 0){
+          console.log("No ProjectPositions for "+ this.projectVMs[pInc].projectId)
+        }else{
+          console.log("Got ProjectPositions for "+ this.projectVMs[pInc].projectId)
+          console.log(theseProjectPositions);
+        }
+      });
+    }
   }
 
   // get Projs(): Project[] {
@@ -129,9 +161,10 @@ export class ProjectListComponent implements OnInit {
 
   //Filters to get all projects that aren't selected projects and sets them to be local list of projects
   //Passes selected project to deletion method for removal
-  delete(project: Project): void {
-    this.projects = this.projects.filter(p => p !== project);
+  delete(project: ProjectVM): void {
+    this.projectVMs = this.projectVMs.filter(p => p !== project);
     this.projectService.deleteProject(project).subscribe();
+    // window.location.reload();
   }
 
   EditProject(id: number): void {
@@ -143,7 +176,7 @@ export class ProjectListComponent implements OnInit {
     console.log(emittedProject);
     //Pull the project to be editted from DB and alter accordingly
     this.projectService.updateProject(emittedProject).subscribe(() => {
-      this.projects.forEach(proj => {
+      this.projectVMs.forEach(proj => {
         if (proj.projectId === emittedProject.projectId) {
           proj.userId = emittedProject.userId;
           proj.projectName = emittedProject.projectName;

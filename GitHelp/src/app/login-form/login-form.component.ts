@@ -66,11 +66,10 @@ export class LoginFormComponent implements OnInit {
         this.userservice.setUserType();
         // this.router.navigate(['/Profile']);
       }, err =>{
-
-      if (err.status == 400){
-        console.log("get rekt kid");
+        if (err.status == 400){
+          console.log("get rekt kid");
+        }
       }
-    }
     )
 }
 
