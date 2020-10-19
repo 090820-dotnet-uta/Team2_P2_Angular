@@ -55,10 +55,7 @@ export class UserService {
   }
   
   /** GET user by id. Will 404 if id not found */
-  getUser(): Observable<User> {
-    // const url = `${this.dbUrl}/?UserId=${id}`;
-    // const url = `${this.dbUrl}/${id}`;
-    let currentUserName = localStorage.getItem("currentUserName");
+  getUserByUserName(currentUserName): Observable<User> {
     const url = `${this.dbUrl}/${currentUserName}`;
     console.log("Getting from "+ url);
     // return this.http.get<User>(url);
@@ -67,9 +64,20 @@ export class UserService {
       catchError(this.handleError<User>(`getUser username=${currentUserName}`))
     );
   }
+  
+  /** GET user by id. Will 404 if id not found */
+  getUserByUserId(userId): Observable<User> {
+    const url = `${this.dbUrl}/id/${userId}`;
+    console.log("Getting from "+ url);
+    // return this.http.get<User>(url);
+    return this.http.get<User>(url).pipe(
+      tap(_ => this.log(`fetched user username=${userId}`)),
+      catchError(this.handleError<User>(`getUser username=${userId}`))
+    );
+  }
 
   setUserType(){
-    this.getUser()
+    this.getUserByUserName(localStorage.getItem("currentUserName"))
     .subscribe(
       c => {
         console.log("Got result:");

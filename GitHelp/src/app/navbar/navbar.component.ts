@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
 
   gotouserprofile(): void {
     console.log("Going to user profile");
-    this.router.navigate(['/Profile']);
+    this.router.navigate(['/clientProfile']);
   }
 
   gotohirerequests(): void {
