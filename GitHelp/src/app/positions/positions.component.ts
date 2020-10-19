@@ -5,6 +5,7 @@ import {empty, Observable, of} from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Position } from '../models/Position';
+import { PositionVM } from '../models/PositionVM';
 import { ProjectPositions } from '../models/ProjectPositions';
 import{ PositionService } from '../models/position.service';
 import { Project } from '../models/Project';
@@ -23,7 +24,7 @@ export class PositionsComponent implements OnInit {
   positionAddForm : FormGroup;
 
   allProjectPositions : ProjectPositions[];
-  allPositions: Position[];
+  allPositions: PositionVM[];
   allProjects: Project[];
  
   //used for fetching list of contractor projects/positions
@@ -96,7 +97,19 @@ export class PositionsComponent implements OnInit {
   }
 
   getAllPositions(): void {
-    this.positionService.getAllPositions().subscribe(allPositions => {this.allPositions = allPositions
+    this.positionService.getAllPositions().subscribe(allPositions => {
+      this.allPositions = [];
+      for( let pInc = 0; pInc < allPositions.length; pInc ++){
+        let newPositionVM = new PositionVM(
+          allPositions[pInc].positionId,
+          allPositions[pInc].positionTitle,
+          allPositions[pInc].Description,
+          'position'+pInc
+        );
+        this.allPositions.push(newPositionVM);
+
+      }
+      // this.allPositions = allPositions
       console.log("Logging positions after leaving getAllPositions:")
       console.log(this.allPositions)
       this.positionAddForm.patchValue({
@@ -105,8 +118,9 @@ export class PositionsComponent implements OnInit {
       });
       for( let pInc = 0; pInc < this.allPositions.length; pInc ++){
         console.log(this.allPositions[pInc]);
-        let positionFieldName = 'position'+pInc;
-        this.allPositions[pInc]["positionFieldName"] = positionFieldName;
+        // let positionFieldName = 'position'+pInc;
+        // this.allPositions[pInc]["positionFieldName"] =positionFieldName;
+        let positionFieldName = this.allPositions[pInc]["positionFieldName"];
         this.positionAddForm.addControl(positionFieldName, 
           this.formBuilder.control({ disabled: false, value: false }));
         // this.positionAddForm.addControl(positionFieldName +"Name", 
@@ -135,13 +149,23 @@ export class PositionsComponent implements OnInit {
   onSubmit(){
     console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
 
-    this.positionService.addPosition(this.positionAddForm.value).subscribe(
+    this.positionService.addPosition(this.positionAddForm.value, this.projId).subscribe(
       (res: any) => {
         if(res.success){
           console.log('Success! Added');
         }
+      }, err => {
+        if(err.status == 400)
+        {
+          console.log("Ur trash")
+        }
       }
+      
     )
+    setTimeout(() => {
+      return this.router.navigateByUrl(`/home`);
+    }, 200)
+    
   }
 
 

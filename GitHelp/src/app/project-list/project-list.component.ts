@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import {Observable, of} from 'rxjs';
 import { Project } from '../models/Project';
 import { ProjectService } from '../models/project.service';
+import{ PositionService } from '../models/position.service';
 
 @Component({
   selector: 'app-project-list',
@@ -15,6 +16,7 @@ export class ProjectListComponent implements OnInit {
 
   //Will hold either all projects, all of a client's projects or all of a contractor's projects
   projects : Project[];
+  allPositions: Position[];
 
   selectedProject: Project;
   EditedProject: Project = new Project();
@@ -22,23 +24,32 @@ export class ProjectListComponent implements OnInit {
   //This dictates the type of list to be displayed 
   listType: number;
   userId: string;
+  loginType: string;
 
   //DUMMY DATA REMOVE LATER, REPLACED WITH LOGGEDINUSER FROM LOCAL STORAGE
   //let userId = localStorage.getItem('currentId');
   //let userType = localStorage.getItem('userType');
 
   
-  constructor(private projectService: ProjectService) {
+  constructor(
+    private projectService: ProjectService,
+    private positionService: PositionService
+    ) {
 
     
    }
 
   //OnInit
   ngOnInit(): void {
+    this.getAllPositions();
 
     //DUMMY DATA, CHANGE LATER
         this.listType = 1;
         this.userId = "1";
+
+        // this.userId = localStorage.getItem('currentUserId');
+        this.loginType = localStorage.getItem('loginType');
+        
         // console.log("List type: " + this.listType);
         // console.log("User id: " + this.userId);
         // //TEST
@@ -59,22 +70,38 @@ export class ProjectListComponent implements OnInit {
         //   this.getAllProjects();
         // }
 
-    console.log("Logging projects inside ngOnInit (before getAllProjects component):")
-    console.log(this.projects)
-    //this.getAllProjects();
-    console.log("Logging projects inside ngOnInit (after getAllProjects component):")
-    console.log(this.projects)
+    // console.log("Logging projects inside ngOnInit (before getAllProjects component):")
+    // console.log(this.projects)
+    // //this.getAllProjects();
+    // console.log("Logging projects inside ngOnInit (after getAllProjects component):")
+    // console.log(this.projects)
 
-    this.getClientProjects(this.userId);
+    if(this.loginType == "client"){
+      this.getClientProjects(this.userId);
+    }else if(this.loginType == "contractor"){
+      this.getAllProjects();
+    }
 
     
+  }
+
+  getAllPositions(): void {
+    this.positionService.getAllPositions().subscribe(allPositions => {
+      // this.allPositions = allPositions
+      // console.log("Logging positions after leaving getAllPositions:")
+      // console.log(this.allPositions)
+      // this.positionAddForm.patchValue({
+      //   allPositions: this.allPositions
+      //   // formControlName2: myValue2 (can be omitted)
+      // });
+    })
   }
 
   getClientProjects(id: string){
     console.log("Entering getCliProjects with userId: #" + id);
 
     this.projectService.getCliProjects(id).subscribe(projects => {this.projects = projects
-      console.log("Logging projects after leaving getAllProjects:")
+      console.log("Logging projects after leaving getClientProjects:")
       console.log(this.projects)}
     );
   }
