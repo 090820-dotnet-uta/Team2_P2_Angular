@@ -41,12 +41,17 @@ export class PositionService {
   //process in which errors with PositionService are handled
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-  
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      if(operation == "getProjectPositionsByProject"){
+        // console.log("getProjectPositionsByProject returned empty")
+        // This operation is sometimes expected to return empty
+      }else{
+    
+        // TODO: send the error to remote logging infrastructure
+        console.error(error); // log to console instead
+    
+        // TODO: better job of transforming error for user consumption
+        this.log(`${operation} failed: ${error.message}`);
+      }
   
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -59,10 +64,22 @@ export class PositionService {
 
   /** GET all ProjectProjects from the server*/
   getAllProjectPositions(): Observable<ProjectPositions[]> {
-    return this.http.get<ProjectPositions[]>(this.positionURL)
+    return this.http.get<ProjectPositions[]>(this.projectPositionURL)
       .pipe(
         tap(_ => this.log('fetched Positions')),
         catchError(this.handleError<ProjectPositions[]>('getAllPositions', []))
+      );
+  }
+
+
+  /** GET ProjectPositions for a project*/
+  getProjectPositionsByProject(projId: number): Observable<ProjectPositions[]> {
+    const queryURL = this.projectPositionURL + "Projects/" + projId;
+    console.log("Querying "+ queryURL)
+    return this.http.get<ProjectPositions[]>(queryURL)
+      .pipe(
+        tap(_ => this.log('fetched ProjectPositions')),
+        catchError(this.handleError<ProjectPositions[]>('getProjectPositionsByProject', []))
       );
   }
 
