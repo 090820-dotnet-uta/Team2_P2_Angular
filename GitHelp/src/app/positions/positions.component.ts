@@ -31,12 +31,14 @@ export class PositionsComponent implements OnInit {
   contractorProjects : Project[];
 
   //Used when adding new positions to a project
-  // projectPositionsToBeAdded: Array<ProjectPositions> = [];
-  // edittedProjectPositionsToBeAdded: Array<ProjectPositions>;
-  // newPosition: ProjectPositions;
-  // foundPositionArray: Array<ProjectPositions>;
-  // foundPosition: ProjectPositions;
-  // matchWasFound: number;
+  projectPositionsToBeAdded: Array<ProjectPositions> = [];
+  edittedProjectPositionsToBeAdded: Array<ProjectPositions> =[];
+  newPosition: ProjectPositions;
+  foundPositionArray: Array<ProjectPositions> = [];
+  foundPosition: ProjectPositions;
+  matchWasFound: number;
+  dummyProjPosArray: Array<ProjectPositions> = [];
+  dummyPosition: ProjectPositions
 
   userId : string;
   userType: string;
@@ -80,14 +82,14 @@ export class PositionsComponent implements OnInit {
     // this.getContractorPositions(this.userId);
     // console.log("contractorPositions =" + this.contractorPositions);
 
-    this.positionAddForm = this.formBuilder.group({
-      //projectPositions: ['Array<ProjectPositions>'],
-      projectId: [this.projId],
-      positionId: ['']
-    })
+    // this.positionAddForm = this.formBuilder.group({
+    //   //projectPositions: ['Array<ProjectPositions>'],
+    //   projectId: [this.projId],
+    //   positionId: ['']
+    // })
   }
 
-  get f() { return this.positionAddForm.controls; }
+  //get f() { return this.positionAddForm.controls; }
 
   getAllProjectPositions(): void {
     this.positionService.getAllProjectPositions().subscribe(allProjectPositions => {this.allProjectPositions = allProjectPositions
@@ -117,98 +119,107 @@ export class PositionsComponent implements OnInit {
     );
   }
 
-  onSubmit(){
-    console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
+  // onSubmit(){
+  //   console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
+  //   this.positionAddForm.value.forEach(projPos => {
+  //     if(projPos.positionId == true)
+  //     {
+  //       projPos.positionId
+  //     }
+  //   });
+  //   this.positionService.addPosition(this.positionAddForm.value).subscribe(
+  //     (res: any) => {
+  //       if(res.success){
+  //         console.log('Success! Added');
+  //       }
+  //     }
+  //   )
+  // }
 
-    this.positionService.addPosition(this.positionAddForm.value).subscribe(
-      (res: any) => {
-        if(res.success){
-          console.log('Success! Added');
-        }
-      }
-    )
+
+  getProjectPositionsFromArray(array: Array<ProjectPositions>) {
+    return array.values;
+    // array.forEach(projPos => {
+    //   this.dummyProjPosArray
+    // });
+    // array.find(projPos => {projPos instanceof ProjectPositions})
+    // return this.dummyProjPosArray;
   }
 
+  determineAddOrRemove(projId: string, positionId: number) { 
+    //Use the selected projectId and positionId to create a new projectPosition object
+    this.newPosition = new ProjectPositions (projId, positionId)
+    console.log("Position that has been checked: ", this.newPosition)
+    console.log("Current projectPositionsToBeAdded: ", this.projectPositionsToBeAdded)
 
+    if(this.projectPositionsToBeAdded.length === 0)
+    {
+      //If array is empty, add it by default
+      console.log("projectPositionsToBeAdded is empty")
+      console.log("The Position ", this.newPosition , " is new and will now be added...")
+      this.addPossiblePosition(projId, positionId)
+    }
+    else{
+      //If there are elements in array, try and see if the position that was checked is currently present in the array
+      this.foundPosition = this.projectPositionsToBeAdded.find(projPos => {
+      projPos.positionId === positionId && projPos.projectId === projId})
+      console.log("After find, the following position was pulled: ")
+      console.log(this.foundPosition)
 
-  // determineAddOrRemove(projId: string, positionId: number) { 
-  //   //Use the selected projectId and positionId to create a new projectPosition object
-  //   this.newPosition = new ProjectPositions (projId, positionId)
-  //   console.log("Position that has been checked: ", this.newPosition)
-  //   console.log("Current projectPositionsToBeAdded: ", this.projectPositionsToBeAdded)
+      //Now compare the position that has been checked to the position that was found
+      if(this.newPosition == this.foundPosition)
+      {
+        //Match was found, the checked position is present in the array so remove it
+        this.matchWasFound = 1;
+      }
+      else if(this.foundPosition === undefined || Object.keys(this.foundPosition).length === 0)
+      {
+        //Match was NOT found (found item is empty), the checked position is NOT present in the array so add it
+        this.matchWasFound = 2;
+      }
 
-  //   if(this.projectPositionsToBeAdded.length === 0)
-  //   {
-  //     //If array is empty, add it by default
-  //     console.log("projectPositionsToBeAdded is empty")
-  //     console.log("The Position ", this.newPosition , " is new and will now be added...")
-  //     this.addPossiblePosition(projId, positionId)
-  //   }
-  //   else{
-  //     //If there are elements in array, try and see if the position that was checked is currently present in the array
-  //     this.foundPosition = this.projectPositionsToBeAdded.find(projPos => {
-  //     projPos === this.newPosition})
-  //     console.log("After find, the following position was pulled: ")
-  //     console.log(this.foundPosition)
+      //Then we check the value of the comparison to see what to do next (add or remove)
+      if(this.matchWasFound === 2)
+      {
+        //Match not found, add the new project to the array
+        console.log("The Position ", this.newPosition , " is new and will now be added...")
+        this.addPossiblePosition(projId, positionId)
+      }
+      else if(this.matchWasFound === 1)
+      {
+        //Match was found, remove the existing position from the array
+        console.log("The Position ", this.newPosition , " is already present and will now be removed...")
+        this.removePossiblePosition(projId, positionId)
+      }
+    }
+  }
 
-  //     //Now compare the position that has been checked to the position that was found
-  //     if(this.newPosition == this.foundPosition)
-  //     {
-  //       //Match was found, the checked position is present in the array
-  //       this.matchWasFound = 1;
-  //     }
-  //     else
-  //     {
-  //       //Match was NOT found, the checked position is NOT present in the array
-  //       this.matchWasFound = 2;
-  //     }
+  addPossiblePosition(projId: string, positionId: number): void {
+    //Use the selected projectId and positionId to create a new projectPosition object
+    this.newPosition = new ProjectPositions (projId, positionId)
 
-  //     //Then we check the value of the comparison to see what to do next (add or remove)
-  //     if(this.matchWasFound === 2)
-  //     {
-  //       //Match not found, add the new project to the array
-  //       console.log("The Position ", this.newPosition , " is new and will now be added...")
-  //       this.addPossiblePosition(projId, positionId)
-  //     }
-  //     else if(this.matchWasFound === 1)
-  //     {
-  //       //Match was found, remove the existing position from the array
-  //       console.log("The Position ", this.newPosition , " is already present and will now be removed...")
-  //       this.removePossiblePosition(projId, positionId)
-  //     }
-  //   }
-  // }
+    //Add the new position to the array
+    this.projectPositionsToBeAdded.push(this.newPosition);
 
-  // addPossiblePosition(projId: string, positionId: number): void {
-  //   //Use the selected projectId and positionId to create a new projectPosition object
-  //   this.newPosition = new ProjectPositions (projId, positionId)
+    console.log("Added ProjId=" + projId)
+    console.log("Added PositionId=" + positionId)
+    console.log("this.projectPositionsToBeAdded= ", this.projectPositionsToBeAdded)
+  }
 
-  //   //Add the new position to the array
-  //   this.projectPositionsToBeAdded.push(this.newPosition);
+  removePossiblePosition(projId: string, positionId: number): void {
+    //Use the selected projectId and positionId to create a new projectPosition object
+    this.newPosition = new ProjectPositions (projId, positionId)
+    console.log("newPosition in removePosition= ", this.newPosition)
 
-  //   console.log("Added ProjId=" + projId)
-  //   console.log("Added PositionId=" + positionId)
-  //   console.log("this.projectPositionsToBeAdded= ", this.projectPositionsToBeAdded)
-  // }
+    //We filter out the position to be removed, push all the remaining projectPositions to the edittedProjectPositionsToBeAdded and set value of original array to the editted one
+    this.projectPositionsToBeAdded.filter(projPos => {
+      projPos.positionId !== positionId && projPos.projectId !== projId,
+      this.edittedProjectPositionsToBeAdded.push(projPos)})
+    console.log("The editted projectPositionsToBeAdded is: ", this.edittedProjectPositionsToBeAdded)
+    this.projectPositionsToBeAdded = this.edittedProjectPositionsToBeAdded;
 
-  // removePossiblePosition(projId: string, positionId: number): void {
-  //   //Use the selected projectId and positionId to create a new projectPosition object
-  //   this.newPosition = new ProjectPositions (projId, positionId)
-  //   console.log("newPosition in removePosition= ", this.newPosition)
-
-  //   //We filter out the position to be removed, push all the remaining projectPositions to the edittedProjectPositionsToBeAdded and set value of original array to the editted one
-  //   this.projectPositionsToBeAdded.filter(projPos => {
-  //     projPos.positionId !== positionId && projPos.projectId !== projId,
-  //     this.edittedProjectPositionsToBeAdded.push(projPos)})
-  //   console.log("The editted projectPositionsToBeAdded is: ", this.edittedProjectPositionsToBeAdded)
-  //   this.projectPositionsToBeAdded = this.edittedProjectPositionsToBeAdded;
-
-  //   console.log("Removed ProjId=" + projId)
-  //   console.log("Removed PositionId=" + positionId)
-  //   console.log("this.projectPositionsToBeAdded= ", this.projectPositionsToBeAdded)
-  // }
-
-  submitProjectPositions(projectPositionsToBeAdded : Array<ProjectPositions>) : void{
-
+    console.log("Removed ProjId=" + projId)
+    console.log("Removed PositionId=" + positionId)
+    console.log("this.projectPositionsToBeAdded= ", this.projectPositionsToBeAdded)
   }
 }
