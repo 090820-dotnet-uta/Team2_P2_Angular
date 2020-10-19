@@ -7,7 +7,7 @@
         <div *ngFor = "let pos of allPositions">
             <div class="tooltip">
                 {{pos.positionTitle}}
-                <input type="checkbox" id="position" formControlName="positionId" class="form-control">
+                <input type="checkbox" id="position" formControlName={{pos.positionFieldName}} class="form-control">
                 <label for = "positionId" >
                     <span class="tooltiptext">
                         ABC 
