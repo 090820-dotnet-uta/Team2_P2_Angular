@@ -1,9 +1,10 @@
 export class ProjectPositions {
     projectId: string;
-    positionId: number;
+    positionId: string;
     contractorId?:number;
-    constructor(projectId: string, positionId : number, contractorId = 0){
+    constructor(projectId: string, positionId : string, contractorId = 0){
         this.projectId = projectId;
         this.positionId = positionId;
     }
+    
   }

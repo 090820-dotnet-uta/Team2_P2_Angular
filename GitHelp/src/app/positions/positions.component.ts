@@ -149,13 +149,23 @@ export class PositionsComponent implements OnInit {
   onSubmit(){
     console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
 
-    this.positionService.addPosition(this.positionAddForm.value).subscribe(
+    this.positionService.addPosition(this.positionAddForm.value, this.projId).subscribe(
       (res: any) => {
         if(res.success){
           console.log('Success! Added');
         }
+      }, err => {
+        if(err.status == 400)
+        {
+          console.log("Ur trash")
+        }
       }
+      
     )
+    setTimeout(() => {
+      return this.router.navigateByUrl(`/home`);
+    }, 200)
+    
   }
 
 
