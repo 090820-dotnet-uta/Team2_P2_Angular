@@ -117,14 +117,24 @@ export class PositionService {
   /** POST: add a new POSITION to the server (Only available to clients) */
   addPosition(projectpositions: ProjectPositions[]): Observable<ProjectPositions> {
     console.log("Inside addProjectPositions with list of projectPositions to be added: ", projectpositions);
-
-    //For each project position in the form, post it to the database
-    projectpositions.forEach(projPos => {
+    let allPositions = projectpositions["allPositions"]
+    for(let pInc = 0; pInc < allPositions.length; pInc++){
+      let projPos = allPositions[pInc].positionId
+      let positionIsChecked = projectpositions["position" + pInc];
+      if(positionIsChecked){
         console.log("About to post the following projectPosition to url ", this.projectPositionURL)
         console.log(projPos);
         this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
         console.log("Added the following projectPosition ", projPos)
-    })
+      }
+    }
+    //For each project position in the form, post it to the database
+    // projectpositions.forEach(projPos => {
+        // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
+        // console.log(projPos);
+        // this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
+        // console.log("Added the following projectPosition ", projPos)
+    // })
     return;
     //   .pipe(
     //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),

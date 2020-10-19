@@ -82,11 +82,11 @@ export class PositionsComponent implements OnInit {
     // this.getContractorPositions(this.userId);
     // console.log("contractorPositions =" + this.contractorPositions);
 
-    // this.positionAddForm = this.formBuilder.group({
-    //   //projectPositions: ['Array<ProjectPositions>'],
-    //   projectId: [this.projId],
-    //   positionId: ['']
-    // })
+    this.positionAddForm = this.formBuilder.group({
+      //projectPositions: ['Array<ProjectPositions>'],
+      projectId: [this.projId],
+      allPositions: []
+    })
   }
 
   //get f() { return this.positionAddForm.controls; }
@@ -100,7 +100,22 @@ export class PositionsComponent implements OnInit {
   getAllPositions(): void {
     this.positionService.getAllPositions().subscribe(allPositions => {this.allPositions = allPositions
       console.log("Logging positions after leaving getAllPositions:")
-      console.log(this.allPositions)})
+      console.log(this.allPositions)
+      this.positionAddForm.patchValue({
+        allPositions: this.allPositions
+        // formControlName2: myValue2 (can be omitted)
+      });
+      for( let pInc = 0; pInc < this.allPositions.length; pInc ++){
+        console.log(this.allPositions[pInc]);
+        let positionFieldName = 'position'+pInc;
+        this.allPositions[pInc]["positionFieldName"] =positionFieldName;
+        this.positionAddForm.addControl(positionFieldName, 
+          this.formBuilder.control({ disabled: false, value: false }));
+        // this.positionAddForm.addControl(positionFieldName +"Name", 
+        //   this.formBuilder.control({ disabled: false, value: this.allPositions[pInc]["positionTitle"] }));
+        // console.log(this.positionAddForm.value)
+      }
+    })
   }
 
   getAllProjects(){

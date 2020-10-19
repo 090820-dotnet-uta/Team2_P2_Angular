@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
     
   getUser(): void {
     // const id = +this.route.snapshot.paramMap.get('id');
-    this.userService.getUser()
+    this.userService.getUserByUserName(localStorage.getItem("currentUserName"))
       .subscribe(
         c => {
           console.log("Got result:");

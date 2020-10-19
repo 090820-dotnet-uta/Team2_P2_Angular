@@ -31,6 +31,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PositionsComponent } from './positions/positions.component';
 import { PositionListComponent } from './position-list/position-list.component';
 import { ProjectService } from './models/project.service';
+import { HireRequestsComponent } from './hire-requests/hire-requests.component';
 
 
 
@@ -56,6 +57,7 @@ import { ProjectService } from './models/project.service';
     NavbarComponent,
     PositionsComponent,
     PositionListComponent,
+    HireRequestsComponent,
   ],
     imports: [
     RouterModule,
