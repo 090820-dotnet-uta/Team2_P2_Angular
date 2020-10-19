@@ -101,9 +101,9 @@ export class AddProjectFormComponent implements OnInit {
         setTimeout(() => {
           this.latestProjId = localStorage.getItem("latestProjId");
           console.log("LatestProjId =", this.latestProjId)
-          let shit: number = +this.latestProjId;
-          console.log("Shit is", shit)
-          return this.router.navigateByUrl(`/Positions/${shit}`)
+          let shitake: number = +this.latestProjId;
+          console.log("Shitake is", shitake)
+          return this.router.navigateByUrl(`/Positions/${shitake}`)
         }, 200)
         
         // this.latestProjId = localStorage.getItem("latestProjId");

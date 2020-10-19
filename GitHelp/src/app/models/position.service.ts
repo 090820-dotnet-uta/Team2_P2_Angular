@@ -14,6 +14,7 @@ import { Project } from './Project';
 export class PositionService {
 
   private positionURL = "https://githelp.azurewebsites.net/api/Positions";
+  private projectPositionURL = "https://githelp.azurewebsites.net/api/ProjectPositions"; 
 
   allPositions : Array<Position>;
   allProjects : Array<Project>;
@@ -114,12 +115,25 @@ export class PositionService {
 
 
   /** POST: add a new POSITION to the server (Only available to clients) */
-  addPosition(projectposition: ProjectPositions): Observable<ProjectPositions> {
-    console.log("Inside addProjectPosition");
-    return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions).pipe(
-      tap((newProjectPosition: ProjectPositions) => this.log(`added project position w/ ProjectId=${projectposition.projectId}`)),
-      catchError(this.handleError<ProjectPositions>('addProjectPosition'))
-    );
+  addPosition(projectpositions: ProjectPositions[]): Observable<ProjectPositions> {
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", projectpositions);
+
+    //For each project position in the form, post it to the database
+    projectpositions.forEach(projPos => {
+        console.log("About to post the following projectPosition to url ", this.projectPositionURL)
+        console.log(projPos);
+        this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
+        console.log("Added the following projectPosition ", projPos)
+    })
+    return;
+    //   .pipe(
+    //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),
+    //   catchError(this.handleError<ProjectPositions>('addPosition'))
+    // )
+    // )
+  
+    // return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions)
+    // );
   }
 
   /** PUT: update the POSITION on the server (Only available to Clients) */

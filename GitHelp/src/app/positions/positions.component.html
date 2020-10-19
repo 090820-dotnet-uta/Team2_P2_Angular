@@ -1,15 +1,51 @@
 <div>
-    Viewing Project #{{this.projId}}
+    Adding Positions to Project #{{this.projId}}
 </div>
-<div *ngFor = "let pos of allPositions">
-    <div class="tooltip">
-        {{pos.positionTitle}}
-        <input type="checkbox" id="position" name={{pos.positionId}} value={{pos.positionTitle}} (click)="determineAddOrRemove(projId, pos.positionId)">
-        <label for = {{pos.positionId}} >
-            <span class="tooltiptext">
-                ABC 
-                {{pos.Description}}
-            </span>
-        </label>
+
+<form [formGroup]="positionAddForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <div *ngFor = "let pos of allPositions">
+            <div class="tooltip">
+                {{pos.positionTitle}}
+                <input type="checkbox" id="position" formControlName="positionId" class="form-control">
+                <label for = "positionId" >
+                    <span class="tooltiptext">
+                        ABC 
+                        {{pos.Description}}
+                    </span>
+                </label>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <button [disabled]="loading" class="button" >
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            <a>Add Positions</a>
+        </button>
+    </div>
+</form>
+
+
+<!-- <form [formGroup]="positionAddForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <div *ngFor = "let pos of allPositions">
+            <div class="tooltip">
+                {{pos.positionTitle}}
+                <input type="checkbox" id="position" formControlName="positionId" class="form-control">
+                <label for = "positionId" >
+                    <span class="tooltiptext">
+                        ABC 
+                        {{pos.Description}}
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="button" >
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            <a>Add Positions</a>
+        </button>
+    </div>
+</form> -->
+
