@@ -106,7 +106,7 @@ export class PositionsComponent implements OnInit {
       for( let pInc = 0; pInc < this.allPositions.length; pInc ++){
         console.log(this.allPositions[pInc]);
         let positionFieldName = 'position'+pInc;
-        this.allPositions[pInc]["positionFieldName"] =positionFieldName;
+        this.allPositions[pInc]["positionFieldName"] = positionFieldName;
         this.positionAddForm.addControl(positionFieldName, 
           this.formBuilder.control({ disabled: false, value: false }));
         // this.positionAddForm.addControl(positionFieldName +"Name", 
