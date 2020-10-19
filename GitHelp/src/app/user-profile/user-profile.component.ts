@@ -17,7 +17,7 @@ import { UserService } from '../models/user.service';
 export class UserProfileComponent implements OnInit {
   @Input() user: User;
   changedUser: User;
-  private editModeStatus;
+  // private editModeStatus;
   userEditForm: FormGroup;
   // @Output() editedUserEvent = new EventEmitter<User>();
   
@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     let loginChecksOut = this.utilmethodsService.loginCheck("any");
-    this.editModeStatus = "0";
+    // this.editModeStatus = "0";
      if(loginChecksOut){
        this.getUser();
      }
@@ -51,7 +51,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   editOn(): void {
-    this.editModeStatus = "1";
+    // this.editModeStatus = "1";
     this.userEditForm = new FormGroup(
       {
         firstName: new FormControl(this.user.firstName),
@@ -62,7 +62,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   editOff(): void {
-    this.editModeStatus = "0";
+    // this.editModeStatus = "0";
   }
 
 
