@@ -1,0 +1,9 @@
+<app-navbar></app-navbar>
+
+<h1>Hire requests {{thisLoginType}} for {{thisUserName}}</h1>
+<li *ngFor="let hireRequest of hireRequests">
+    <p>{{hireRequest | json}}</p>
+    <p>{{hireRequest | json}}</p>
+    <!-- <button class="delete" title="delete hero"
+      (click)="delete(hero)">x</button> -->
+  </li>

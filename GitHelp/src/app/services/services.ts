@@ -24,6 +24,7 @@ export class LoginService {
   });
 
   comparePasswords(fb: FormGroup) {
+    console.log("Checking password");
     let confirmPswrdCtrl = fb.get('ConfirmPassword');
     //passwordMismatch
     //confirmPswrdCtrl.errors={passwordMismatch:true}
@@ -48,6 +49,7 @@ export class LoginService {
   }
 
   login (formData){
+    console.log("Logging in");
     return this.http.post(this.BaseURI + '/ApplicationUser/Login', formData);
   }
 }
