@@ -58,8 +58,9 @@ export class PositionService {
 
 
   /** GET all ProjectProjects from the server*/
-  getAllProjectPositions(): Observable<ProjectPositions[]> {
-    return this.http.get<ProjectPositions[]>(this.positionURL)
+  getAllProjectPositions(projId: string): Observable<ProjectPositions[]> {
+    const url = `${this.projectPositionURL}/?projectId=${projId}`;
+    return this.http.get<ProjectPositions[]>(this.projectPositionURL)
       .pipe(
         tap(_ => this.log('fetched Positions')),
         catchError(this.handleError<ProjectPositions[]>('getAllPositions', []))

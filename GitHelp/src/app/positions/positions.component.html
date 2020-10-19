@@ -1,11 +1,11 @@
 <div>
     Adding Positions to Project #{{this.projId}}
 </div>
-<div>
+<!-- <div>
     <div *ngFor = "let pos of allPositions">
         <div class="tooltip">
             {{pos.positionTitle}}
-            <input type="checkbox" id="position" name={{pos.positionId}} value={{pos.positionTitle}} (click)="determineAddOrRemove(this.projId, pos.positionId)">
+            <input type="checkbox" id="position" name={{pos.positionId}} value={{pos.positionTitle}}>
             <label for = {{pos.positionId}} >
                 <span class="tooltiptext">
                     ABC 
@@ -19,10 +19,10 @@
     <button class="button" >
         <a>Add Positions</a>
     </button>
-</div>
+</div> -->
 
 
-<!-- <form [formGroup]="positionAddForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="positionAddForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <div *ngFor = "let pos of allPositions">
             <div class="tooltip">
@@ -43,5 +43,5 @@
             <a>Add Positions</a>
         </button>
     </div>
-</form> -->
+</form>
 
