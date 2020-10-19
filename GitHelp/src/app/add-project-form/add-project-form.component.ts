@@ -1,11 +1,9 @@
 import { ProjectService } from '../models/project.service';
 import { Project } from '../models/Project';
-import { Position} from '../models/Position';
 import { Location } from '@angular/common';
 import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { distinct } from 'rxjs/operators';
 
 
 @Component({
@@ -18,7 +16,7 @@ export class AddProjectFormComponent implements OnInit {
   //New project (with info) is input and the output is a new project that emits the add event 
   projectAddForm: FormGroup;
   newProj : Project;
-  latestProject: Project;
+  latestProject: any;
   latestProjId: string;
   CliProjects: Project[];
   allProjects: Project[];
@@ -42,6 +40,11 @@ export class AddProjectFormComponent implements OnInit {
     //this.userId = localStorage.getItem("currentUserId");
     this.userId = "1";
     console.log("userID in ngOnInit= " + this.userId)
+
+    localStorage.removeItem("latestProjId");
+    //this.ProjectService.getLatestCliProject();
+    // this.getLatestProject(this.userId);
+    // console.log("latest project is: ", this.latestProject);
 
     this.projectAddForm = this.formBuilder.group({
       //Date validators are done in html (type=date)
@@ -74,7 +77,10 @@ export class AddProjectFormComponent implements OnInit {
             console.log('Success! Added');
             
           }else
-          console.log('Failure, just like you');
+          {
+            console.log('Failure, just like you');
+          }
+        
         }
       )
 
@@ -89,14 +95,30 @@ export class AddProjectFormComponent implements OnInit {
       }
       console.log("userId=" + this.userId)
       //this.getCliProjects(this.userId);
-      this.getLatestProject();
-      setTimeout(() => {
-        this.latestProjId =localStorage.getItem("latestProjId");
-        console.log("latestProjId =" + this.latestProjId);
-      }, 500)
       
+      
+        this.getLatestProject(this.userId);
+        setTimeout(() => {
+          this.latestProjId = localStorage.getItem("latestProjId");
+          console.log("LatestProjId =", this.latestProjId)
+          let shit: number = +this.latestProjId;
+          console.log("Shit is", shit)
+          return this.router.navigateByUrl(`/Positions/${shit}`)
+        }, 200)
+        
+        // this.latestProjId = localStorage.getItem("latestProjId");
+        // console.log("Latest project ID=", this.latestProjId)
+        // //localStorage.setItem("latestProjId", this.latestProject.projectId);
 
-      return this.router.navigateByUrl(`/Positions/${this.latestProjId}`)
+        // // console.log("(Before)latestProjId =" + this.latestProjId);
+        // // this.latestProjId =localStorage.getItem("latestProjId");
+        // // console.log("(After)latestProjId =" + this.latestProjId);
+
+        // return this.router.navigateByUrl(`/Positions/${this.latestProjId}`)
+        
+        
+      
+      
 
      
       
@@ -106,6 +128,7 @@ export class AddProjectFormComponent implements OnInit {
   goBack(){
     this.location.back();
   }
+
   getAllProjects(){
     this.ProjectService.getAllProjects().subscribe(projects => {this.allProjects = projects
     console.log("Logging projects after leaving getAllProjects (addProject component):")
@@ -115,42 +138,62 @@ export class AddProjectFormComponent implements OnInit {
 
   
 
-  //Get all the client projects so we can get the most recent one 
-  getCliProjects(id: string){
-    console.log("Entering getCliProjects (add project component) with userId: #" + id);
+  // //Get all the client projects so we can get the most recent one 
+  // getCliProjects(id: string){
+  //   console.log("Entering getCliProjects (add project component) with userId: #" + id);
 
-    this.ProjectService.getCliProjects(id).subscribe(projects => {this.CliProjects = projects
-      console.log("Logging projects after leaving getCliProjects (add project component):")
-      console.log(this.CliProjects)}
-    );
-  }
+  //   this.ProjectService.getCliProjects(id).subscribe(projects => {this.CliProjects = projects
+  //     console.log("Logging projects after leaving getCliProjects (add project component):")
+  //     console.log(this.CliProjects)}
+  //   );
+  // }
+
   //Get the latest project for the current client 
-  getLatestProject() : void{
+  // getLatestProject(){
+    
+  //     console.log("Inside getLatestProject")
+  //     //this.ProjectService.getLatestCliProject(userId).subscribe(project => {this.latestProject = project});
+  //     return this.ProjectService.getLatestCliProject().subscribe(project => {this.latestProject = project
+  //       this.latestProjId = this.latestProject.projectId + 1;
+  //       console.log(this.latestProjId);
+  //       localStorage.setItem("latestProjId", this.latestProjId.toString());
+  //       this.latestProjId = localStorage.getItem("latestProjId");
+  //       return this.router.navigateByUrl(`/Positions/${this.latestProjId}`)
+  //     });
+  //     //console.log("Latest project=" + this.latestProject)
+  //     //localStorage.setItem("latestProjId", this.latestProject.projectId.toString())
+    
+    
+
+
+  //   // this.getAllProjects();
+  //   // console.log("Project list after getAllProjects (inside getLatestProject)")
+  //   // console.log(this.allProjects);
+  //   // this.getCliProjects(this.userId);
+  //   // console.log("Project list after getCliProjects (inside getLatestProject)")
+  //   // console.log(this.CliProjects);
+    
+  //   // setTimeout(() => {
+  //   //   console.log("Inside timeout of getLatest project")
+
+  //   //   console.log("latestProject BEFORE setting to CliProjects.length index =" + this.latestProject)
+  //   //   console.log("CliProjects.Length BEFORE setting to latestProject =" + this.CliProjects.length)
+  //   //   this.latestProject = this.CliProjects[this.CliProjects.length];
+  //   //   console.log("latestProject AFTER setting to CliProjects.length index =" + this.latestProject)
+  //   //   console.log("CliProjects.Length AFTER setting to latestProject =" + this.CliProjects.length)
+
+  //   //   console.log("this.latestProject.projectId=" + this.latestProject.projectId)
+  //   //   localStorage.setItem("latestProjId", this.latestProject.projectId.toString())
+  //   // }, 500 )
+    
+  // }
+
+  getLatestProject(id :string){
     console.log("Inside getLatestProject")
-    this.ProjectService.getLatestCliProject(this.userId).subscribe(project => {this.latestProject = project});
-    console.log("Latest project=" + this.latestProject)
-    localStorage.setItem("latestProjId", this.latestProject.projectId.toString())
-
-
-    // this.getAllProjects();
-    // console.log("Project list after getAllProjects (inside getLatestProject)")
-    // console.log(this.allProjects);
-    // this.getCliProjects(this.userId);
-    // console.log("Project list after getCliProjects (inside getLatestProject)")
-    // console.log(this.CliProjects);
-    
-    // setTimeout(() => {
-    //   console.log("Inside timeout of getLatest project")
-
-    //   console.log("latestProject BEFORE setting to CliProjects.length index =" + this.latestProject)
-    //   console.log("CliProjects.Length BEFORE setting to latestProject =" + this.CliProjects.length)
-    //   this.latestProject = this.CliProjects[this.CliProjects.length];
-    //   console.log("latestProject AFTER setting to CliProjects.length index =" + this.latestProject)
-    //   console.log("CliProjects.Length AFTER setting to latestProject =" + this.CliProjects.length)
-
-    //   console.log("this.latestProject.projectId=" + this.latestProject.projectId)
-    //   localStorage.setItem("latestProjId", this.latestProject.projectId.toString())
-    // }, 500 )
-    
+    this.ProjectService.getLatestCliProject(id).subscribe(project => {this.latestProject = project
+      this.latestProjId = this.latestProject.projectId + 1;
+      console.log(this.latestProjId);
+      localStorage.setItem("latestProjId", this.latestProjId.toString());
+    });
   }
 }

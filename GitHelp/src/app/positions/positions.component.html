@@ -1,16 +1,15 @@
 <div>
-    Viewing Project# {{projId}}
+    Viewing Project #{{this.projId}}
 </div>
 <div *ngFor = "let pos of allPositions">
     <div class="tooltip">
         {{pos.positionTitle}}
-        <input type="checkbox" name = {{pos.positionId}} value={{pos.positionTitle}}>
+        <input type="checkbox" id="position" name={{pos.positionId}} value={{pos.positionTitle}} (click)="determineAddOrRemove(projId, pos.positionId)">
         <label for = {{pos.positionId}} >
             <span class="tooltiptext">
                 ABC 
                 {{pos.Description}}
             </span>
         </label>
-        
     </div>
 </div>
