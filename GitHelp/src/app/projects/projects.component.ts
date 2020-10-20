@@ -1,30 +1,18 @@
-import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { distinct } from 'rxjs/operators';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Project } from '../models/Project';
 import { ProjectService } from '../models/project.service';
-import { Contractor } from '../models/Contractor';
-import { User } from '../models/User';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
-export class ProjectsComponent implements OnInit, OnChanges {
+export class ProjectsComponent implements OnInit {
 
   //Represents the selected project that is passed from the HTML
-  @Input() project: Project;
-  projectEditForm: FormGroup;
-  projectName: string;
-  Description: string;
-  startDate: number;
-  endDate: number;
-  //What is returned from the edit project form 
-  @Output() editedProject = new EventEmitter<Project>();
-  proj : Project;
+  @Input() project : Project;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,34 +24,19 @@ export class ProjectsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getProject();
   }
-
-  ngOnChanges(): void{
-    if (this.project) {
-      this.projectEditForm = new FormGroup(
-        {
-          userId: new FormControl(this.project.userId),
-          projectName: new FormControl(this.project.projectName),
-          Description: new FormControl(this.project.Description),
-          startDate: new FormControl(this.project.startDate),
-          endDate: new FormControl(this.project.endDate),
-          paymentOffered: new FormControl(this.project.paymentOffered),
-        }
-      );
-    }
-  }
   
   getProject(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.projectService.requestProject("id")
+    this.projectService.getProject(id)
       .subscribe(p => this.project = p);
   }
 
   //Run the update method from service to save project changes
-  updateProject(): void {
+  save(): void {
     this.projectService.updateProject(this.project)
       .subscribe(() => this.goBack());
   }
-
+  
   goBack(): void {
     this.location.back();
   }

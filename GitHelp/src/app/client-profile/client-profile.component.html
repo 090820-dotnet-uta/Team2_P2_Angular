@@ -1,27 +1,28 @@
-<app-navbar></app-navbar>
-
 
     <h2>Client Profile</h2>
 
-<div *ngIf="client">
-    <h2>{{client.userName }} Details</h2>
-    <div><span>email: </span>{{client.email}}</div>
-    <!-- <div>
-        <label>name:
-        <input [(ngModel)]="client.userName" placeholder="name"/>
-        </label>
-    </div> -->
-    <!--<button (click)="save()">save</button>-->
-    <br>
-    <button (click)="goBack()">go back</button>
-</div>
-
-<!-- <span *ngFor="let thisclient of client">
-    <p>Username: {{thisclient.Username }}</p>
-    <p>Description: {{thisclient.Description}}</p>
+<!-- <div *ngIf="client">
+    <h2>{{client.Username }} Details</h2>
+    <div><span>id: </span>{{client.ClientId}}</div>
     <div>
+        <label>name:
+        <input [(ngModel)]="client.Username" placeholder="name"/>
+        </label>
     </div>
     <button (click)="save()">save</button>
     <br>
     <button (click)="goBack()">go back</button>
-</span> -->
+</div> -->
+
+<span *ngFor="let thisclient of client">
+    <p>Username: {{thisclient.Username }}</p>
+    <p>Description: {{thisclient.Description}}</p>
+    <div>
+        <!-- <label>name:
+        <input [(ngModel)]="thisclient.Username" placeholder="name"/>
+        </label> -->
+    </div>
+    <button (click)="save()">save</button>
+    <br>
+    <button (click)="goBack()">go back</button>
+</span>

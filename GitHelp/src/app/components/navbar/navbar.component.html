@@ -1,0 +1,46 @@
+
+
+
+<div class="navBar">
+    <div class="navBarStuff">
+        <span id="titlespan">
+            {{title}}
+        </span>
+            <span [ngSwitch]="loginStatus">
+                <span *ngSwitchCase="1">
+                    
+                    <!-- <span class="navusername">Logged in as client {{currentuserName}}</span> -->
+                    |
+                    <button class="navBarButton"  (click)="gotohomepage()">Home</button>
+                    |
+                    <button class="navBarButton" (click)="gotouserprofile()">Profile</button>
+                    |
+                    <button class="navBarButton" (click)="gotohirerequests()">Hire Requests</button>
+                    |
+                    <button class="navBarButton" (click)="gotoprojects()">My Projects</button>
+                    |
+                    <button class="navBarButton" (click)="logout()">Log Out</button>
+                </span>
+                <span *ngSwitchCase="2">
+                    
+                    <!-- <span class="navusername">Logged in as Contractor {{currentuserName}}</span> -->
+                    |
+                    <button class="navBarButton" (click)="gotohomepage()">Home</button>
+                    |
+                    <button class="navBarButton" (click)="gotouserprofile()">Profile</button>
+                    |
+                    <button class="navBarButton" (click)="gotohirerequests()">Hire Requests</button>
+                    |
+                    <button class="navBarButton" (click)="gotoprojects()">Browse Projects</button>
+                    |
+                    <button class="navBarButton" (click)="logout()">Log Out</button>
+                </span>
+                <span *ngSwitchDefault>
+                    |
+                    <button class="navBarButton" (click)="gotologin()">Login</button>
+                    |
+                    <button class="navBarButton" (click)="gotosignup()">Sign Up </button>
+                </span>
+            </span>
+    </div>
+</div>

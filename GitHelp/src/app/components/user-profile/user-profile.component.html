@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+
+    <!-- <h2>User Profile</h2> -->
+<div *ngIf="user">
+    <span [ngSwitch]="editModeStatus">
+        <span *ngSwitchCase="1">
+            <h1>Editing Profile for {{user.userName}}</h1>
+            <form [formGroup]="userEditForm">
+                <label>First Name </label>
+                <input formControlName="firstName" type="text" name="firstName" id="firstName" />
+                <br/>
+                <label>Last Name </label>
+                <input formControlName="lastName" type="text" name="lastName" id="lastName" />
+                <br/>
+                <label>Email </label>
+                <input formControlName="email" type="text" name="email" id="email" />
+                <br/>
+                <button (click)="updateUser()" type="submit">Save</button>
+              </form>
+            <button (click)="editOff()">Cancel Edit</button>
+            
+        <pre *ngIf="userEditForm">{{userEditForm.value | json}}</pre>
+        </span>
+        <span *ngSwitchDefault>
+            <h1>Profile for {{user.userName}}</h1>
+            <div><span>First Name: </span>{{user.firstName}}</div>
+            <div><span>Last Name: </span>{{user.lastName}}</div>
+            <div><span>Email: </span>{{user.email}}</div>
+            <br>
+            <!-- <button (click)="editOn()">Edit Profile</button> -->
+        </span>
+    </span>
+</div>
+<button (click)="goBack()">go back</button>
+
+<!-- <span *ngFor="let thisuser of user">
+    <p>Username: {{thisuser.Username }}</p>
+    <p>Description: {{thisuser.Description}}</p>
+    <div>
+    </div>
+    <button (click)="save()">save</button>
+    <br>
+    <button (click)="goBack()">go back</button>
+</span> -->

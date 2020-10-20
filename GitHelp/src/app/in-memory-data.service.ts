@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { User } from './models/User';
+import { Client } from './models/Client';
 import { Contractor } from './models/Contractor';
 import { Project } from './models/Project';
 import { Position } from './models/Position';
@@ -31,20 +31,20 @@ export class InMemoryDataService implements InMemoryDbService {
     const clients =[
       {
         id: 1,
-        UserId: 1,
+        ClientId: 1,
         Username: "aa",
         FirstName: "Afn",
         LastName: "Aln",
-        Description: "Test User A",
+        Description: "Test Client A",
         Email: "Email Placeholder"
       },
       {
         id: 2,
-        UserId: 2,
+        ClientId: 2,
         Username: "bb",
         FirstName: "Bfn",
         LastName: "Bln",
-        Description: "Test User B",
+        Description: "Test Client B",
         Email: "Email Placeholder"
       }
     ];
@@ -148,8 +148,7 @@ export class InMemoryDataService implements InMemoryDbService {
   // the method below returns the initial number (11).
   // if the heroes array is not empty, the method below returns the highest
   // hero id + 1.
-  
-  // genId(clients: Client[]): number {
-  //   return clients.length > 0 ? Math.max(...clients.map(clients => clients.clientId)) + 1 : 11;
-  // }
+  genId(clients: Client[]): number {
+    return clients.length > 0 ? Math.max(...clients.map(clients => clients.ClientId)) + 1 : 11;
+  }
 }

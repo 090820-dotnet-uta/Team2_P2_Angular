@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Contractor } from '../models/Contractor';
-import{ User } from '../models/User';
+import{ Client } from '../models/client';
 import { LoginInfo } from '../models/LoginInfo';
-
-import { UtilmethodsService } from '../utilmethods.service';
 //TODO Import user service when it's created
 @Component({
   selector: 'app-home-page',
@@ -12,32 +10,29 @@ import { UtilmethodsService } from '../utilmethods.service';
 })
 
 export class HomePageComponent implements OnInit {
-  Users: User[] = [];
+  Clients: Client[] = [];
   Contractors: Contractor[] = [];
   LoginInfos: LoginInfo[] =[];
   //Dummy data, remove! Replace with loggedInUser localstorage
   userType : number;
-  loggedInUser: User | Contractor;
+  loggedInUser: Client | Contractor;
   
-  constructor(
-    private utilmethodsService: UtilmethodsService
-  ) { }
+  constructor() { }
   
 
   ngOnInit(): void {
-    let loginChecksOut = this.utilmethodsService.loginCheck("any");
     //Dummy data, remove later!
-    // let user = new User();
-    // user.firstName = 'bob';
+    let user = new Client();
+    user.FirstName = 'bob';
 
-    // this.userType = this.CliOrCon(user);
-    // console.log(this.userType),
-    // console.log(user instanceof User)
+    this.userType = this.CliOrCon(user);
+    console.log(this.userType),
+    console.log(user instanceof Client)
   }
 
-  CliOrCon(loggedInUser: User | Contractor) : number
+  CliOrCon(loggedInUser: Client | Contractor) : number
   {
-      if(loggedInUser instanceof User)
+      if(loggedInUser instanceof Client)
       {
           this.userType = 1;
       }

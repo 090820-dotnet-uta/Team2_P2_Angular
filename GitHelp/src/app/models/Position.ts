@@ -1,5 +1,7 @@
 export class Position {
-    positionId: number;
-    positionTitle: string;
+    PositionId: number;
+    ProjectId: number;
+    ContractorId: number;
+    PositionTitle: string;
     Description: string;
   }

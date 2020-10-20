@@ -1,4 +1,5 @@
 export class PositionNeedsSkill {
-    positionId: number;
-    skillId: number;
+    PositionNeedsSkillId: number;
+    PositionId: number;
+    SkillId: number;
   }

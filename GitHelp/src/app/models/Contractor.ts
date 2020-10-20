@@ -1,5 +1,5 @@
 export class Contractor {
-    ContractorId: string;
+    ContractorId: number;
     Username: string;
     FirstName: string;
     LastName: string;
