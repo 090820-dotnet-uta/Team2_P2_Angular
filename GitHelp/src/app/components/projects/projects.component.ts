@@ -43,7 +43,7 @@ export class ProjectsComponent implements OnInit, OnChanges {
         {
           userId: new FormControl(this.project.userId),
           projectName: new FormControl(this.project.projectName),
-          Description: new FormControl(this.project.Description),
+          description: new FormControl(this.project.description),
           startDate: new FormControl(this.project.startDate),
           endDate: new FormControl(this.project.endDate),
           paymentOffered: new FormControl(this.project.paymentOffered),

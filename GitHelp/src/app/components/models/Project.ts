@@ -9,7 +9,7 @@ export class Project {
     endDate: string = new Date().toDateString();
     paymentOffered: number;
     projectName: string;
-    Description?: string;
+    description?: string;
     // constructor(ProjectId: number = 0, ClientId: number = 0, StartDate: string = "Jan 1 1000", EndDate: string = "Jan 1 2000", ProjectName: string = "None", Description: string = "Nothing"){
     //   this.ProjectId = ProjectId;
     //   this.ClientId = ClientId;
