@@ -6,11 +6,17 @@
 <span *ngIf="!isClient">
     <h1>Hire requests from {{thisLoginType}} {{thisUserName}}</h1>
 </span>
-<li *ngFor="let hireRequestVM of hireRequestVMs">
-    <p id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</p>
-    <p><b>Contractor:</b> {{hireRequestVM.contractorName}}</p>
-    <p><b>Status:</b> {{hireRequestVM.requestStatus}}</p>
-    <!-- <p>{{hireRequestVMs | json}}</p> -->
-    <!-- <button class="delete" title="delete hero"
-        (click)="delete(hero)">x</button> -->
-</li>
+<span *ngIf="!hireRequestVMs || hireRequestVMs.length == 0">
+    <h2>No hire quests found associated with {{thisUserName}}</h2>
+</span>
+<ul *ngFor="let hireRequestVM of hireRequestVMs">
+    <li>
+        <p id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</p>
+        <p><b>Contractor:</b> {{hireRequestVM.contractorName}}</p>
+        <p><b>Status:</b> {{hireRequestVM.requestStatus}}</p>
+        <!-- <p>{{hireRequestVMs | json}}</p> -->
+        <!-- <button class="delete" title="delete hero"
+            (click)="delete(hero)">x</button> -->
+    </li>
+</ul>
+<a (click)="goBack()" class="button">Back</a>

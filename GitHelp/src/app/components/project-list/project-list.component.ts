@@ -10,6 +10,7 @@ import { ProjectService } from '../services/project.service';
 import { Position } from '../models/Position';
 import{ PositionService } from '../services/position.service';
 import { ProjectPositionVM } from '../models/ProjectPositionVM';
+import { HireRequest } from '../models/HireRequest';
 
 @Component({
   selector: 'app-project-list',
@@ -30,11 +31,6 @@ export class ProjectListComponent implements OnInit {
   listType: number;
   userId: string;
   loginType: string;
-
-  //DUMMY DATA REMOVE LATER, REPLACED WITH LOGGEDINUSER FROM LOCAL STORAGE
-  //let userId = localStorage.getItem('currentId');
-  //let userType = localStorage.getItem('userType');
-
   
   constructor(
     private router: Router,
@@ -197,12 +193,11 @@ export class ProjectListComponent implements OnInit {
   }
 
   EditProject(id: number): void {
-    console.log("AAA");
+    console.log("Edit currently placeholder");
     this.selectedProject = this.projectService.getProject(id);
   }
 
   HandleEditProject(emittedProject: Project): void {
-    console.log("BBB");
     // Log the values of the emitted event here to check
     console.log(emittedProject);
     //Pull the project to be editted from DB and alter accordingly
@@ -220,7 +215,17 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  RequestPosition(projectPositionsId: number){
-    console.log("aaa "+ projectPositionsId)
+  RequestPosition(projectPositionsId: number, clientId: string){
+    console.log("Requesting "+ projectPositionsId)
+    const newHireRequest = new HireRequest(
+      projectPositionsId,
+      clientId,
+      this.userId
+    )
+    console.log(newHireRequest)
+    this.positionService.addHireRequest(newHireRequest).subscribe(res => {
+      console.log("HireRequest post completed")
+      console.log(res)
+    });
   }
 }

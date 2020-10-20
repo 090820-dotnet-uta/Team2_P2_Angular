@@ -61,6 +61,8 @@ export class LoginFormComponent implements OnInit {
     this.service.login(form.value).subscribe(
       (res:any) => {
         console.log("Login valid");
+        console.log(res);
+        localStorage.setItem('currentUserId', res.id);
         localStorage.setItem('currentUserName', form.value.UserName);
         localStorage.setItem('token', res.token);
         this.userservice.setUserType();
