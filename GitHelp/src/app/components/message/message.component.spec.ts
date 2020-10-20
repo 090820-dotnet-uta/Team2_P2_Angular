@@ -22,4 +22,5 @@ describe('MessageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });
