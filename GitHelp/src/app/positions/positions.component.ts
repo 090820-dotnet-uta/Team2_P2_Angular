@@ -32,9 +32,9 @@ export class PositionsComponent implements OnInit {
   contractorProjects : Project[];
 
   //Used when adding new positions to a project
-  // projectPositionsToBeAdded: Array<ProjectPositions> = [];
+  projectPositionsToBeAdded: Array<ProjectPositions> = [];
   // edittedProjectPositionsToBeAdded: Array<ProjectPositions>;
-  // newPosition: ProjectPositions;
+  newPosition: ProjectPositions;
   // foundPositionArray: Array<ProjectPositions>;
   // foundPosition: ProjectPositions;
   // matchWasFound: number;
@@ -149,23 +149,41 @@ export class PositionsComponent implements OnInit {
   onSubmit(){
     console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
 
-    this.positionService.addPosition(this.positionAddForm.value, this.projId).subscribe(
-      (res: any) => {
-        if(res.success){
-          console.log('Success! Added');
-        }
-      }, err => {
-        if(err.status == 400)
-        {
-          console.log("Ur trash")
-        }
-      }
-      
-    )
-    setTimeout(() => {
-      return this.router.navigateByUrl(`/home`);
-    }, 200)
-    
+
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", this.positionAddForm);
+    let allPositions = this.positionAddForm.value["allPositions"]
+    console.log(allPositions)
+    for(let pInc = 0; pInc < allPositions.length ; pInc++){
+
+      let projPos = allPositions[pInc].positionId
+      let positionIsChecked = allPositions["position" + pInc];
+
+      if(positionIsChecked){
+
+        console.log("ProjPos is ", projPos)
+        this.newPosition = new ProjectPositions(this.projId, projPos); 
+        console.log("Added the following projectPosition ", this.newPosition)
+        
+        this.positionService.addPosition(this.newPosition).subscribe(
+          (res: any) => {
+            if(res.success){
+              console.log('Success! Added');
+            }
+          }, err => {
+            if(err.status == 400)
+            {
+              console.log("Ur trash")
+            }
+          }
+        ) //End of addPosition.subscribe()
+
+      }//End of for loop
+
+    }//End of onSubmit()
+
+    // setTimeout(() => {
+    //   //return this.router.navigateByUrl(`home`);
+    // }, 200)
   }
 
 
@@ -246,8 +264,5 @@ export class PositionsComponent implements OnInit {
   //   console.log("Removed PositionId=" + positionId)
   //   console.log("this.projectPositionsToBeAdded= ", this.projectPositionsToBeAdded)
   // }
-
-  submitProjectPositions(projectPositionsToBeAdded : Array<ProjectPositions>) : void{
-
-  }
 }
+

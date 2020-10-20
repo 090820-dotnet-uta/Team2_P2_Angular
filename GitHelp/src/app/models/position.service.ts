@@ -116,30 +116,29 @@ export class PositionService {
 
 
   /** POST: add a new POSITION to the server (Only available to clients) */
-  addPosition(projectpositions: ProjectPositions[], projectId: string): Observable<ProjectPositions> {
+  addPosition(projectpositions: ProjectPositions): Observable<ProjectPositions> {
     console.log("Inside addProjectPositions with list of projectPositions to be added: ", projectpositions);
-    let allPositions = projectpositions["allPositions"]
-    for(let pInc = 0; pInc < allPositions.length; pInc++){
-      let projPos = allPositions[pInc].positionId
-      let positionIsChecked = projectpositions["position" + pInc];
-      if(positionIsChecked){
-        console.log("ProjPos is ", projPos)
+    return this.http.post<ProjectPositions>(this.projectPositionURL, projectpositions, this.httpOptions)
+    // let allPositions = projectpositions["allPositions"]
+    // for(let pInc = 0; pInc < allPositions.length; pInc++){
+    //   let projPos = allPositions[pInc].positionId
+    //   let positionIsChecked = projectpositions["position" + pInc];
+    //   if(positionIsChecked){
+    //     console.log("ProjPos is ", projPos)
         
-        this.newPosition = new ProjectPositions(projectId, projPos);
 
-        if(pInc++ === allPositions)
-        {
-          return this.http.post<ProjectPositions>(this.projectPositionURL, this.newPosition, this.httpOptions)
-        }
-        else{
-          console.log("About to post the following projectPosition to url ", this.projectPositionURL)
-          console.log(projPos);
-          this.http.post<ProjectPositions>(this.projectPositionURL, this.newPosition, this.httpOptions)
-          console.log("Added the following projectPosition ", this.newPosition)
-        }
-      }
-    }
-    return; 
+    //     if(pInc++ === allPositions.length)
+    //     {
+          
+        //}
+        //else{
+          // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
+          // console.log(projPos);
+          // this.http.post<ProjectPositions>(this.projectPositionURL, this.newPosition, this.httpOptions)
+          // console.log("Added the following projectPosition ", this.newPosition)
+        //}
+      //}
+    
 
      
     //For each project position in the form, post it to the database
