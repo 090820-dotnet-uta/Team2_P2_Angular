@@ -23,14 +23,14 @@ import { MessageComponent } from './components/message/message.component';
 
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './services/in-memory-data.service';
+//import { InMemoryDataService } from './services/in-memory-data.service';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
 import { AddProjectFormComponent } from './components/add-project-form/add-project-form.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PositionsComponent } from './components/positions/positions.component';
 import { PositionListComponent } from './components/position-list/position-list.component';
-import { ProjectService } from './services/project.service';
+import { ProjectService } from './components/services/project.service';
 import { HireRequestsComponent } from './components/hire-requests/hire-requests.component';
 import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
 

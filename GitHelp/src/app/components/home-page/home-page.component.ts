@@ -3,7 +3,7 @@ import { Contractor } from '../models/Contractor';
 import{ User } from '../models/User';
 import { LoginInfo } from '../models/LoginInfo';
 
-import { UtilmethodsService } from '../utilmethods.service';
+import { UtilmethodsService } from '../services/utilmethods.service';
 //TODO Import user service when it's created
 @Component({
   selector: 'app-home-page',
