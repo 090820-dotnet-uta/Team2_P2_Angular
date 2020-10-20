@@ -98,6 +98,7 @@ export class AddProjectFormComponent implements OnInit {
       
       
         this.getLatestProject(this.userId);
+        // WARNING: This has troulbe if the last project was deleted
         setTimeout(() => {
           this.latestProjId = localStorage.getItem("latestProjId");
           console.log("LatestProjId =", this.latestProjId)

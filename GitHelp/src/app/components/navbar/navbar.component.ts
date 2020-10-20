@@ -14,8 +14,6 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    console.log("nNn")
-    console.log(localStorage.getItem("currentUserId"))
     let loginType = localStorage.getItem("loginType");
     if(loginType == "Client"){
       loginType = "client";

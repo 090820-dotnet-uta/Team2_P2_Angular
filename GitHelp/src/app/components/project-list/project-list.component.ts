@@ -183,7 +183,8 @@ export class ProjectListComponent implements OnInit {
   delete(project: ProjectVM): void {
     this.projectVMs = this.projectVMs.filter(p => p !== project);
     this.projectService.deleteProject(project).subscribe(res => {
-      window.location.reload();
+      // window.location.reload();
+      this.handleProjectGetting()
     });
   }
 

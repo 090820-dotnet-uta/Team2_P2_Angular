@@ -88,9 +88,8 @@ export class ProjectService {
 
   /** GET a project by project id (HTTP REQUEST). Will 404 if id not found.*/
   requestProject(id: string): Observable<Project> {
-    const url = `${this.projectURL}/ProjectId=${id}`;
-    // const url = `${this.dbUrl}/${id}`;
-    // const url = `${this.dbUrl}/?name=aa`;
+    // const url = `${this.projectURL}/ProjectId=${id}`;
+    const url = `${this.projectURL}/${id}`;
     console.log("made it into requestProject")
     console.log(url)
     // console.log(this.http.get<Client>(url))
@@ -103,7 +102,7 @@ export class ProjectService {
    /** GET a project by project id. NOT HTTP, Used in project-list!.
     * Had to do this to avoid Observable parameter error
    */
-   getProject(id: number): Project {
+  getProject(id: number): Project {
     console.log("made it into getProject")
     // console.log(this.http.get<Client>(url))
     return this.allProjects.find(p => p.projectId === id);
