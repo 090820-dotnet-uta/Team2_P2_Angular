@@ -4,7 +4,7 @@
 <div *ngIf="listType === 1">
 <div>
   Displaying Client's List of Projects: 
-  <ul *ngFor="let p of projects">
+  <ul *ngFor="let p of projectVMs">
     Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
     <li>
       {{ p.projectId}} | {{p.userId}} | {{p.startDate}} | {{p.Description}} | {{p.endDate}} | {{p.paymentOffered}} 

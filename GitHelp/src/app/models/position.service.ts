@@ -42,12 +42,17 @@ export class PositionService {
   //process in which errors with PositionService are handled
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-  
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      if(operation == "getProjectPositionsByProject"){
+        // console.log("getProjectPositionsByProject returned empty")
+        // This operation is sometimes expected to return empty
+      }else{
+    
+        // TODO: send the error to remote logging infrastructure
+        console.error(error); // log to console instead
+    
+        // TODO: better job of transforming error for user consumption
+        this.log(`${operation} failed: ${error.message}`);
+      }
   
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -60,10 +65,22 @@ export class PositionService {
 
   /** GET all ProjectProjects from the server*/
   getAllProjectPositions(): Observable<ProjectPositions[]> {
-    return this.http.get<ProjectPositions[]>(this.positionURL)
+    return this.http.get<ProjectPositions[]>(this.projectPositionURL)
       .pipe(
         tap(_ => this.log('fetched Positions')),
         catchError(this.handleError<ProjectPositions[]>('getAllPositions', []))
+      );
+  }
+
+
+  /** GET ProjectPositions for a project*/
+  getProjectPositionsByProject(projId: number): Observable<ProjectPositions[]> {
+    const queryURL = this.projectPositionURL + "/Projects/" + projId;
+    console.log("Querying "+ queryURL)
+    return this.http.get<ProjectPositions[]>(queryURL)
+      .pipe(
+        tap(_ => this.log('fetched ProjectPositions')),
+        catchError(this.handleError<ProjectPositions[]>('getProjectPositionsByProject', []))
       );
   }
 
@@ -114,50 +131,33 @@ export class PositionService {
 
   //---------------------ADD, UPDATE, DELETE METHODS -----------------------------------
 
-
   /** POST: add a new POSITION to the server (Only available to clients) */
-  addPosition(projectpositions: ProjectPositions): Observable<ProjectPositions> {
-    console.log("Inside addProjectPositions with list of projectPositions to be added: ", projectpositions);
-    return this.http.post<ProjectPositions>(this.projectPositionURL, projectpositions, this.httpOptions)
-    // let allPositions = projectpositions["allPositions"]
-    // for(let pInc = 0; pInc < allPositions.length; pInc++){
-    //   let projPos = allPositions[pInc].positionId
-    //   let positionIsChecked = projectpositions["position" + pInc];
-    //   if(positionIsChecked){
-    //     console.log("ProjPos is ", projPos)
-        
-
-    //     if(pInc++ === allPositions.length)
-    //     {
-          
-        //}
-        //else{
-          // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
-          // console.log(projPos);
-          // this.http.post<ProjectPositions>(this.projectPositionURL, this.newPosition, this.httpOptions)
-          // console.log("Added the following projectPosition ", this.newPosition)
-        //}
-      //}
-    
+  addPosition(projectPositions: ProjectPositions): Observable<ProjectPositions> {
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", ProjectPositions);
+    let queryReturn;
+    queryReturn = this.http.post<ProjectPositions>(this.projectPositionURL, projectPositions, this.httpOptions)
+    console.log(queryReturn)
+    return queryReturn;
+  }
 
      
-    //For each project position in the form, post it to the database
-    // projectpositions.forEach(projPos => {
-        // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
-        // console.log(projPos);
-        // this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
-        // console.log("Added the following projectPosition ", projPos)
-    // })
+  //   //For each project position in the form, post it to the database
+  //   // projectpositions.forEach(projPos => {
+  //       // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
+  //       // console.log(projPos);
+  //       // this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
+  //       // console.log("Added the following projectPosition ", projPos)
+  //   // })
    
-    //   .pipe(
-    //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),
-    //   catchError(this.handleError<ProjectPositions>('addPosition'))
-    // )
-    // )
+  //   //   .pipe(
+  //   //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),
+  //   //   catchError(this.handleError<ProjectPositions>('addPosition'))
+  //   // )
+  //   // )
   
-    // return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions)
-    // );
-  }
+  //   // return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions)
+  //   // );
+  // }
 
   /** PUT: update the POSITION on the server (Only available to Clients) */
   updateProjectPosition(projectposition: ProjectPositions): Observable<any> {

@@ -148,23 +148,17 @@ export class PositionsComponent implements OnInit {
 
   onSubmit(){
     console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
+    let projectpositions: ProjectPositions[];
+    projectpositions = this.positionAddForm.value;
+    let allPositions = projectpositions["allPositions"]
 
-
-    console.log("Inside addProjectPositions with list of projectPositions to be added: ", this.positionAddForm);
-    let allPositions = this.positionAddForm.value["allPositions"]
-    console.log(allPositions)
-    for(let pInc = 0; pInc < allPositions.length ; pInc++){
-
+    for(let pInc = 0; pInc < allPositions.length; pInc++){
       let projPos = allPositions[pInc].positionId
-      let positionIsChecked = allPositions["position" + pInc];
-
+      let positionIsChecked = projectpositions["position" + pInc];
       if(positionIsChecked){
-
         console.log("ProjPos is ", projPos)
-        this.newPosition = new ProjectPositions(this.projId, projPos); 
-        console.log("Added the following projectPosition ", this.newPosition)
-        
-        this.positionService.addPosition(this.newPosition).subscribe(
+        let newPosition = new ProjectPositions(this.projId, projPos);
+        this.positionService.addPosition(newPosition).subscribe(
           (res: any) => {
             if(res.success){
               console.log('Success! Added');
@@ -175,15 +169,14 @@ export class PositionsComponent implements OnInit {
               console.log("Ur trash")
             }
           }
-        ) //End of addPosition.subscribe()
-
-      }//End of for loop
-
-    }//End of onSubmit()
-
-    // setTimeout(() => {
-    //   //return this.router.navigateByUrl(`home`);
-    // }, 200)
+          
+        )
+        setTimeout(() => {
+          return this.router.navigateByUrl(`/home`);
+        }, 200)
+      }
+    }
+    
   }
 
 
