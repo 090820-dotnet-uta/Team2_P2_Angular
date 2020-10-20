@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
 import { Position } from '../models/Position';
 import { PositionVM } from '../models/PositionVM';
 import { ProjectPositions } from '../models/ProjectPositions';
-import{ PositionService } from '../models/position.service';
+import{ PositionService } from '../services/position.service';
 import { Project } from '../models/Project';
-import { ProjectService } from '../models/project.service';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-positions',

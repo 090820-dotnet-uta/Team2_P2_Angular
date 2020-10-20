@@ -4,7 +4,7 @@ import { distinct } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Project } from '../models/Project';
-import { ProjectService } from '../models/project.service';
+import { ProjectService } from '../services/project.service';
 import { Contractor } from '../models/Contractor';
 import { User } from '../models/User';
 

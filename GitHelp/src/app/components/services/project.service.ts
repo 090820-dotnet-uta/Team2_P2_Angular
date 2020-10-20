@@ -3,10 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { Project } from './Project';
-import { User } from './User';
-import { Contractor} from './Contractor';
-import { MessageService } from '../message.service';
+import { Project } from '../models/Project';
+import { User } from '../models/User';
+import { MessageService } from '../services/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -160,7 +159,7 @@ export class ProjectService {
   }
   
   /** GET a project by contractor id. Will 404 if id not found. (use with getting contractor's projects) */
-  getContractorProjects(id: Contractor | number): Observable<Project> {
+  getContractorProjects(id: User | number): Observable<Project> {
     const url = `${this.projectURL}/?ContractorId=${id}`;
     // const url = `${this.dbUrl}/${id}`;
     // const url = `${this.dbUrl}/?name=aa`;

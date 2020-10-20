@@ -4,9 +4,9 @@ import { Location } from '@angular/common';
 import {Observable, of} from 'rxjs';
 import { Project } from '../models/Project';
 import { ProjectVM } from '../models/ProjectVM';
-import { ProjectService } from '../models/project.service';
+import { ProjectService } from '../services/project.service';
 import { Position } from '../models/Position';
-import{ PositionService } from '../models/position.service';
+import{ PositionService } from '../services/position.service';
 
 @Component({
   selector: 'app-project-list',

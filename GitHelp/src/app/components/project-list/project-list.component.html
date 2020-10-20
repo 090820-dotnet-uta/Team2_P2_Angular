@@ -21,7 +21,7 @@
   Displaying Contractor Projects
 </div>
 <div>
-  <ul *ngFor="let p of projects">
+  <ul *ngFor="let p of getAllProjects()">
     Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
     <li>
       {{ p.projectId}} | {{p.userId}} | {{p.startDate}} | {{p.Description}} | {{p.endDate}} | {{p.paymentOffered}} 
@@ -36,7 +36,7 @@
     Displaying All Projects
   </div>
   <div>
-    <ul *ngFor="let p of projects">
+    <ul *ngFor="let p of getAllProjects()">
       Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
       <li >
         {{ p.projectId}} | {{p.userId}} | {{p.startDate}} | {{p.Description}} | {{p.endDate}} | {{p.paymentOffered}} 

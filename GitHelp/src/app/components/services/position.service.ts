@@ -4,9 +4,9 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Position } from '../models/Position';
 import { ProjectPositions } from '../models/ProjectPositions';
-import { MessageService } from '../message.service';
-import { ProjectService } from '../models/project.service';
-import { Project } from './Project';
+import { MessageService } from '../services/message.service';
+import { ProjectService } from '../services/project.service';
+import { Project } from '../models/Project';
 
 @Injectable({
   providedIn: 'root'

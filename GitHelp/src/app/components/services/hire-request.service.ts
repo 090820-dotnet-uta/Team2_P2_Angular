@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { HireRequest } from './HireRequest';
+import { HireRequest } from '../models/HireRequest';
 
 
 @Injectable({
