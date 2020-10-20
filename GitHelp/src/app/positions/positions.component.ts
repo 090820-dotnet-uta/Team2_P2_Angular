@@ -148,23 +148,34 @@ export class PositionsComponent implements OnInit {
 
   onSubmit(){
     console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
+    let projectpositions: ProjectPositions[];
+    projectpositions = this.positionAddForm.value;
+    let allPositions = projectpositions["allPositions"]
 
-    this.positionService.addPosition(this.positionAddForm.value, this.projId).subscribe(
-      (res: any) => {
-        if(res.success){
-          console.log('Success! Added');
-        }
-      }, err => {
-        if(err.status == 400)
-        {
-          console.log("Ur trash")
-        }
+    for(let pInc = 0; pInc < allPositions.length; pInc++){
+      let projPos = allPositions[pInc].positionId
+      let positionIsChecked = projectpositions["position" + pInc];
+      if(positionIsChecked){
+        console.log("ProjPos is ", projPos)
+        let newPosition = new ProjectPositions(this.projId, projPos);
+        this.positionService.addPosition(newPosition).subscribe(
+          (res: any) => {
+            if(res.success){
+              console.log('Success! Added');
+            }
+          }, err => {
+            if(err.status == 400)
+            {
+              console.log("Ur trash")
+            }
+          }
+          
+        )
+        setTimeout(() => {
+          return this.router.navigateByUrl(`/home`);
+        }, 200)
       }
-      
-    )
-    setTimeout(() => {
-      return this.router.navigateByUrl(`/home`);
-    }, 200)
+    }
     
   }
 

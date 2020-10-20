@@ -137,6 +137,8 @@ export class ProjectListComponent implements OnInit {
     console.log("Getting project positions")
     for(let pInc = 0; pInc < this.projectVMs.length; pInc ++){
       this.positionService.getProjectPositionsByProject(this.projectVMs[pInc].projectId).subscribe(theseProjectPositions => {
+        console.log("AAA")
+        console.log(theseProjectPositions)
         if(theseProjectPositions.length == 0){
           console.log("No ProjectPositions for "+ this.projectVMs[pInc].projectId)
         }else{
