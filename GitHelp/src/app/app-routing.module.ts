@@ -10,9 +10,11 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { PositionsComponent } from './positions/positions.component';
 import { HireRequestsComponent } from './hire-requests/hire-requests.component';
+import { StripePaymentComponent } from './stripe-payment/stripe-payment.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/checkout', pathMatch: 'full' },
+  {path: 'checkout', component: StripePaymentComponent},
   {path: 'login', component: LoginFormComponent},
   {path: 'signup', component: SignUpFormComponent},
   //Maybe, login/signup page should be the landing page 

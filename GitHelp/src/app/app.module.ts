@@ -32,6 +32,7 @@ import { PositionsComponent } from './positions/positions.component';
 import { PositionListComponent } from './position-list/position-list.component';
 import { ProjectService } from './models/project.service';
 import { HireRequestsComponent } from './hire-requests/hire-requests.component';
+import { StripePaymentComponent } from './stripe-payment/stripe-payment.component';
 
 
 
@@ -58,6 +59,7 @@ import { HireRequestsComponent } from './hire-requests/hire-requests.component';
     PositionsComponent,
     PositionListComponent,
     HireRequestsComponent,
+    StripePaymentComponent,
   ],
     imports: [
     RouterModule,
