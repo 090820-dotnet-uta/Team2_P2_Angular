@@ -13,4 +13,12 @@ describe('MessageService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('messages should be cleared', () => {
+    expect(service.clear()).toBeFalsy();
+  });
+
+  it('messages should ', () => {
+    expect(service.add("ok")).toBeFalsy();
+  });
 });
