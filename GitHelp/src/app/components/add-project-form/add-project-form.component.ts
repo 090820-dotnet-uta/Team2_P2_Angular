@@ -1,4 +1,4 @@
-import { ProjectService } from '../models/project.service';
+import { ProjectService } from '../services/project.service';
 import { Project } from '../models/Project';
 import { Location } from '@angular/common';
 import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';

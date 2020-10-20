@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
 import { Position } from '../models/Position';
 import { PositionVM } from '../models/PositionVM';
 import { ProjectPositions } from '../models/ProjectPositions';
-import{ PositionService } from '../models/position.service';
+import{ PositionService } from '../services/position.service';
 import { Project } from '../models/Project';
-import { ProjectService } from '../models/project.service';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-positions',
@@ -32,9 +32,9 @@ export class PositionsComponent implements OnInit {
   contractorProjects : Project[];
 
   //Used when adding new positions to a project
-  // projectPositionsToBeAdded: Array<ProjectPositions> = [];
+  projectPositionsToBeAdded: Array<ProjectPositions> = [];
   // edittedProjectPositionsToBeAdded: Array<ProjectPositions>;
-  // newPosition: ProjectPositions;
+  newPosition: ProjectPositions;
   // foundPositionArray: Array<ProjectPositions>;
   // foundPosition: ProjectPositions;
   // matchWasFound: number;
@@ -257,8 +257,5 @@ export class PositionsComponent implements OnInit {
   //   console.log("Removed PositionId=" + positionId)
   //   console.log("this.projectPositionsToBeAdded= ", this.projectPositionsToBeAdded)
   // }
-
-  submitProjectPositions(projectPositionsToBeAdded : Array<ProjectPositions>) : void{
-
-  }
 }
+

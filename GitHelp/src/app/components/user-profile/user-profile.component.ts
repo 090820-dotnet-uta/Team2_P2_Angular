@@ -5,9 +5,9 @@ import { distinct } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { UtilmethodsService } from '../utilmethods.service';
+import { UtilmethodsService } from '../services/utilmethods.service';
 import { User } from '../models/User';
-import { UserService } from '../models/user.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-profile',

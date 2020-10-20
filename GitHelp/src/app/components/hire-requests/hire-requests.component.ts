@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { UtilmethodsService } from '../utilmethods.service';
+import { UtilmethodsService } from '../services/utilmethods.service';
 import { HireRequest } from '../models/HireRequest'
 import { HireRequestViewModel } from '../models/HireRequestVM'
-import { HireRequestService } from '../models/hire-request.service';
-import { UserService } from '../models/user.service';
+import { HireRequestService } from '../services/hire-request.service';
+import { UserService } from '../services/user.service';
 
 
 @Component({

@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { User } from './User';
-import { MessageService } from '../message.service';
+import { User } from '../models/User';
+import { MessageService } from '../services/message.service';
 
 @Injectable({
   providedIn: 'root'

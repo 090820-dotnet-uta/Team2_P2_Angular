@@ -4,35 +4,35 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ClientsComponent } from './clients/clients.component';
-import { ContractorsComponent } from './contractors/contractors.component';
-import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { ClientListComponent } from './client-list/client-list.component';
-import { ContractorListComponent } from './contractor-list/contractor-list.component';
-import { ContractorProfileComponent } from './contractor-profile/contractor-profile.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ClientsComponent } from './components/clients/clients.component';
+import { ContractorsComponent } from './components/contractors/contractors.component';
+import { SignUpFormComponent } from './components/sign-up-form/sign-up-form.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { ClientListComponent } from './components/client-list/client-list.component';
+import { ContractorListComponent } from './components/contractor-list/contractor-list.component';
+import { ContractorProfileComponent } from './components/contractor-profile/contractor-profile.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 
-import { HomePageComponent } from './home-page/home-page.component';
-import { SearchComponent } from './search/search.component';
-import { MessageComponent } from './message/message.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { SearchComponent } from './components/search/search.component';
+import { MessageComponent } from './components/message/message.component';
 
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
-import { ProjectsComponent } from './projects/projects.component';
-import { ProjectListComponent } from './project-list/project-list.component';
-import { AddProjectFormComponent } from './add-project-form/add-project-form.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { PositionsComponent } from './positions/positions.component';
-import { PositionListComponent } from './position-list/position-list.component';
-import { ProjectService } from './models/project.service';
-import { HireRequestsComponent } from './hire-requests/hire-requests.component';
-import { StripePaymentComponent } from './stripe-payment/stripe-payment.component';
+//import { InMemoryDataService } from './services/in-memory-data.service';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { ProjectListComponent } from './components/project-list/project-list.component';
+import { AddProjectFormComponent } from './components/add-project-form/add-project-form.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { PositionsComponent } from './components/positions/positions.component';
+import { PositionListComponent } from './components/position-list/position-list.component';
+import { ProjectService } from './components/services/project.service';
+import { HireRequestsComponent } from './components/hire-requests/hire-requests.component';
+import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
 
 
 

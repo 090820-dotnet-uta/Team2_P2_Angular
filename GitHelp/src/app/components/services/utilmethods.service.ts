@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { NavbarComponent } from './navbar/navbar.component';
+//import { NavbarComponent } from './components/navbar.component';
 
 @Injectable({
   providedIn: 'root'
