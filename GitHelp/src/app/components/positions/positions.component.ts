@@ -152,7 +152,7 @@ export class PositionsComponent implements OnInit {
     let projectpositions: ProjectPosition[];
     projectpositions = this.positionAddForm.value;
     let allPositions = projectpositions["allPositions"]
-
+    
     for(let pInc = 0; pInc < allPositions.length; pInc++){
       let projPos = allPositions[pInc].positionId
       let positionIsChecked = projectpositions["position" + pInc];
@@ -180,8 +180,8 @@ export class PositionsComponent implements OnInit {
     }
   }
 
-  goBack(){
-    this.location.back();
+  cancelAdd(){
+    return this.router.navigateByUrl(`/ProjectList`);
   }
   
 

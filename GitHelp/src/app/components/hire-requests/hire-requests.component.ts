@@ -7,6 +7,8 @@ import { HireRequest } from '../models/HireRequest'
 import { HireRequestViewModel } from '../models/HireRequestVM'
 import { HireRequestService } from '../services/hire-request.service';
 import { UserService } from '../services/user.service';
+import { PositionService } from '../services/position.service';
+import { ProjectService } from '../services/project.service';
 
 
 @Component({
@@ -15,17 +17,19 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./hire-requests.component.css']
 })
 export class HireRequestsComponent implements OnInit {
-  isClient: boolean;
   thisUserName: string;
   thisLoginType: string;
   thisUserId: string;
-  hireRequests: HireRequest[];
+  // hireRequests: HireRequest[];
   hireRequestVMs: HireRequestViewModel[];
+  positionDict: Object;
 
   constructor(
     private utilmethodsService: UtilmethodsService,
     private hireRequestService: HireRequestService,
     private userService: UserService,
+    private positionService: PositionService,
+    private projectService: ProjectService,
     private location: Location
   ) {}
 
@@ -35,13 +39,19 @@ export class HireRequestsComponent implements OnInit {
       this.thisUserName = localStorage.getItem('currentUserName');
       this.thisLoginType = localStorage.getItem('loginType');
       this.thisUserId = localStorage.getItem('currentUserId');
-      if(this.thisLoginType == "client"){
-        this.isClient = true;
-      }else{
-        this.isClient = false;
-      }
-       this.getHireRequests();
+       this.makePositionDict();
      }
+   }
+
+   makePositionDict(): void {
+     this.positionService.getAllPositions().subscribe(allPositions => {
+       this.positionDict = new Object();
+       for(let pInc = 0; pInc < allPositions.length; pInc ++){
+         let thisPosId = allPositions[pInc].positionId;
+         this.positionDict[thisPosId] = allPositions[pInc].positionTitle;
+       }
+       this.getHireRequests()
+     })
    }
     
    getHireRequests(): void {
@@ -53,19 +63,50 @@ export class HireRequestsComponent implements OnInit {
           console.log(gottenHireRequests);
           let matchingHireRequests = [];
           for(let hInc = 0; hInc < gottenHireRequests.length; hInc ++){
-            // console.log("aaaa")
-            // console.log(this.thisUserId)
-            // console.log(gottenHireRequests[hInc].clientId)
-            // console.log(gottenHireRequests[hInc].contractorId )
             if(gottenHireRequests[hInc].clientId == this.thisUserId || gottenHireRequests[hInc].contractorId == this.thisUserId){
               matchingHireRequests.push(gottenHireRequests[hInc])
             }
           }
           console.log("Id Matching result:");
           console.log(matchingHireRequests);
-          this.hireRequests = matchingHireRequests;
-          this.getNameLists();
+          // this.hireRequests = matchingHireRequests; // Stored for use with updating
+          this.doSubRequests(matchingHireRequests);
         });
+  }
+
+  doSubRequests(matchingHireRequests: HireRequest[]): void{
+    this.hireRequestVMs = [];
+    for(let hrInc = 0;  hrInc < matchingHireRequests.length; hrInc ++){
+      let otherUserType;
+      let targetId;
+      let thisHireRequestVM: HireRequestViewModel;
+      if(this.thisLoginType == "client"){
+        thisHireRequestVM = new HireRequestViewModel(
+          matchingHireRequests[hrInc].positionId,
+          this.thisUserName,
+          "-",
+          matchingHireRequests[hrInc].requestStatus
+        );
+        this.hireRequestVMs.push(thisHireRequestVM);
+        otherUserType = "contractor";
+        targetId = matchingHireRequests[hrInc].contractorId;
+      }else if(this.thisLoginType == "contractor"){
+        thisHireRequestVM = new HireRequestViewModel(
+          matchingHireRequests[hrInc].positionId,
+          "-",
+          this.thisUserName,
+          matchingHireRequests[hrInc].requestStatus
+        );
+        this.hireRequestVMs.push(thisHireRequestVM);
+        otherUserType = "client";
+        targetId = matchingHireRequests[hrInc].clientId;
+      }
+      thisHireRequestVM.originalHireRequest = matchingHireRequests[hrInc];
+      this.getOtherUserName( hrInc, otherUserType, targetId )
+      this.getProjectPositionTitle(hrInc, matchingHireRequests[hrInc].positionId)
+    }
+  //  console.log("After adding names")
+  //  console.log(this.hireRequestVMs)
   }
 
   getOtherUserName(hrInc: number, userType:string, otherUserId: string): void {
@@ -75,43 +116,63 @@ export class HireRequestsComponent implements OnInit {
     }else{
       this.userService.getUserByUserId(otherUserId)
       .subscribe(
-        c => {
-          console.log("Got other user:");
-          console.log(c.userName);
-          console.log(this.hireRequestVMs)
-          this.hireRequestVMs[hrInc][userType+"Name"] = c.userName;
+        otherUser => {
+          console.log("Got other user:"+ otherUser.userName);
+          // console.log(this.hireRequestVMs)
+          this.hireRequestVMs[hrInc][userType+"Name"] = otherUser.userName;
         });
     }
-      
   }
 
-  getNameLists(): void{
-    this.hireRequestVMs = [];
-    if(this.thisLoginType == "client"){
-      for(let hrInc = 0;  hrInc < this.hireRequests.length; hrInc ++){
-        let thisHireRequestVM = new HireRequestViewModel(
-          this.thisUserName,
-          "-",
-          this.hireRequests[hrInc].requestStatus
-        );
-        this.hireRequestVMs.push(thisHireRequestVM);
-        let otherUserType = "contractor";
-        this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].contractorId )
-      }
-    }else if(this.thisLoginType == "contractor"){
-      for(let hrInc = 0;  hrInc < this.hireRequests.length; hrInc ++){
-        let thisHireRequestVM = new HireRequestViewModel(
-          "-",
-          this.thisUserName,
-          this.hireRequests[hrInc].requestStatus
-        );
-        this.hireRequestVMs.push(thisHireRequestVM);
-        let otherUserType = "client";
-        this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].clientId )
-      }
-   }
-   console.log("After adding names")
-   console.log(this.hireRequestVMs)
+  getProjectPositionTitle(hrInc: number, ProjPosId: number): void {
+    this.positionService.getProjectPositionByProjPosId(ProjPosId)
+      .subscribe(
+        projPos => {
+          console.log("aaa")
+          console.log(projPos)
+          console.log("Got ProjectPosition:"+ this.positionDict[projPos.positionId]);
+          this.hireRequestVMs[hrInc].positionTitle = this.positionDict[projPos.positionId];
+          this.getProjectName(hrInc, projPos.projectId)
+        });
+  }
+
+  getProjectName(hrInc: number, ProjId: string): void {
+    this.projectService.requestProject(ProjId)
+      .subscribe(
+        gotProj => {
+          if(gotProj == undefined){
+            console.log("Skipped listing request due to no project found");
+          }else{
+            console.log("Got project name: "+ gotProj.projectName)
+            this.hireRequestVMs[hrInc].projectName = gotProj.projectName;
+          }
+        });
+  }
+
+  approveHireRequest(thisHireRequestVM: HireRequestViewModel): void {
+    this.updateHireRequest(thisHireRequestVM, "Approved");
+  }
+
+  denyHireRequest(thisHireRequestVM: HireRequestViewModel): void {
+    this.updateHireRequest(thisHireRequestVM, "Denied");
+  }
+
+  updateHireRequest(thisHireRequestVM: HireRequestViewModel, newStatus: string): void {
+    let thisHireRequest = thisHireRequestVM.originalHireRequest;
+    thisHireRequest.requestStatus = newStatus;
+    // this.hireRequestVMs = this.hireRequestVMs.filter(p => p !== thisHireRequestVM);
+    this.hireRequestService.updateHireRequest(thisHireRequest).subscribe(res => {
+      console.log("Update succesful")
+      this.getHireRequests();
+    });
+  }
+
+  deleteHireRequest(thisHireRequestVM: HireRequestViewModel): void {
+    this.hireRequestVMs = this.hireRequestVMs.filter(p => p !== thisHireRequestVM);
+    this.hireRequestService.deleteHireRequest(thisHireRequestVM.originalHireRequest).subscribe(res => {
+      console.log("Deletion succesful")
+      // window.location.reload();
+    });
   }
 
   goBack(){

@@ -1,5 +1,6 @@
 import { LoginService } from '../services/services';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -8,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpFormComponent implements OnInit {
 
-  constructor(public service: LoginService) { }
+  constructor(
+    private router: Router,
+    public service: LoginService
+    ) { }
 
   ngOnInit() {
     this.service.formModel.reset();
@@ -20,6 +24,7 @@ export class SignUpFormComponent implements OnInit {
         if (res.succeeded) {
           this.service.formModel.reset();
           console.log('New user created!', 'Registration successful.');
+          this.router.navigate(['/login']);
         } else {
           res.errors.forEach(element => {
             switch (element.code) {
