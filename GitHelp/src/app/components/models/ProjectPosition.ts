@@ -1,4 +1,5 @@
-export class ProjectPositions {
+export class ProjectPosition {
+    projectPositionsId: number;
     projectId: string;
     positionId: string;
     contractorId?:number;

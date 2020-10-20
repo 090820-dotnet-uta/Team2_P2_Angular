@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Position } from '../models/Position';
-import { ProjectPositions } from '../models/ProjectPositions';
+import { ProjectPosition } from '../models/ProjectPosition';
 import { MessageService } from '../services/message.service';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/Project';
@@ -18,7 +18,7 @@ export class PositionService {
 
   allPositions : Array<Position>;
   allProjects : Array<Project>;
-  newPosition: ProjectPositions;
+  newPosition: ProjectPosition;
 
   //What kind of info to return with http
   httpOptions = {
@@ -64,23 +64,23 @@ export class PositionService {
 
 
   /** GET all ProjectProjects from the server*/
-  getAllProjectPositions(): Observable<ProjectPositions[]> {
-    return this.http.get<ProjectPositions[]>(this.projectPositionURL)
+  getAllProjectPositions(): Observable<ProjectPosition[]> {
+    return this.http.get<ProjectPosition[]>(this.projectPositionURL)
       .pipe(
         tap(_ => this.log('fetched Positions')),
-        catchError(this.handleError<ProjectPositions[]>('getAllPositions', []))
+        catchError(this.handleError<ProjectPosition[]>('getAllPositions', []))
       );
   }
 
 
   /** GET ProjectPositions for a project*/
-  getProjectPositionsByProject(projId: number): Observable<ProjectPositions[]> {
+  getProjectPositionsByProject(projId: number): Observable<ProjectPosition[]> {
     const queryURL = this.projectPositionURL + "/Projects/" + projId;
     console.log("Querying "+ queryURL)
-    return this.http.get<ProjectPositions[]>(queryURL)
+    return this.http.get<ProjectPosition[]>(queryURL)
       .pipe(
         tap(_ => this.log('fetched ProjectPositions')),
-        catchError(this.handleError<ProjectPositions[]>('getProjectPositionsByProject', []))
+        catchError(this.handleError<ProjectPosition[]>('getProjectPositionsByProject', []))
       );
   }
 
@@ -132,10 +132,10 @@ export class PositionService {
   //---------------------ADD, UPDATE, DELETE METHODS -----------------------------------
 
   /** POST: add a new POSITION to the server (Only available to clients) */
-  addPosition(projectPositions: ProjectPositions): Observable<ProjectPositions> {
-    console.log("Inside addProjectPositions with list of projectPositions to be added: ", ProjectPositions);
+  addPosition(projectPositions: ProjectPosition): Observable<ProjectPosition> {
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", ProjectPosition);
     let queryReturn;
-    queryReturn = this.http.post<ProjectPositions>(this.projectPositionURL, projectPositions, this.httpOptions)
+    queryReturn = this.http.post<ProjectPosition>(this.projectPositionURL, projectPositions, this.httpOptions)
     console.log(queryReturn)
     return queryReturn;
   }
@@ -160,9 +160,9 @@ export class PositionService {
   // }
 
   /** PUT: update the POSITION on the server (Only available to Clients) */
-  updateProjectPosition(projectposition: ProjectPositions): Observable<any> {
+  updateProjectPosition(projectposition: ProjectPosition): Observable<any> {
     console.log("Inside updateProjectPosition");
-    return this.http.put(this.positionURL, ProjectPositions, this.httpOptions).pipe(
+    return this.http.put(this.positionURL, ProjectPosition, this.httpOptions).pipe(
       tap(_ => this.log(`updated projectposition with ProjectId=${projectposition.projectId} and positionId=${projectposition.positionId}`)),
       catchError(this.handleError<any>('updateProjectPosition'))
     );

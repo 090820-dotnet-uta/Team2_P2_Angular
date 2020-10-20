@@ -179,6 +179,7 @@ export class ProjectService {
   /** POST: add a new PROJECT to the server (Only available to Clients) */
   addProject(project: Project): Observable<Project> {
     console.log("Inside addproject...");
+    console.log(this.projectURL);
     console.log(project);
     return this.http.post<Project>(this.projectURL, project, this.httpOptions)
     .pipe(
