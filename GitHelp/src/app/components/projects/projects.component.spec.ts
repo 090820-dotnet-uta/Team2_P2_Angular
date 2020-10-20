@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { ProjectsComponent } from './projects.component';
+import  { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
@@ -8,6 +9,7 @@ describe('ProjectsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports : [RouterTestingModule, HttpClientTestingModule],
       declarations: [ ProjectsComponent ]
     })
     .compileComponents();
@@ -22,4 +24,12 @@ describe('ProjectsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should update proj', () => {
+    expect(component.updateProject()).toBeTruthy();
+  });
+  it('should get proj', () => {
+    expect(component.getProject()).toBeDefined();
+  });
+
 });

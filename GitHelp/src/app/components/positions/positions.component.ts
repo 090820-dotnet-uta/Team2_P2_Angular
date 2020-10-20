@@ -48,6 +48,7 @@ export class PositionsComponent implements OnInit {
 
 
   constructor(
+    private location: Location,
     private positionService: PositionService, 
     private projectService: ProjectService, 
     private router: Router,
@@ -178,6 +179,11 @@ export class PositionsComponent implements OnInit {
     }
     
   }
+
+  cancelAdd(){
+    return this.router.navigateByUrl(`/ProjectList`);
+  }
+  
 
 
 

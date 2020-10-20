@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SignUpFormComponent } from './sign-up-form.component';
 
@@ -8,6 +10,10 @@ describe('SignUpFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule
+    ],
       declarations: [ SignUpFormComponent ]
     })
     .compileComponents();
@@ -22,4 +28,8 @@ describe('SignUpFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+ 
+
+
 });

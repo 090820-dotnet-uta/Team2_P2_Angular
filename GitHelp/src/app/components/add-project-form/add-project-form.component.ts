@@ -37,8 +37,8 @@ export class AddProjectFormComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("inside ngOnInit")
-    //this.userId = localStorage.getItem("currentUserId");
-    this.userId = "1";
+    this.userId = localStorage.getItem("currentUserId");
+    // this.userId = "1";
     console.log("userID in ngOnInit= " + this.userId)
 
     localStorage.removeItem("latestProjId");
@@ -98,6 +98,7 @@ export class AddProjectFormComponent implements OnInit {
       
       
         this.getLatestProject(this.userId);
+        // WARNING: This has troulbe if the last project was deleted
         setTimeout(() => {
           this.latestProjId = localStorage.getItem("latestProjId");
           console.log("LatestProjId =", this.latestProjId)

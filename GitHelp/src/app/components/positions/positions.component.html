@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div>
     Adding Positions to Project #{{this.projId}}
 </div>
@@ -21,6 +23,7 @@
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             <a>Add Positions</a>
         </button>
+        <a (click)="cancelAdd()" class="button">Cancel</a>
     </div>
 </form>
 
