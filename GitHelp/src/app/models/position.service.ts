@@ -75,7 +75,7 @@ export class PositionService {
 
   /** GET ProjectPositions for a project*/
   getProjectPositionsByProject(projId: number): Observable<ProjectPositions[]> {
-    const queryURL = this.projectPositionURL + "Projects/" + projId;
+    const queryURL = this.projectPositionURL + "/Projects/" + projId;
     console.log("Querying "+ queryURL)
     return this.http.get<ProjectPositions[]>(queryURL)
       .pipe(
@@ -131,51 +131,33 @@ export class PositionService {
 
   //---------------------ADD, UPDATE, DELETE METHODS -----------------------------------
 
-
   /** POST: add a new POSITION to the server (Only available to clients) */
-  addPosition(projectpositions: ProjectPositions[], projectId: string): Observable<ProjectPositions> {
-    console.log("Inside addProjectPositions with list of projectPositions to be added: ", projectpositions);
-    let allPositions = projectpositions["allPositions"]
-    for(let pInc = 0; pInc < allPositions.length; pInc++){
-      let projPos = allPositions[pInc].positionId
-      let positionIsChecked = projectpositions["position" + pInc];
-      if(positionIsChecked){
-        console.log("ProjPos is ", projPos)
-        
-        this.newPosition = new ProjectPositions(projectId, projPos);
-
-        if(pInc++ === allPositions)
-        {
-          return this.http.post<ProjectPositions>(this.projectPositionURL, this.newPosition, this.httpOptions)
-        }
-        else{
-          console.log("About to post the following projectPosition to url ", this.projectPositionURL)
-          console.log(projPos);
-          this.http.post<ProjectPositions>(this.projectPositionURL, this.newPosition, this.httpOptions)
-          console.log("Added the following projectPosition ", this.newPosition)
-        }
-      }
-    }
-    return; 
+  addPosition(projectPositions: ProjectPositions): Observable<ProjectPositions> {
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", ProjectPositions);
+    let queryReturn;
+    queryReturn = this.http.post<ProjectPositions>(this.projectPositionURL, projectPositions, this.httpOptions)
+    console.log(queryReturn)
+    return queryReturn;
+  }
 
      
-    //For each project position in the form, post it to the database
-    // projectpositions.forEach(projPos => {
-        // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
-        // console.log(projPos);
-        // this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
-        // console.log("Added the following projectPosition ", projPos)
-    // })
+  //   //For each project position in the form, post it to the database
+  //   // projectpositions.forEach(projPos => {
+  //       // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
+  //       // console.log(projPos);
+  //       // this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
+  //       // console.log("Added the following projectPosition ", projPos)
+  //   // })
    
-    //   .pipe(
-    //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),
-    //   catchError(this.handleError<ProjectPositions>('addPosition'))
-    // )
-    // )
+  //   //   .pipe(
+  //   //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),
+  //   //   catchError(this.handleError<ProjectPositions>('addPosition'))
+  //   // )
+  //   // )
   
-    // return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions)
-    // );
-  }
+  //   // return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions)
+  //   // );
+  // }
 
   /** PUT: update the POSITION on the server (Only available to Clients) */
   updateProjectPosition(projectposition: ProjectPositions): Observable<any> {
