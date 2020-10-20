@@ -7,6 +7,7 @@ import { ProjectPosition } from '../models/ProjectPosition';
 import { MessageService } from '../services/message.service';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/Project';
+import { HireRequest } from '../models/HireRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class PositionService {
 
   private positionURL = "https://githelp.azurewebsites.net/api/Positions";
   private projectPositionURL = "https://githelp.azurewebsites.net/api/ProjectPositions"; 
+  private hireRequestURL = "https://githelp.azurewebsites.net/api/HireRequests"; 
 
   allPositions : Array<Position>;
   allProjects : Array<Project>;
@@ -93,20 +95,6 @@ export class PositionService {
       );
   }
 
-  /** GET a project by project id (HTTP REQUEST). Will 404 if id not found.*/
-  requestPosition(id: number): Observable<Position> {
-    const url = `${this.positionURL}/?PositionId=${id}`;
-    // const url = `${this.dbUrl}/${id}`;
-    // const url = `${this.dbUrl}/?name=aa`;
-    console.log("made it into requestPosition")
-    console.log(url)
-    // console.log(this.http.get<Client>(url))
-    return this.http.get<Position>(url).pipe(
-      tap(_ => this.log(`fetched position by positionId=${id}`)),
-      catchError(this.handleError<Position>(`requestPosition PositionId=${id}`))
-    );
-  }
-
    /** GET a position by position id. NOT HTTP! Getting from local list .
     * Had to do this to avoid Observable parameter error
    */
@@ -178,6 +166,15 @@ export class PositionService {
       tap(_ => this.log(`deleted position PositionId=${id}`)),
       catchError(this.handleError<Position>('deletePosition'))
     );
+  }
+
+  /** GET a project by project id (HTTP REQUEST). Will 404 if id not found.*/
+  addHireRequest(hireRequest: HireRequest): Observable<Position> {
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", ProjectPosition);
+    let queryReturn;
+    queryReturn = this.http.post<ProjectPosition>(this.hireRequestURL, hireRequest, this.httpOptions)
+    console.log(queryReturn)
+    return queryReturn;
   }
 
 

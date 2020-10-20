@@ -14,6 +14,8 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    console.log("nNn")
+    console.log(localStorage.getItem("currentUserId"))
     let loginType = localStorage.getItem("loginType");
     if(loginType == "Client"){
       loginType = "client";
@@ -54,6 +56,7 @@ export class NavbarComponent implements OnInit {
     console.log("Going to hire requests");
     this.router.navigate(['/HireRequests']);
   }
+
   logout(): void {
     console.log("Logging out");
     localStorage.setItem('currentUserName', '');

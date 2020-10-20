@@ -34,13 +34,12 @@ export class HireRequestsComponent implements OnInit {
      if(loginChecksOut){
       this.thisUserName = localStorage.getItem('currentUserName');
       this.thisLoginType = localStorage.getItem('loginType');
-      this.thisUserId = localStorage.getItem('loginType');
+      this.thisUserId = localStorage.getItem('currentUserId');
       if(this.thisLoginType == "client"){
         this.isClient = true;
       }else{
         this.isClient = false;
       }
-      localStorage.setItem('currentUserId', '');
        this.getHireRequests();
      }
    }
@@ -49,19 +48,32 @@ export class HireRequestsComponent implements OnInit {
     // const id = +this.route.snapshot.paramMap.get('id');
     this.hireRequestService.getHireRequests()
       .subscribe(
-        c => {
+        gottenHireRequests => {
           console.log("Got result:");
-          console.log(c);
-          console.log(this.hireRequests);
-          // console.log(c[0]);
-          this.hireRequests = c;
+          console.log(gottenHireRequests);
+          let matchingHireRequests = [];
+          for(let hInc = 0; hInc < gottenHireRequests.length; hInc ++){
+            // console.log("aaaa")
+            // console.log(this.thisUserId)
+            // console.log(gottenHireRequests[hInc].clientId)
+            // console.log(gottenHireRequests[hInc].contractorId )
+            if(gottenHireRequests[hInc].clientId == this.thisUserId || gottenHireRequests[hInc].contractorId == this.thisUserId){
+              matchingHireRequests.push(gottenHireRequests[hInc])
+            }
+          }
+          console.log("Id Matching result:");
+          console.log(matchingHireRequests);
+          this.hireRequests = matchingHireRequests;
           this.getNameLists();
         });
   }
 
   getOtherUserName(hrInc: number, userType:string, otherUserId: string): void {
-    // const id = +this.route.snapshot.paramMap.get('id');
-    this.userService.getUserByUserId(otherUserId)
+    console.log(otherUserId)
+    if(!otherUserId){
+      console.log("No other contractor ID")
+    }else{
+      this.userService.getUserByUserId(otherUserId)
       .subscribe(
         c => {
           console.log("Got other user:");
@@ -69,6 +81,7 @@ export class HireRequestsComponent implements OnInit {
           console.log(this.hireRequestVMs)
           this.hireRequestVMs[hrInc][userType+"Name"] = c.userName;
         });
+    }
       
   }
 
@@ -78,29 +91,31 @@ export class HireRequestsComponent implements OnInit {
       for(let hrInc = 0;  hrInc < this.hireRequests.length; hrInc ++){
         let thisHireRequestVM = new HireRequestViewModel(
           this.thisUserName,
-          "placeholder",
+          "-",
           this.hireRequests[hrInc].requestStatus
         );
         this.hireRequestVMs.push(thisHireRequestVM);
         let otherUserType = "contractor";
-        // this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].contractorId )
-        this.getOtherUserName( hrInc, otherUserType, "6a70d447-e64a-4437-bc58-b1d4b8cf439c" )
+        this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].contractorId )
       }
     }else if(this.thisLoginType == "contractor"){
       for(let hrInc = 0;  hrInc < this.hireRequests.length; hrInc ++){
         let thisHireRequestVM = new HireRequestViewModel(
-          "placeholder",
+          "-",
           this.thisUserName,
           this.hireRequests[hrInc].requestStatus
         );
         this.hireRequestVMs.push(thisHireRequestVM);
         let otherUserType = "client";
-        // this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].contractorId )
-        this.getOtherUserName( hrInc, otherUserType, "6a70d447-e64a-4437-bc58-b1d4b8cf439c" )
+        this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].clientId )
       }
    }
    console.log("After adding names")
    console.log(this.hireRequestVMs)
+  }
+
+  goBack(){
+    this.location.back();
   }
 
 }
