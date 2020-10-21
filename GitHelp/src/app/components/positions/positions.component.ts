@@ -104,7 +104,7 @@ export class PositionsComponent implements OnInit {
         let newPositionVM = new PositionVM(
           allPositions[pInc].positionId,
           allPositions[pInc].positionTitle,
-          allPositions[pInc].Description,
+          allPositions[pInc].description,
           'position'+pInc
         );
         this.allPositions.push(newPositionVM);
@@ -173,7 +173,7 @@ export class PositionsComponent implements OnInit {
           
         )
         setTimeout(() => {
-          return this.router.navigateByUrl(`/ProjectList`);
+          return this.router.navigateByUrl(`/checkout`);
         }, 200)
       }
       

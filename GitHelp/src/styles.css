@@ -22,6 +22,10 @@ h1{
 
   position: relative;
 }
+.head{
+  font-size: x-large;
+  font-family: 'Lato', sans-serif;
+}
 
 /* 
 STYLE FOR BUTTONS 
@@ -121,6 +125,22 @@ background-size: 400%;
   border-radius: 50px;
 
   position: relative;
+
+  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+}
+
+.card{
+  text-align: left;
+  width: 80%;
+  margin-left: 20px;
+  border: 1px solid #795bff;
+  border-left-style: none;
+  border-right-style: none;
+  background-color: aliceblue;
+  position: relative;
 }
 
 .form-group{
@@ -153,7 +173,10 @@ TOOLTIP STYLING
   .tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
+    top: -5px;
+    right: 105%;
     background-color: #241f5c;
+    font-size: small;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -162,6 +185,8 @@ TOOLTIP STYLING
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
+    
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
   }
   
   .tooltip:hover .tooltiptext {

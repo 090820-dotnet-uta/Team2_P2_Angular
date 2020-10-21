@@ -72,4 +72,9 @@ export class NavbarComponent implements OnInit {
     console.log("Going to signup");
     this.router.navigate(['/signup']);
   }
+
+  gotoCreateProject(): void {
+    console.log("Going to create project component");
+    this.router.navigate(['/AddProject']);
+  }
 }

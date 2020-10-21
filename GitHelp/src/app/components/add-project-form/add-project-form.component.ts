@@ -195,6 +195,8 @@ export class AddProjectFormComponent implements OnInit {
       this.latestProjId = this.latestProject.projectId + 1;
       console.log(this.latestProjId);
       localStorage.setItem("latestProjId", this.latestProjId.toString());
+      // localStorage.setItem("cost", this.latestProject.paymentOffered);
+      // console.log("Cost is ", this.latestProject.paymentOffered);
     });
   }
 }

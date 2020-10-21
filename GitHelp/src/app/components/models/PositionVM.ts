@@ -1,13 +1,13 @@
 export class PositionVM {
     positionId: number;
     positionTitle: string;
-    Description: string;
+    description: string;
     positionFieldName: string;
 
     constructor(positionId: number, positionTitle: string, Description: string, positionFieldName: string){
       this.positionId = positionId;
       this.positionTitle = positionTitle;
-      this.Description = Description;
+      this.description = Description;
       this.positionFieldName = positionFieldName; 
     }
   }

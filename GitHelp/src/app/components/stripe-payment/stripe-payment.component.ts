@@ -7,11 +7,13 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./stripe-payment.component.css']
 })
 export class StripePaymentComponent implements OnInit {
-
+  projectId: string;
+  cost: number;
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.loadStripe();
+    
   }
 
   

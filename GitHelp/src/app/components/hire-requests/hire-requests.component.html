@@ -1,38 +1,57 @@
 <app-navbar></app-navbar>
 
-<span *ngIf="thisLoginType == 'client'">
-    <h1>Hire requests for {{thisLoginType}} {{thisUserName}}</h1>
-</span>
-<span *ngIf="thisLoginType == 'contractor'">
-    <h1>Hire requests from {{thisLoginType}} {{thisUserName}}</h1>
-</span>
-<span *ngIf="!hireRequestVMs || hireRequestVMs.length == 0">
-    <h2>No hire quests found associated with {{thisUserName}}</h2>
-</span>
-<ul *ngFor="let hireRequestVM of hireRequestVMs">
-    <li >
-        <b>Project:</b> {{hireRequestVM.projectName}}
-        <div>
-            <b>Position:</b> {{hireRequestVM.positionTitle}}
-            <br/>
-            <span id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</span>
-            <br/>
-            <b>Applying Contractor:</b> {{hireRequestVM.contractorName}}
-            <br/>
-            <span *ngIf="thisLoginType == 'client'">
-                <b>Applying Contractor's Description:</b> {{hireRequestVM.contractorDescription}}
-                <br/>
-            </span>
-            <b>Status:</b> {{hireRequestVM.requestStatus}}
-            <br/>
-            <span *ngIf="thisLoginType == 'contractor'">
-                <button (click)="deleteHireRequest(hireRequestVM)">Withdraw Hire Request</button>
-            </span>
-            <span *ngIf="thisLoginType == 'client' && hireRequestVM.requestStatus == 'Pending'">
-                <button (click)="approveHireRequest(hireRequestVM)">Approve</button> | 
-                <button (click)="denyHireRequest(hireRequestVM)">Deny</button>
-            </span>
+<div class="bigContainer">
+    <div class="formContainer">
+        <div class="littleContainer">
+
+
+            <div class="form">
+                <span class="head" *ngIf="thisLoginType == 'client'">
+                    Displaying hire requests for {{thisLoginType}} {{thisUserName}}...
+                </span>
+                <span class="head" *ngIf="thisLoginType == 'contractor'">
+                    Displaying hire requests from {{thisLoginType}} {{thisUserName}}...
+                </span>
+                <span class="head" *ngIf="!hireRequestVMs || hireRequestVMs.length == 0">
+                    No hire quests found associated with {{thisUserName}}
+                </span>
+            </div>
+
+            <div class="form">
+                <ul *ngFor="let hireRequestVM of hireRequestVMs">
+                    <div class="card">
+                        <b style="text-decoration: underline;">Project:</b> {{hireRequestVM.projectName}}
+
+                        <div>
+                            <b>Position:</b> {{hireRequestVM.positionTitle}}
+                            <br/>
+                            <span id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</span>
+                            <br/>
+                            <b>Applicant:</b> {{hireRequestVM.contractorName}}
+                            <br/>
+                            <span *ngIf="thisLoginType == 'client'">
+                                <b style="text-decoration: underline;">Applicant Description:</b> 
+                                <textarea rows="4" cols="50" style="cursor: default;" readonly>{{hireRequestVM.contractorDescription}}</textarea>
+                                <br/>
+                            </span>
+                            <b>Status:</b> {{hireRequestVM.requestStatus}}
+                            <br/>
+                            <span *ngIf="thisLoginType == 'contractor'">
+                                <button class="button" (click)="deleteHireRequest(hireRequestVM)">Withdraw Hire Request</button>
+                            </span>
+                            <span *ngIf="thisLoginType == 'client' && hireRequestVM.requestStatus == 'Pending'">
+                                <button class="button" (click)="approveHireRequest(hireRequestVM)">Approve</button> | 
+                                <button class="button" (click)="denyHireRequest(hireRequestVM)">Deny</button>
+                            </span>
+                        </div>
+                    </div>
+                    
+                </ul>
+            </div>
+
         </div>
-    </li>
-</ul>
+    </div>
+</div>
+
+
 <a (click)="goBack()" class="button">Back</a> 
