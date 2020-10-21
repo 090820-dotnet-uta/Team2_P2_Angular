@@ -141,29 +141,12 @@ export class PositionService {
     return queryReturn;
   }
 
-     
-  //   //For each project position in the form, post it to the database
-  //   // projectpositions.forEach(projPos => {
-  //       // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
-  //       // console.log(projPos);
-  //       // this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
-  //       // console.log("Added the following projectPosition ", projPos)
-  //   // })
-   
-  //   //   .pipe(
-  //   //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),
-  //   //   catchError(this.handleError<ProjectPositions>('addPosition'))
-  //   // )
-  //   // )
-  
-  //   // return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions)
-  //   // );
-  // }
-
-  /** PUT: update the POSITION on the server (Only available to Clients) */
-  updateProjectPosition(projectposition: ProjectPositions): Observable<any> {
+  /** PUT: update the ProjectPosition on the server (Done when accepting a hire request) */
+  updateProjectPosition(projectposition: ProjectPosition): Observable<any> {
     console.log("Inside updateProjectPosition");
-    return this.http.put(this.positionURL, projectposition, this.httpOptions).pipe(
+    let thisUrl = this.projectPositionURL + "/" + projectposition.projectPositionsId;
+    console.log("Updating "+ thisUrl);
+    return this.http.put(thisUrl, projectposition, this.httpOptions).pipe(
       tap(_ => this.log(`updated projectposition with ProjectId=${projectposition.projectId} and positionId=${projectposition.positionId}`)),
       catchError(this.handleError<any>('updateProjectPosition'))
     );

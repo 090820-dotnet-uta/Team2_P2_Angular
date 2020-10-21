@@ -7,9 +7,22 @@
   <ul *ngFor="let p of projectVMs">
     Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
     <li>
-      {{ p.projectId}} | {{p.userId}} | {{p.startDate}} | {{p.Description}} | {{p.endDate}} | {{p.paymentOffered}} 
-      <button (click)="delete(p.projectId)">Delete Project</button> |
-      <button (click)="EditProject(p.projectId)">Edit Project</button>
+      {{ p.projectName}} | {{ p.projectId}} | {{p.userId}} | {{p.startDate}} | {{p.description}} | {{p.endDate}} | {{p.paymentOffered}} | 
+      <span *ngIf="loginType == 'client'">
+        <button (click)="addPositions(p.projectId)">Add Positions</button> |
+        <!-- <button (click)="EditProject(p.projectId)">Edit Project</button> | -->
+        <button (click)="delete(p.projectId)">Delete Project</button>
+      </span>
+      <ul *ngFor="let ppos of p.positions">
+        Position: {{ppos.positionTitle}}
+        <span *ngIf="ppos.contractorId">
+          [Position Filled]
+        </span>
+        <span *ngIf="loginType == 'contractor' && !ppos.contractorId">
+
+          <button (click)="RequestPosition(ppos.projectPositionsId, p.userId)">Request Position</button>
+        </span>
+      </ul>
     </li>
   </ul>
 </div>
