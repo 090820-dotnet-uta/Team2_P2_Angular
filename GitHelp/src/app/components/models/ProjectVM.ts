@@ -10,6 +10,7 @@ export class ProjectVM {
     projectName: string;
     description: string;
     positions?: object;
+    clientUserName: string;
     constructor(projectId: number, userId: string, startDate: string, endDate: string, paymentOffered: number, 
         projectName: string, description: string){
       this.projectId = projectId;
@@ -19,5 +20,6 @@ export class ProjectVM {
       this.paymentOffered = paymentOffered;
       this.projectName = projectName;
       this.description = description;
+      this.clientUserName = "-";
     }
   } 
