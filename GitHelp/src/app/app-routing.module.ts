@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginFormComponent } from 'src/app/components/login-form/login-form.component';
 import { SignUpFormComponent } from 'src/app/components/sign-up-form/sign-up-form.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
