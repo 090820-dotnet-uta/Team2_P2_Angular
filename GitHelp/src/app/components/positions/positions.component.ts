@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Position } from '../models/Position';
 import { PositionVM } from '../models/PositionVM';
-import { ProjectPositions } from '../models/ProjectPositions';
+import { ProjectPosition } from '../models/ProjectPosition';
 import{ PositionService } from '../services/position.service';
 import { Project } from '../models/Project';
 import { ProjectService } from '../services/project.service';
@@ -23,18 +23,18 @@ export class PositionsComponent implements OnInit {
 
   positionAddForm : FormGroup;
 
-  allProjectPositions : ProjectPositions[];
+  allProjectPositions : ProjectPosition[];
   allPositions: PositionVM[];
   allProjects: Project[];
  
   //used for fetching list of contractor projects/positions
-  contractorPositions: ProjectPositions[];
+  contractorPositions: ProjectPosition[];
   contractorProjects : Project[];
 
   //Used when adding new positions to a project
-  projectPositionsToBeAdded: Array<ProjectPositions> = [];
+  projectPositionsToBeAdded: Array<ProjectPosition> = [];
   // edittedProjectPositionsToBeAdded: Array<ProjectPositions>;
-  newPosition: ProjectPositions;
+  newPosition: ProjectPosition;
   // foundPositionArray: Array<ProjectPositions>;
   // foundPosition: ProjectPositions;
   // matchWasFound: number;
@@ -104,7 +104,7 @@ export class PositionsComponent implements OnInit {
         let newPositionVM = new PositionVM(
           allPositions[pInc].positionId,
           allPositions[pInc].positionTitle,
-          allPositions[pInc].description,
+          allPositions[pInc].Description,
           'position'+pInc
         );
         this.allPositions.push(newPositionVM);
@@ -149,16 +149,16 @@ export class PositionsComponent implements OnInit {
 
   onSubmit(){
     console.log("Entered onSubmit with the following form values: ", this.positionAddForm.value)
-    let projectpositions: ProjectPositions[];
+    let projectpositions: ProjectPosition[];
     projectpositions = this.positionAddForm.value;
     let allPositions = projectpositions["allPositions"]
-
+    
     for(let pInc = 0; pInc < allPositions.length; pInc++){
       let projPos = allPositions[pInc].positionId
       let positionIsChecked = projectpositions["position" + pInc];
       if(positionIsChecked){
         console.log("ProjPos is ", projPos)
-        let newPosition = new ProjectPositions(this.projId, projPos);
+        let newPosition = new ProjectPosition(this.projId, projPos);
         this.positionService.addPosition(newPosition).subscribe(
           (res: any) => {
             if(res.success){
@@ -173,11 +173,11 @@ export class PositionsComponent implements OnInit {
           
         )
         setTimeout(() => {
-          return this.router.navigateByUrl(`/checkout`);
+          return this.router.navigateByUrl(`/ProjectList`);
         }, 200)
       }
+      
     }
-    
   }
 
   cancelAdd(){
