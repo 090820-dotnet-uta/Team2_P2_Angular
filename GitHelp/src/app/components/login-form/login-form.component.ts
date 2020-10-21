@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { LoginService } from '../services/services';
+import { LoginService } from '../services/loginService';
 import { UserService } from '../services/user.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 

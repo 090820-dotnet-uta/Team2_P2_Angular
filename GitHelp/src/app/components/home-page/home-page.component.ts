@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Contractor } from '../models/Contractor';
+import { Router } from '@angular/router';
 import{ User } from '../models/User';
 import { LoginInfo } from '../models/LoginInfo';
 
@@ -13,14 +13,14 @@ import { UtilmethodsService } from '../services/utilmethods.service';
 
 export class HomePageComponent implements OnInit {
   Users: User[] = [];
-  Contractors: Contractor[] = [];
   LoginInfos: LoginInfo[] =[];
   //Dummy data, remove! Replace with loggedInUser localstorage
   display : number;
   loggedInUser: string;
   
   constructor(
-    private utilmethodsService: UtilmethodsService
+    private utilmethodsService: UtilmethodsService,
+    private router: Router
   ) { }
   
 
@@ -48,6 +48,36 @@ export class HomePageComponent implements OnInit {
       {
         this.display = 2;
       }
+  }
+
+  gotohomepage(): void {
+    console.log("Going to home component");
+    this.router.navigate(['/home']);
+  }
+
+  gotouserprofile(): void {
+    console.log("Going to user profile");
+    this.router.navigate(['/clientProfile']);
+  }
+
+  gotoprojects(): void {
+    console.log("Going to hire requests");
+    this.router.navigate(['/ProjectList']);
+  }
+
+  goToAddProjects(): void {
+    console.log("Going to hire requests");
+    this.router.navigate(['/ProjectList']);
+  }
+
+  goToPastProjects(): void {
+    console.log("Going to hire requests");
+    this.router.navigate(['/ProjectList']);
+  }
+
+  gotohirerequests(): void {
+    console.log("Going to hire requests");
+    this.router.navigate(['/HireRequests']);
   }
 
   

@@ -9,17 +9,14 @@
     padding: 10px;
     max-width: fit-content;
     
+    background: linear-gradient( 45deg, #241f5c, #795bff);
+    opacity: .9;
     border: 3px ridge #795bff;
-    border-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 
     color: aliceblue;
-    background: repeating-linear-gradient(
-      45deg,
-      #606dbc,
-      #606dbc 10px,
-      #465298 10px,
-      #465298 20px
-    );
+    
 }
 
 .navBarButton{

@@ -1,8 +1,7 @@
 <app-navbar></app-navbar>
 
     <!-- <h2>User Profile</h2> -->
-<div *ngIf="user">
-    <span>
+
         <!-- <span *ngSwitchCase="1">
             <h1>Editing Profile for {{user.userName}}</h1>
             <form [formGroup]="userEditForm">
@@ -21,17 +20,59 @@
             
         <pre *ngIf="userEditForm">{{userEditForm.value | json}}</pre>
         </span> -->
-        <span>
-            <h1>Profile for {{user.userName}}</h1>
-            <div><span>First Name: </span>{{user.firstName}}</div>
-            <div><span>Last Name: </span>{{user.lastName}}</div>
-            <div><span>Email: </span>{{user.email}}</div>
-            <br>
-            <!-- <button (click)="editOn()">Edit Profile</button> -->
-        </span>
-    </span>
+<div class="bigContainer">
+    <div class="formContainer">
+        <div class="littleContainer">
+            <div class="form">
+                <div *ngIf="user">
+                    <span>
+                        <span>
+                            <div>
+                                <div class="avatar">
+                                    <img src="https://i.imgur.com/2UXykNF.png" alt="">
+                                </div>
+                            </div>
+                            <h1>
+                                {{user.firstName}}'s Profile
+                            </h1>
+                            <div>
+                                <div class="inputLabel">
+                                    First Name: 
+                                </div>
+                                {{user.firstName}}
+                            </div>
+
+                            <div>
+                                <div class="inputLabel">
+                                    Last Name: 
+                                </div>
+                                {{user.lastName}}
+                            </div >
+                            <div>
+                                <div class="inputLabel">
+                                    Username: 
+                                </div>
+                                {{user.userName}}
+                            </div>
+                            <div>
+                                <div class="inputLabel">
+                                    Email: 
+                                </div>
+                                {{user.email}}
+                            </div>
+                            <br>
+                            <!-- <button (click)="editOn()">Edit Profile</button> -->
+                        </span>
+                    </span>
+                    <button class="button" (click)="goBack()">Go Back</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </div>
-<button (click)="goBack()">go back</button>
+
+
 
 <!-- <span *ngFor="let thisuser of user">
     <p>Username: {{thisuser.Username }}</p>
