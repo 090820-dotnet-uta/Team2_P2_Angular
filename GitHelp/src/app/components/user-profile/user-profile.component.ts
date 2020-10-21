@@ -17,8 +17,8 @@ import { UserService } from '../services/user.service';
 export class UserProfileComponent implements OnInit {
   @Input() user: User;
   changedUser: User;
-  // private editModeStatus;
-  userEditForm: FormGroup;
+  // userEditForm: FormGroup;
+  isEditing: boolean;
   // @Output() editedUserEvent = new EventEmitter<User>();
   
   constructor(
@@ -29,8 +29,9 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userService.editFormModel.reset();
     let loginChecksOut = this.utilmethodsService.loginCheck("any");
-    // this.editModeStatus = "0";
+    this.isEditing = false;
      if(loginChecksOut){
        this.getUser();
      }
@@ -40,45 +41,49 @@ export class UserProfileComponent implements OnInit {
     // const id = +this.route.snapshot.paramMap.get('id');
     this.userService.getUserByUserName(localStorage.getItem("currentUserName"))
       .subscribe(
-        c => {
+        gotUser => {
           console.log("Got result:");
-          console.log(c);
+          console.log(gotUser);
           console.log(this.user);
-          // console.log(c[0]);
-          this.user = c;
+          this.user = gotUser;
+          this.userService.editFormModel.reset();
+          this.userService.editFormModel.setValue({
+            Email: gotUser.email,
+            FirstName: gotUser.firstName,
+            LastName: gotUser.lastName,
+            // Password: "",
+            description: gotUser.description
+          })
         });
       
   }
 
   editOn(): void {
-    // this.editModeStatus = "1";
-    this.userEditForm = new FormGroup(
-      {
-        firstName: new FormControl(this.user.firstName),
-        lastName: new FormControl(this.user.lastName),
-        email: new FormControl(this.user.email)
-      }
-    );
+    // this.userEditForm = new FormGroup(
+    //   {
+    //     firstName: new FormControl(this.user.firstName),
+    //     lastName: new FormControl(this.user.lastName),
+    //     email: new FormControl(this.user.email)
+    //   }
+    // );
+    this.isEditing = true;
   }
 
   editOff(): void {
-    // this.editModeStatus = "0";
+    this.isEditing = false;
+    this.getUser();
   }
 
-
-  updateUser(): void {
-    // console.log(`userEditForm name in child component => ${this.userEditForm.get('firstName').value}`);
-    // let aaa = new User();
-    this.changedUser = new User(this.user.userName,
-      this.userEditForm.get('firstName').value,
-      this.userEditForm.get('lastName').value,
-      this.userEditForm.get('email').value
-    )
-    console.log(this.changedUser);
-    
-    // this.editedUserEvent.emit(this.changedUser);
-    this.userService.updateUser(this.changedUser);
-    //   .subscribe(() => this.goBack());
+  onSubmit(): void {
+    this.userService.updateUser(this.user).subscribe(
+      (res: any) => {
+        console.log('Edit complete');
+        this.editOff();
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   goBack(): void {
