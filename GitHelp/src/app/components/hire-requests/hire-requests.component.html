@@ -12,12 +12,12 @@
                 <span class="head" *ngIf="thisLoginType == 'contractor'">
                     Displaying hire requests from {{thisLoginType}} {{thisUserName}}...
                 </span>
-                <span class="head" *ngIf="!hireRequestVMs || hireRequestVMs.length == 0">
-                    No hire quests found associated with {{thisUserName}}
-                </span>
             </div>
 
             <div class="form">
+                <span class="head" *ngIf="!hireRequestVMs || hireRequestVMs.length == 0">
+                    No hire requests found associated with {{thisUserName}}
+                </span>
                 <ul *ngFor="let hireRequestVM of hireRequestVMs">
                     <div class="card">
                         <b style="text-decoration: underline;">Project:</b> {{hireRequestVM.projectName}}
