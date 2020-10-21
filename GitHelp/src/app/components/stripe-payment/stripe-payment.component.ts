@@ -69,6 +69,7 @@ takePayment(productName: string, amount: number, token: any) {
     currency: 'usd',
     token: tokenCallback,
     product: productName
+
   });
 
   
