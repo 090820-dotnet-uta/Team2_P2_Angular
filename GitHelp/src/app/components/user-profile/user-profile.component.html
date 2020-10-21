@@ -1,31 +1,49 @@
 <app-navbar></app-navbar>
 
-    <!-- <h2>User Profile</h2> -->
-
-        <!-- <span *ngSwitchCase="1">
-            <h1>Editing Profile for {{user.userName}}</h1>
-            <form [formGroup]="userEditForm">
-                <label>First Name </label>
-                <input formControlName="firstName" type="text" name="firstName" id="firstName" />
-                <br/>
-                <label>Last Name </label>
-                <input formControlName="lastName" type="text" name="lastName" id="lastName" />
-                <br/>
-                <label>Email </label>
-                <input formControlName="email" type="text" name="email" id="email" />
-                <br/>
-                <button (click)="updateUser()" type="submit">Save</button>
-              </form>
-            <button (click)="editOff()">Cancel Edit</button>
-            
-        <pre *ngIf="userEditForm">{{userEditForm.value | json}}</pre>
-        </span> -->
 <div class="bigContainer">
     <div class="formContainer">
         <div class="littleContainer">
             <div class="form">
                 <div *ngIf="user">
-                    <span>
+                    <span *ngIf="isEditing">
+                        <h2>Editing Profile for {{user.userName}}</h2>
+                        <form class="form" [formGroup]="userService.editFormModel" autocomplete="off" (submit)="onSubmit()">
+                            <div class="form-group">
+                              <div>
+                                <label class="inputLabel">First Name</label>
+                              </div>
+                              <input class="form-control" formControlName="FirstName">
+                            </div>
+                            <div class="form-group">
+                              <div>
+                                <label class="inputLabel">Last Name</label>
+                              </div>
+                              <input class="form-control" formControlName="LastName">
+                            </div>
+                            <div class="form-group">
+                              <div>
+                                <label class="inputLabel">Description</label>
+                              </div>
+                              <!-- <input class="form-control" formControlName="Description"> -->
+                              <textarea matInput matTextareaAutosize formControlName="description"></textarea>
+                            </div>
+                            <!-- <div class="form-group required">
+                            <div>
+                                <label class="inputLabel">Password</label>
+                            </div>
+                            <input type="password" class="form-control" formControlName="Password">
+                            <label class="text-danger" *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.required">This field is mandatory.</label>
+                            <label class="text-danger" *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.minlength">Minimum 4 characters required.</label>
+                            </div> -->
+                            <div class="form-row">
+                              <div class="form-group col-md-8 offset-md-2">
+                                <button type="submit" class="button disabled"  [disabled]="!userService.editFormModel.valid">Submit Edit</button>
+                              </div>
+                            </div>
+                          </form>
+                        <button class="button" (click)="editOff()">Cancel Edit</button>
+                    </span>
+                    <span *ngIf="!isEditing">
                         <span>
                             <div>
                                 <div class="avatar">
@@ -50,15 +68,20 @@
                             </div >
                             <div>
                                 <div class="inputLabel">
-                                    Username: 
-                                </div>
-                                {{user.userName}}
-                            </div>
-                            <div>
-                                <div class="inputLabel">
                                     Email: 
                                 </div>
                                 {{user.email}}
+                            </div>
+                            <div>
+                                <div class="inputLabel">
+                                    Description: 
+                                </div>
+                                <span *ngIf="user.description">
+                                    {{user.description}}
+                                </span>
+                                <span *ngIf="!user.description">
+                                    (Description empty)
+                                </span>
                             </div>
                             <!-- <div>
                                 <div class="inputLabel">
@@ -69,7 +92,9 @@
                             <br> -->
                             <!-- <button (click)="editOn()">Edit Profile</button> -->
                         </span>
+                        <button class="button" (click)="editOn()">Edit</button>
                     </span>
+                    <br />
                     <button class="button" (click)="goBack()">Go Back</button>
                 </div>
             </div>

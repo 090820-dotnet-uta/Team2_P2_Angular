@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { User } from '../models/User';
 
@@ -19,10 +20,19 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+  editFormModel = this.fb.group({
+    Email: ['', Validators.email],
+    FirstName: [''],
+    LastName: [''],
+    // Password: ['', [Validators.required, Validators.minLength(4)]],
+    description: ['']
+  });
+
   // constructor(private messageService: MessageService) { }
   constructor(
     private router: Router, 
     private http: HttpClient,
+    private fb: FormBuilder
   ) { }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -88,8 +98,19 @@ export class UserService {
 
   /** PUT: update the user on the server */
   updateUser(user: User): Observable<any> {
-    console.log("aAa");
-    return this.http.put(this.dbUrl, user, this.httpOptions).pipe(
+    let thisUrl = `${this.dbUrl}/${user.id}`;
+    
+    let updatedUser = user;
+    console.log("SSSSSSSSSSS")
+    console.log(this.editFormModel)
+    console.log(this.editFormModel.value.FirstName)
+    updatedUser.firstName = this.editFormModel.value.FirstName;
+    updatedUser.lastName = this.editFormModel.value.LastName;
+    updatedUser.email = this.editFormModel.value.Email;
+    updatedUser.description = this.editFormModel.value.description;
+    console.log("Setting user to "+ thisUrl);
+    console.log(user);
+    return this.http.put(thisUrl, user, this.httpOptions).pipe(
       tap(_ => console.log(`updated user username=${user.userName}`)),
       catchError(this.handleError<any>('updateUser'))
     );
