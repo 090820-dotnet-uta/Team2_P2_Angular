@@ -136,6 +136,8 @@ export class PositionService {
     console.log("Inside updateProjectPosition");
     let thisUrl = this.projectPositionURL + "/" + projectposition.projectPositionsId;
     console.log("Updating "+ thisUrl);
+    console.log("AAAAAAAAAAAAA")
+    console.log(projectposition)
     return this.http.put(thisUrl, projectposition, this.httpOptions).pipe(
       tap(_ => console.log(`updated projectposition with ProjectId=${projectposition.projectId} and positionId=${projectposition.positionId}`)),
       catchError(this.handleError<any>('updateProjectPosition'))
