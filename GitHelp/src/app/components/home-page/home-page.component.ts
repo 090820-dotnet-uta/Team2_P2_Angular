@@ -80,5 +80,10 @@ export class HomePageComponent implements OnInit {
     this.router.navigate(['/HireRequests']);
   }
 
+  gotoCreateProject(): void {
+    console.log("Going to create project component");
+    this.router.navigate(['/AddProject']);
+  }
+
   
 }

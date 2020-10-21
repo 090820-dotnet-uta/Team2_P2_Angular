@@ -1,43 +1,103 @@
 <app-navbar></app-navbar>
 
-<div *ngIf="loginType == 'client'">
-  <button (click)="gotoCreateProject()">Create New Project</button>
-</div>
-<!--If we are returning the list of a client's projects-->
-<!-- <div *ngIf="listType === 1"> -->
-<div>
-  <span *ngIf="loginType == 'client' && projectVMs && projectVMs.length > 0">
-    Displaying Client's List of Projects: 
-  </span>
-  <span *ngIf="loginType == 'client' && (!projectVMs || projectVMs.length == 0)">
-    You have no current projects: 
-  </span>
-  <span *ngIf="loginType == 'contractor'">
-    Displaying List of Projects: 
-  </span>
-  <ul *ngFor="let p of projectVMs">
-    Project Name | Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
-    <li>
-      {{ p.projectName}} | {{ p.projectId}} | {{p.userId}} | {{p.startDate}} | {{p.description}} | {{p.endDate}} | {{p.paymentOffered}} | 
-      <span *ngIf="loginType == 'client'">
-        <button (click)="addPositions(p.projectId)">Add Positions</button> |
-        <!-- <button (click)="EditProject(p.projectId)">Edit Project</button> | -->
-        <button (click)="delete(p.projectId)">Delete Project</button>
-      </span>
-      <ul *ngFor="let ppos of p.positions">
-        Position: {{ppos.positionTitle}}
-        <span *ngIf="ppos.contractorId">
-          [Position Filled]
-        </span>
-        <span *ngIf="loginType == 'contractor' && !ppos.contractorId">
 
-          <button (click)="RequestPosition(ppos.projectPositionsId, p.userId)">Request Position</button>
-        </span>
-      </ul>
-    </li>
-  </ul>
-</div> 
-<!-- </div> -->
+<div class="bigContainer">
+  <div class="formContainer">
+    <div *ngIf="loginType == 'client'">
+      <div class="button" (click)="gotoCreateProject()">
+        Create New Project
+      </div>
+    </div>
+    <div class="littleContainer">
+        <div class="form">
+          <!--If we are returning the list of a client's projects-->
+          <!-- <div *ngIf="listType === 1"> -->
+          <div>
+            <span class="head" *ngIf="loginType == 'client' && projectVMs && projectVMs.length > 0">
+              Displaying Client's List of Projects... 
+            </span>
+            <span class="head" *ngIf="loginType == 'client' && (!projectVMs || projectVMs.length == 0)">
+              You have no current projects... 
+            </span>
+            <span class="head" *ngIf="loginType == 'contractor'">
+              Displaying List of Projects... 
+            </span>
+        </div>
+      </div> 
+      <!-- End of first form (holds submit button and head info) -->
+
+      <div class="form">
+
+        <ul *ngFor="let p of projectVMs">
+
+          <div class="card">
+            <li>
+              Project Name | {{ p.projectName}}
+            </li>
+            <li>
+              Project ID | {{ p.projectId}}
+            </li>
+            <li>
+              Client ID | {{p.userId}}
+            </li>
+            <li>
+              Project Title | {{p.projectName}}
+            </li>
+            <li>
+              Description | {{p.description}}
+            </li>
+            <li>
+              Start Date | {{p.startDate}}
+            </li>
+            <li>
+              End Date | {{p.endDate}}
+            </li>
+            <li>
+              Payment Offered | ${{p.paymentOffered}}
+            </li>
+                
+            <div>
+
+              <li>
+                Project Positions:
+              </li>
+               
+              <div *ngFor="let ppos of p.positions">
+                Position: {{ppos.positionTitle}}
+                <span *ngIf="ppos.contractorId">
+                  [Position Filled]
+                </span>
+      
+                <span *ngIf="loginType == 'contractor' && !ppos.contractorId">
+                  <button class="button" (click)="RequestPosition(ppos.projectPositionsId, p.userId)">Request Position</button>
+                </span>
+      
+              </div>
+              <div *ngIf="loginType == 'client'">
+                <button class="button" (click)="addPositions(p.projectId)">
+                  Add Positions
+                </button> <b>|</b>
+                <!-- <button (click)="EditProject(p.projectId)">Edit Project</button> | -->
+                <button class="button" (click)="delete(p.projectId)">
+                  Delete Project
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- End of card for each listed project -->
+        </ul>
+        <!-- End of unordered list of each project -->
+      </div>
+      <!-- End of second form (holds the list of projects) -->
+
+
+    </div>
+    <!-- End of little container -->
+  </div>
+  <!-- End of form container -->
+</div>
+<!-- End of big container -->
+
 
 <!--If list wants to display all of a contractor's projects-->
 <!-- <div *ngIf="listType === 2 ">

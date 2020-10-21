@@ -1,9 +1,114 @@
 <app-navbar></app-navbar>
 
-<div class="card">
-    <h4 class="card-header">Add New Project</h4>
+
+<div class="bigContainer">
+    <div class="formContainer">
+        <div class="littleContainer">
+            <form [formGroup]="projectAddForm" (ngSubmit)="onSubmit()" class="form">
+                
+                <h4 class="head">
+                    Please enter your project's information
+                </h4>
+
+                <div class="form-group">
+                    <div>
+                        <label class="inputLabel" for="projectName">
+                            Project Title
+                        </label>
+                    </div>
+                    <input type="text" formControlName="projectName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.projectName.errors }" />
+                    <div *ngIf="submitted && f.projectName.errors" class="invalid-feedback">
+                        <div *ngIf="f.projectName.errors.required">
+                            Enter a valid title!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label class="inputLabel" for="Description">
+                            Project Description
+                        </label>
+                    </div>
+                    <textarea type="text" formControlName="Description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Description.errors }"  rows="5" cols="50">
+                    </textarea>
+                    <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+                        <div *ngIf="f.Description.errors.required">
+                            Enter a project description!
+                        </div>
+                        <div *ngIf="f.Description.errors.minLength">
+                            Enter a longer description! (5 character minimum)
+                        </div>
+                        <div *ngIf="f.Description.errors.maxLength">
+                            Enter a shorter description! (2000 character maximum)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label class="inputLabel" for="startDate">
+                            Start Date
+                        </label>
+                    </div>
+                    <input type="date" formControlName="startDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }" />
+                    <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                        <div *ngIf="f.startDate.errors.required">
+                            Enter a starting date!
+                        </div>
+                        <div *ngIf="f.startDate.errors.arguments">
+                            Your project can't be due before it starts!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label class="inputLabel" for="endDate">
+                            Due Date
+                        </label>
+                    </div>
+                    <input type="date" formControlName="endDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }" />
+                    <div *ngIf="submitted && f.endDate.errors" class="invalid-feedback">
+                        <div *ngIf="f.endDate.errors.required">
+                            Enter a due date!
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div>
+                        <label class="inputLabel" for="paymentOffered">
+                            Payment Offered
+                        </label>
+                    </div>
+                    <input type="number" formControlName="paymentOffered" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.paymentOffered.errors }" />
+                    <div *ngIf="submitted && f.paymentOffered.errors" class="invalid-feedback">
+                        <div *ngIf="f.paymentOffered.errors.required">
+                            You have to pay people for their work!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button [disabled]="loading" class="button" >
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        <a>
+                            Create
+                        </a>
+                    </button>
+                    <a (click)="goBack()" class="button">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- <div class="card">
+    <h4 class="card-header">Create a New Project</h4>
     <div class="card-body">
-        <form [formGroup]="projectAddForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="projectAddForm" (ngSubmit)="onSubmit()" class="form">
             <div class="form-group">
                 <label for="projectName">Project Title</label>
                 <input type="text" formControlName="projectName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.projectName.errors }" />
@@ -52,4 +157,4 @@
         </form>
     </div>
 </div>
-
+ -->
