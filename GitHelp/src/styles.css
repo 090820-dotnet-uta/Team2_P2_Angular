@@ -1,26 +1,147 @@
 
 /* You can add global styles to this file, and also import other style files */
-.button{
-    Border: 3px outset #0f3dbd;
-    border-radius: 20px;
-    background-color: #0f3dbd;
-    text-align: center;
-    color: black;
-    cursor: pointer;
-    padding: 5px;
-    margin: 5px;
+body{
+  /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400%;
+    animation: gradient 15s ease infinite; */
+    background-color: rgb(191, 225, 255);
 }
-
-.button:hover{
-    border-style: outset;
-    border-color: #2f5edd;
-    background-color: #2f5edd;
-    cursor: pointer;
-}
-
 div{
     margin: 5px;
     padding:5px;
+
+    position: relative;
+}
+h1{
+  text-shadow: 3px 3px 3px #795bff;
+  color: black;
+  padding-bottom: 10px;
+  font-size: 45px;
+  font-weight: 700;
+  font-family: 'Prata', serif;
+
+  position: relative;
+}
+
+/* 
+STYLE FOR BUTTONS 
+*/
+.button{
+    Border: 3px outset #241f5c;
+    border-radius: 20px;
+    background: repeating-radial-gradient(
+      circle,
+      #606dbc,
+      #606dbc 10px,
+      #465298 10px,
+      #465298 20px
+    );
+    text-align: center;
+    color: aliceblue;
+    font-size: large;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 5px;
+
+    position: relative;
+}
+
+.button:hover{
+    border-style: inset;
+    border-color: #795bff;
+    background: repeating-radial-gradient(
+      circle,
+      #465298,
+      #465298 10px,
+      #606dbc 10px,
+      #606dbc 20px
+    );
+    cursor: pointer;
+
+    position: relative;
+}
+
+.button:disabled{
+  opacity: .5;
+  background-color: gray;
+  border-color: grey;
+  color: black;
+  cursor: default;
+
+  position: relative;
+  
+}
+
+.bigContainer{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  position: relative;
+  
+}
+
+/* 
+STYLING FOR FORMS 
+*/
+
+.formContainer{
+  width: 50%;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  padding: 5px;
+  margin: 3px;
+
+  position: relative;
+}
+
+.littleContainer{
+  
+  /* background: linear-gradient(-45deg,#a69aff, #eb84ff, #ffe79b, #795bff, #241f5c);
+background-size: 400%;
+  animation: gradient 15s ease infinite; */
+
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400%;
+  animation: gradient 15s ease infinite;
+  border-radius: 50px;
+  border: 3px solid #795bff;
+
+  position: relative;
+}
+
+.form{
+  width: 90%;
+  padding: 15px;
+  margin: 10px;
+  border: 3px solid #795bff;
+  background-color: aliceblue;
+  border-radius: 50px;
+
+  position: relative;
+}
+
+.form-group{
+  font-size: large;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+
+  position: relative;
+}
+
+.inputLabel{
+  font-size: large;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: #241f5c;
+
+  position: relative;
 }
 
 /*
@@ -29,13 +150,13 @@ TOOLTIP STYLING
 .tooltip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black;
+    border-bottom: 1px dotted #241f5c;
   }
   
   .tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
-    background-color: black;
+    background-color: #241f5c;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -49,3 +170,5 @@ TOOLTIP STYLING
   .tooltip:hover .tooltiptext {
     visibility: visible;
   }
+
+

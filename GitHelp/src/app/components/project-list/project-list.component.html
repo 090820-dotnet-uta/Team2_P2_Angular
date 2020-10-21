@@ -1,22 +1,11 @@
 <app-navbar></app-navbar>
 
-<div *ngIf="loginType == 'client'">
-  <button (click)="gotoCreateProject()">Create New Project</button>
-</div>
 <!--If we are returning the list of a client's projects-->
-<!-- <div *ngIf="listType === 1"> -->
+<div *ngIf="listType === 1">
 <div>
-  <span *ngIf="loginType == 'client' && projectVMs && projectVMs.length > 0">
-    Displaying Client's List of Projects: 
-  </span>
-  <span *ngIf="loginType == 'client' && (!projectVMs || projectVMs.length == 0)">
-    You have no current projects: 
-  </span>
-  <span *ngIf="loginType == 'contractor'">
-    Displaying List of Projects: 
-  </span>
+  Displaying Client's List of Projects: 
   <ul *ngFor="let p of projectVMs">
-    Project Name | Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
+    Project ID | Client ID | Project Title | Description | Start Date | End Date | Payment Offered 
     <li>
       {{ p.projectName}} | {{ p.projectId}} | {{p.userId}} | {{p.startDate}} | {{p.description}} | {{p.endDate}} | {{p.paymentOffered}} | 
       <span *ngIf="loginType == 'client'">
@@ -40,7 +29,7 @@
 <!-- </div> -->
 
 <!--If list wants to display all of a contractor's projects-->
-<!-- <div *ngIf="listType === 2 ">
+<div *ngIf="listType === 2 ">
 <div>
   Displaying Contractor Projects
 </div>
@@ -52,10 +41,10 @@
     </li>
   </ul>
 </div>
-</div> -->
+</div>
 
 <!--If list just wants all projects, display them all-->
-<!-- <div *ngIf="listType !== 1 && listType !== 2">
+<div *ngIf="listType !== 1 && listType !== 2">
   <div>
     Displaying All Projects
   </div>
@@ -67,7 +56,7 @@
       </li>
     </ul>
   </div>
-</div> -->
+</div>
 
 
   <!--Displays the information about each of the projects displayed so it can be deleted or editted-->

@@ -1,6 +1,6 @@
 export class HireRequest {
     hireRequestId: number;
-    positionId: number; // Actually in practice ProjectPositionId
+    positionId: number;
     clientId: string;
     contractorId: string;
     requestStatus: string;
