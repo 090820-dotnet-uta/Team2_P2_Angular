@@ -1,34 +1,16 @@
 <app-navbar></app-navbar>
 
-<span *ngIf="thisLoginType == 'client'">
+<span *ngIf="isClient">
     <h1>Hire requests for {{thisLoginType}} {{thisUserName}}</h1>
 </span>
-<span *ngIf="thisLoginType == 'contractor'">
+<span *ngIf="!isClient">
     <h1>Hire requests from {{thisLoginType}} {{thisUserName}}</h1>
 </span>
-<span *ngIf="!hireRequestVMs || hireRequestVMs.length == 0">
-    <h2>No hire quests found associated with {{thisUserName}}</h2>
-</span>
-<ul *ngFor="let hireRequestVM of hireRequestVMs">
-    <li >
-        <b>Project:</b> {{hireRequestVM.projectName}}
-        <div>
-            <b>Position:</b> {{hireRequestVM.positionTitle}}
-            <br/>
-            <span id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</span>
-            <br/>
-            <b>Contractor:</b> {{hireRequestVM.contractorName}}
-            <br/>
-            <b>Status:</b> {{hireRequestVM.requestStatus}}
-            <br/>
-            <span *ngIf="thisLoginType == 'contractor'">
-                <button (click)="deleteHireRequest(hireRequestVM)">Withdraw Hire Request</button>
-            </span>
-            <span *ngIf="thisLoginType == 'client' && hireRequestVM.requestStatus == 'Pending'">
-                <button (click)="approveHireRequest(hireRequestVM)">Approve</button> | 
-                <button (click)="denyHireRequest(hireRequestVM)">Deny</button>
-            </span>
-        </div>
-    </li>
-</ul>
-<a (click)="goBack()" class="button">Back</a>
+<li *ngFor="let hireRequestVM of hireRequestVMs">
+    <p id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</p>
+    <p><b>Contractor:</b> {{hireRequestVM.contractorName}}</p>
+    <p><b>Status:</b> {{hireRequestVM.requestStatus}}</p>
+    <!-- <p>{{hireRequestVMs | json}}</p> -->
+    <!-- <button class="delete" title="delete hero"
+        (click)="delete(hero)">x</button> -->
+</li>

@@ -1,16 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
 import {Observable, of} from 'rxjs';
-
 import { Project } from '../models/Project';
 import { ProjectVM } from '../models/ProjectVM';
 import { ProjectService } from '../services/project.service';
 import { Position } from '../models/Position';
 import{ PositionService } from '../services/position.service';
-import { ProjectPositionVM } from '../models/ProjectPositionVM';
-import { HireRequest } from '../models/HireRequest';
 
 @Component({
   selector: 'app-project-list',
@@ -31,9 +27,13 @@ export class ProjectListComponent implements OnInit {
   listType: number;
   userId: string;
   loginType: string;
+
+  //DUMMY DATA REMOVE LATER, REPLACED WITH LOGGEDINUSER FROM LOCAL STORAGE
+  //let userId = localStorage.getItem('currentId');
+  //let userType = localStorage.getItem('userType');
+
   
   constructor(
-    private router: Router,
     private projectService: ProjectService,
     private positionService: PositionService
     ) {
@@ -45,10 +45,10 @@ export class ProjectListComponent implements OnInit {
   ngOnInit(): void {
 
     //DUMMY DATA, CHANGE LATER
-        // this.listType = 1;
-        // this.userId = "1";
+        this.listType = 1;
+        this.userId = "1";
 
-        this.userId = localStorage.getItem('currentUserId');
+        // this.userId = localStorage.getItem('currentUserId');
         this.loginType = localStorage.getItem('loginType');
         
         // console.log("List type: " + this.listType);
@@ -77,7 +77,15 @@ export class ProjectListComponent implements OnInit {
     // console.log("Logging projects inside ngOnInit (after getAllProjects component):")
     // console.log(this.projects)
     
-    this.makePositionDict(); // Other stuff moved to after this dict is defined
+    this.makePositionDict();
+
+    if(this.loginType == "client"){
+      this.getClientProjects(this.userId);
+    }else if(this.loginType == "contractor"){
+      this.getAllProjects();
+    }
+
+    
   }
 
   makePositionDict(): void {
@@ -87,18 +95,9 @@ export class ProjectListComponent implements OnInit {
         let thisPosId = allPositions[pInc].positionId;
         this.positionDict[thisPosId] = allPositions[pInc].positionTitle;
       }
-      // console.log("Made dictionary of positions")
-      // console.log(this.positionDict)
-      this.handleProjectGetting()
+      console.log("Made dictionary of positions")
+      console.log(this.positionDict)
     })
-  }
-
-  handleProjectGetting(){
-    if(this.loginType == "client"){
-      this.getClientProjects(this.userId);
-    }else if(this.loginType == "contractor"){
-      this.getAllProjects();
-    }
   }
 
   getClientProjects(id: string){
@@ -120,16 +119,14 @@ export class ProjectListComponent implements OnInit {
   assembleProjectVMsList(projects: Project[]){
       this.projectVMs= [];
       for(let pInc = 0; pInc < projects.length; pInc ++){
-        const newProject = new ProjectVM(
+        this.projectVMs.push( new ProjectVM(
           projects[pInc].projectId,
           projects[pInc].userId,
           projects[pInc].startDate,
           projects[pInc].endDate,
           projects[pInc].paymentOffered,
-          projects[pInc].projectName,
-          projects[pInc].description
-        );
-        this.projectVMs.push(newProject);
+          projects[pInc].Description
+        ));
       }
       console.log("Gotten Projects:");
       console.log(this.projectVMs);
@@ -140,21 +137,13 @@ export class ProjectListComponent implements OnInit {
     console.log("Getting project positions")
     for(let pInc = 0; pInc < this.projectVMs.length; pInc ++){
       this.positionService.getProjectPositionsByProject(this.projectVMs[pInc].projectId).subscribe(theseProjectPositions => {
+        console.log("AAA")
+        console.log(theseProjectPositions)
         if(theseProjectPositions.length == 0){
           console.log("No ProjectPositions for "+ this.projectVMs[pInc].projectId)
         }else{
           console.log("Got ProjectPositions for "+ this.projectVMs[pInc].projectId)
           console.log(theseProjectPositions);
-          let theseProjectPositionsVM = [];
-          for(let p2Inc = 0; p2Inc < theseProjectPositions.length; p2Inc ++){
-            theseProjectPositionsVM.push(new ProjectPositionVM(
-              theseProjectPositions[p2Inc].projectPositionsId,
-              theseProjectPositions[p2Inc].projectId,
-              theseProjectPositions[p2Inc].positionId,
-              this.positionDict[theseProjectPositions[p2Inc].positionId],
-            ))
-          }
-          this.projectVMs[pInc].positions = theseProjectPositionsVM;
         }
       });
     }
@@ -172,29 +161,15 @@ export class ProjectListComponent implements OnInit {
   //     .subscribe(project => {this.projects.push(project)})
   // }
 
-  gotoCreateProject(): void {
-    console.log("Going to create project component");
-    this.router.navigate(['/AddProject']);
-  }
-
-
   //Filters to get all projects that aren't selected projects and sets them to be local list of projects
   //Passes selected project to deletion method for removal
   delete(project: ProjectVM): void {
     this.projectVMs = this.projectVMs.filter(p => p !== project);
-    this.projectService.deleteProject(project).subscribe(res => {
-      // window.location.reload();
-      this.handleProjectGetting()
-    });
-  }
-
-  addPositions(id: number): void {
-    console.log("Going to add positions to project "+ id);
-    this.router.navigate(['/Positions/'+id]);
+    this.projectService.deleteProject(project).subscribe();
+    // window.location.reload();
   }
 
   EditProject(id: number): void {
-    console.log("Edit currently placeholder");
     this.selectedProject = this.projectService.getProject(id);
   }
 
@@ -207,26 +182,12 @@ export class ProjectListComponent implements OnInit {
         if (proj.projectId === emittedProject.projectId) {
           proj.userId = emittedProject.userId;
           proj.projectName = emittedProject.projectName;
-          proj.description = emittedProject.description;
+          proj.Description = emittedProject.Description;
           proj.startDate = emittedProject.startDate;
           proj.endDate = emittedProject.endDate;
           proj.paymentOffered = emittedProject.paymentOffered;
         }
       });
-    });
-  }
-
-  RequestPosition(projectPositionsId: number, clientId: string){
-    console.log("Requesting "+ projectPositionsId)
-    const newHireRequest = new HireRequest(
-      projectPositionsId,
-      clientId,
-      this.userId
-    )
-    console.log(newHireRequest)
-    this.positionService.addHireRequest(newHireRequest).subscribe(res => {
-      console.log("HireRequest post completed")
-      console.log(res)
     });
   }
 }

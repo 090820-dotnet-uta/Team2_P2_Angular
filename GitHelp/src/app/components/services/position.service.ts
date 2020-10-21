@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Position } from '../models/Position';
-import { ProjectPosition } from '../models/ProjectPosition';
+import { ProjectPositions } from '../models/ProjectPositions';
 import { MessageService } from '../services/message.service';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/Project';
@@ -20,7 +20,7 @@ export class PositionService {
 
   allPositions : Array<Position>;
   allProjects : Array<Project>;
-  newPosition: ProjectPosition;
+  newPosition: ProjectPositions;
 
   //What kind of info to return with http
   httpOptions = {
@@ -66,34 +66,36 @@ export class PositionService {
 
 
   /** GET all ProjectProjects from the server*/
-  getAllProjectPositions(): Observable<ProjectPosition[]> {
-    return this.http.get<ProjectPosition[]>(this.projectPositionURL)
+  getAllProjectPositions(): Observable<ProjectPositions[]> {
+    return this.http.get<ProjectPositions[]>(this.projectPositionURL)
       .pipe(
         tap(_ => this.log('fetched Positions')),
-        catchError(this.handleError<ProjectPosition[]>('getAllPositions', []))
+        catchError(this.handleError<ProjectPositions[]>('getAllPositions', []))
+      );
+  }
+
+
+ 
+  /** GET ProjectPosition for a project position ID*/
+  getProjectPositionByProjPosId(ProjPosId: number): Observable<ProjectPositions> {
+    const queryURL = this.projectPositionURL +"/"+ ProjPosId;
+    console.log("Querying "+ queryURL)
+    return this.http.get<ProjectPositions>(queryURL)
+      .pipe(
+        tap(_ => this.log('fetched ProjectPositions')),
+        catchError(this.handleError<ProjectPositions>('getProjectPositionsByProject', ))
       );
   }
 
 
   /** GET ProjectPositions for a project*/
-  getProjectPositionsByProject(projId: number): Observable<ProjectPosition[]> {
+  getProjectPositionsByProject(projId: number): Observable<ProjectPositions[]> {
     const queryURL = this.projectPositionURL + "/Projects/" + projId;
     console.log("Querying "+ queryURL)
-    return this.http.get<ProjectPosition[]>(queryURL)
+    return this.http.get<ProjectPositions[]>(queryURL)
       .pipe(
         tap(_ => this.log('fetched ProjectPositions')),
-        catchError(this.handleError<ProjectPosition[]>('getProjectPositionsByProject', []))
-      );
-  }
-
-  /** GET ProjectPosition for a project position ID*/
-  getProjectPositionByProjPosId(ProjPosId: number): Observable<ProjectPosition> {
-    const queryURL = this.projectPositionURL +"/"+ ProjPosId;
-    console.log("Querying "+ queryURL)
-    return this.http.get<ProjectPosition>(queryURL)
-      .pipe(
-        tap(_ => this.log('fetched ProjectPositions')),
-        catchError(this.handleError<ProjectPosition>('getProjectPositionsByProject', ))
+        catchError(this.handleError<ProjectPositions[]>('getProjectPositionsByProject', []))
       );
   }
 
@@ -131,18 +133,37 @@ export class PositionService {
   //---------------------ADD, UPDATE, DELETE METHODS -----------------------------------
 
   /** POST: add a new POSITION to the server (Only available to clients) */
-  addPosition(projectPositions: ProjectPosition): Observable<ProjectPosition> {
-    console.log("Inside addProjectPositions with projectPosition to be added: ", ProjectPosition);
+  addPosition(projectPositions: ProjectPositions): Observable<ProjectPositions> {
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", ProjectPositions);
     let queryReturn;
-    queryReturn = this.http.post<ProjectPosition>(this.projectPositionURL, projectPositions, this.httpOptions)
+    queryReturn = this.http.post<ProjectPositions>(this.projectPositionURL, projectPositions, this.httpOptions)
     console.log(queryReturn)
     return queryReturn;
   }
 
+     
+  //   //For each project position in the form, post it to the database
+  //   // projectpositions.forEach(projPos => {
+  //       // console.log("About to post the following projectPosition to url ", this.projectPositionURL)
+  //       // console.log(projPos);
+  //       // this.http.post<ProjectPositions>(this.projectPositionURL, projPos, this.httpOptions)
+  //       // console.log("Added the following projectPosition ", projPos)
+  //   // })
+   
+  //   //   .pipe(
+  //   //   tap((newProjectPosition: ProjectPositions) => this.log(`added new project position w/ ProjectId=${projPos.projectId} and PositionId=${projPos.positionId}`)),
+  //   //   catchError(this.handleError<ProjectPositions>('addPosition'))
+  //   // )
+  //   // )
+  
+  //   // return this.http.post<ProjectPositions>(this.positionURL, projectposition, this.httpOptions)
+  //   // );
+  // }
+
   /** PUT: update the POSITION on the server (Only available to Clients) */
-  updateProjectPosition(projectposition: ProjectPosition): Observable<any> {
+  updateProjectPosition(projectposition: ProjectPositions): Observable<any> {
     console.log("Inside updateProjectPosition");
-    return this.http.put(this.positionURL, ProjectPosition, this.httpOptions).pipe(
+    return this.http.put(this.positionURL, projectposition, this.httpOptions).pipe(
       tap(_ => this.log(`updated projectposition with ProjectId=${projectposition.projectId} and positionId=${projectposition.positionId}`)),
       catchError(this.handleError<any>('updateProjectPosition'))
     );
@@ -161,10 +182,10 @@ export class PositionService {
   }
 
   /** GET a project by project id (HTTP REQUEST). Will 404 if id not found.*/
-  addHireRequest(hireRequest: HireRequest): Observable<Position> {
-    console.log("Inside addProjectPositions with list of projectPositions to be added: ", ProjectPosition);
+  addHireRequest(hireRequest: HireRequest): Observable<HireRequest> {
+    console.log("Inside addProjectPositions with list of projectPositions to be added: ", hireRequest);
     let queryReturn;
-    queryReturn = this.http.post<ProjectPosition>(this.hireRequestURL, hireRequest, this.httpOptions)
+    queryReturn = this.http.post<HireRequest>(this.hireRequestURL, hireRequest, this.httpOptions)
     console.log(queryReturn)
     return queryReturn;
   }
