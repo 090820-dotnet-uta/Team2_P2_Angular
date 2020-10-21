@@ -43,7 +43,7 @@ takePayment(productName: string, amount: number, token: any) {
 
 
   this.http
-    .post( "https://localhost:5001/api/StripePayment", body)
+    .post( "https://githelp.azurewebsites.net/api/StripePayment", body)
     .toPromise()
     .then(res => {
       console.log("ok");
