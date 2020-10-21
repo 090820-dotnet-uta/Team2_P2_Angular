@@ -11,6 +11,7 @@ import { Position } from '../models/Position';
 import{ PositionService } from '../services/position.service';
 import { ProjectPositionVM } from '../models/ProjectPositionVM';
 import { HireRequest } from '../models/HireRequest';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-project-list',
@@ -35,7 +36,8 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private router: Router,
     private projectService: ProjectService,
-    private positionService: PositionService
+    private positionService: PositionService,
+    private userService: UserService
     ) {
 
     
@@ -130,6 +132,7 @@ export class ProjectListComponent implements OnInit {
           projects[pInc].description
         );
         this.projectVMs.push(newProject);
+        this.getOtherUserName(pInc, "contractor", projects[pInc].userId)
       }
       console.log("Gotten Projects:");
       console.log(this.projectVMs);
@@ -161,6 +164,20 @@ export class ProjectListComponent implements OnInit {
           this.projectVMs[pInc].positions = theseProjectPositionsVM;
         }
       });
+    }
+  }
+
+  getOtherUserName(hrInc: number, userType:string, otherUserId: string): void {
+    console.log(otherUserId)
+    if(!otherUserId){
+      console.log("No other contractor ID")
+    }else{
+      this.userService.getUserByUserId(otherUserId)
+      .subscribe(
+        otherUser => {
+          console.log("Got client:"+ otherUser.userName);
+          this.projectVMs[hrInc].clientUserName = otherUser.userName;
+        });
     }
   }
 
