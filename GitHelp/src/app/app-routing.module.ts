@@ -13,7 +13,7 @@ import { HireRequestsComponent } from './components/hire-requests/hire-requests.
 import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/checkout', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'checkout', component: StripePaymentComponent},
   {path: 'login', component: LoginFormComponent},
   {path: 'signup', component: SignUpFormComponent},

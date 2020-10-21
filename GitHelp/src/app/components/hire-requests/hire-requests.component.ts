@@ -7,8 +7,6 @@ import { HireRequest } from '../models/HireRequest'
 import { HireRequestViewModel } from '../models/HireRequestVM'
 import { HireRequestService } from '../services/hire-request.service';
 import { UserService } from '../services/user.service';
-import { PositionService } from '../services/position.service';
-import { ProjectService } from '../services/project.service';
 
 
 @Component({
@@ -17,19 +15,17 @@ import { ProjectService } from '../services/project.service';
   styleUrls: ['./hire-requests.component.css']
 })
 export class HireRequestsComponent implements OnInit {
+  isClient: boolean;
   thisUserName: string;
   thisLoginType: string;
   thisUserId: string;
-  // hireRequests: HireRequest[];
+  hireRequests: HireRequest[];
   hireRequestVMs: HireRequestViewModel[];
-  positionDict: Object;
 
   constructor(
     private utilmethodsService: UtilmethodsService,
     private hireRequestService: HireRequestService,
     private userService: UserService,
-    private positionService: PositionService,
-    private projectService: ProjectService,
     private location: Location
   ) {}
 
@@ -38,69 +34,71 @@ export class HireRequestsComponent implements OnInit {
      if(loginChecksOut){
       this.thisUserName = localStorage.getItem('currentUserName');
       this.thisLoginType = localStorage.getItem('loginType');
-      this.thisUserId = localStorage.getItem('currentUserId');
-       this.makePositionDict();
+      this.thisUserId = localStorage.getItem('loginType');
+      if(this.thisLoginType == "client"){
+        this.isClient = true;
+      }else{
+        this.isClient = false;
+      }
+      localStorage.setItem('currentUserId', '');
+       this.getHireRequests();
      }
-   }
-
-   makePositionDict(): void {
-     this.positionService.getAllPositions().subscribe(allPositions => {
-       this.positionDict = new Object();
-       for(let pInc = 0; pInc < allPositions.length; pInc ++){
-         let thisPosId = allPositions[pInc].positionId;
-         this.positionDict[thisPosId] = allPositions[pInc].positionTitle;
-       }
-       this.getHireRequests()
-     })
    }
     
    getHireRequests(): void {
     // const id = +this.route.snapshot.paramMap.get('id');
     this.hireRequestService.getHireRequests()
       .subscribe(
-        gottenHireRequests => {
+        c => {
           console.log("Got result:");
-          console.log(gottenHireRequests);
-          let matchingHireRequests = [];
-          for(let hInc = 0; hInc < gottenHireRequests.length; hInc ++){
-            if(gottenHireRequests[hInc].clientId == this.thisUserId || gottenHireRequests[hInc].contractorId == this.thisUserId){
-              matchingHireRequests.push(gottenHireRequests[hInc])
-            }
-          }
-          console.log("Id Matching result:");
-          console.log(matchingHireRequests);
-          // this.hireRequests = matchingHireRequests; // Stored for use with updating
-          this.doSubRequests(matchingHireRequests);
+          console.log(c);
+          console.log(this.hireRequests);
+          // console.log(c[0]);
+          this.hireRequests = c;
+          this.getNameLists();
         });
   }
 
-  doSubRequests(matchingHireRequests: HireRequest[]): void{
+  getOtherUserName(hrInc: number, userType:string, otherUserId: string): void {
+    // const id = +this.route.snapshot.paramMap.get('id');
+    this.userService.getUserByUserId(otherUserId)
+      .subscribe(
+        c => {
+          console.log("Got other user:");
+          console.log(c.userName);
+          console.log(this.hireRequestVMs)
+          this.hireRequestVMs[hrInc][userType+"Name"] = c.userName;
+        });
+      
+  }
+
+  getNameLists(): void{
     this.hireRequestVMs = [];
-    for(let hrInc = 0;  hrInc < matchingHireRequests.length; hrInc ++){
-      let otherUserType;
-      let targetId;
-      let thisHireRequestVM: HireRequestViewModel;
-      if(this.thisLoginType == "client"){
-        thisHireRequestVM = new HireRequestViewModel(
-          matchingHireRequests[hrInc].positionId,
+    if(this.thisLoginType == "client"){
+      for(let hrInc = 0;  hrInc < this.hireRequests.length; hrInc ++){
+        let thisHireRequestVM = new HireRequestViewModel(
           this.thisUserName,
-          "-",
-          matchingHireRequests[hrInc].requestStatus
+          "placeholder",
+          this.hireRequests[hrInc].requestStatus
         );
         this.hireRequestVMs.push(thisHireRequestVM);
-        otherUserType = "contractor";
-        targetId = matchingHireRequests[hrInc].contractorId;
-      }else if(this.thisLoginType == "contractor"){
-        thisHireRequestVM = new HireRequestViewModel(
-          matchingHireRequests[hrInc].positionId,
-          "-",
-          this.thisUserName,
-          matchingHireRequests[hrInc].requestStatus
-        );
-        this.hireRequestVMs.push(thisHireRequestVM);
-        otherUserType = "client";
-        targetId = matchingHireRequests[hrInc].clientId;
+        let otherUserType = "contractor";
+        // this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].contractorId )
+        this.getOtherUserName( hrInc, otherUserType, "6a70d447-e64a-4437-bc58-b1d4b8cf439c" )
       }
+    }else if(this.thisLoginType == "contractor"){
+      for(let hrInc = 0;  hrInc < this.hireRequests.length; hrInc ++){
+        let thisHireRequestVM = new HireRequestViewModel(
+          "placeholder",
+          this.thisUserName,
+          this.hireRequests[hrInc].requestStatus
+        );
+        this.hireRequestVMs.push(thisHireRequestVM);
+        let otherUserType = "client";
+        // this.getOtherUserName( hrInc, otherUserType, this.hireRequests[hrInc].contractorId )
+        this.getOtherUserName( hrInc, otherUserType, "6a70d447-e64a-4437-bc58-b1d4b8cf439c" )
+      }
+
       thisHireRequestVM.originalHireRequest = matchingHireRequests[hrInc];
       this.getOtherUserName( hrInc, otherUserType, targetId )
       this.getProjectPositionTitle(hrInc, matchingHireRequests[hrInc].positionId)

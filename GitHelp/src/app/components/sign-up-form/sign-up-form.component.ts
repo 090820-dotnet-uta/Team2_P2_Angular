@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './sign-up-form.component.html',
   styles: ['./sign-up-form.component.css']
 })
+
 export class SignUpFormComponent implements OnInit {
 
   constructor(

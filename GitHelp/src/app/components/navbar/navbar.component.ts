@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  title = 'Placeholder Title Front End';
+  title = 'GitHelp';
   currentuserName : string;
   loginStatus :string;
 
@@ -54,7 +54,6 @@ export class NavbarComponent implements OnInit {
     console.log("Going to hire requests");
     this.router.navigate(['/HireRequests']);
   }
-
   logout(): void {
     console.log("Logging out");
     localStorage.setItem('currentUserName', '');
