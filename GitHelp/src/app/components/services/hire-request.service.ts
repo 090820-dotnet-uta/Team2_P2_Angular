@@ -32,6 +32,7 @@ export class HireRequestService {
  
   /** PUT: update the HireRequest on the server (for approving or rejecting) */
   updateHireRequest(hireRequest: HireRequest): Observable<any> {
+    console.log("BBBBBBBBBBBB")
     const id = hireRequest.hireRequestId;
     const url = `${this.dbUrl}/${id}`;
     console.log("Updating "+ url)
