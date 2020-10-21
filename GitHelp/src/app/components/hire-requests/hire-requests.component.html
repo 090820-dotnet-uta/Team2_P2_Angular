@@ -17,41 +17,41 @@
                 </span>
             </div>
 
-
             <div class="form">
+                <ul *ngFor="let hireRequestVM of hireRequestVMs">
+                    <div class="card">
+                        <b style="text-decoration: underline;">Project:</b> {{hireRequestVM.projectName}}
 
+                        <div>
+                            <b>Position:</b> {{hireRequestVM.positionTitle}}
+                            <br/>
+                            <span id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</span>
+                            <br/>
+                            <b>Applicant:</b> {{hireRequestVM.contractorName}}
+                            <br/>
+                            <span *ngIf="thisLoginType == 'client'">
+                                <b style="text-decoration: underline;">Applicant Description:</b> 
+                                <textarea rows="4" cols="50" style="cursor: default;" readonly>{{hireRequestVM.contractorDescription}}</textarea>
+                                <br/>
+                            </span>
+                            <b>Status:</b> {{hireRequestVM.requestStatus}}
+                            <br/>
+                            <span *ngIf="thisLoginType == 'contractor'">
+                                <button class="button" (click)="deleteHireRequest(hireRequestVM)">Withdraw Hire Request</button>
+                            </span>
+                            <span *ngIf="thisLoginType == 'client' && hireRequestVM.requestStatus == 'Pending'">
+                                <button class="button" (click)="approveHireRequest(hireRequestVM)">Approve</button> | 
+                                <button class="button" (click)="denyHireRequest(hireRequestVM)">Deny</button>
+                            </span>
+                        </div>
+                    </div>
+                    
+                </ul>
             </div>
 
         </div>
     </div>
 </div>
 
-<ul *ngFor="let hireRequestVM of hireRequestVMs">
-    <div class="card">
-        <b style="text-decoration: underline;">Project:</b> {{hireRequestVM.projectName}}
 
-        <div>
-            <b>Position:</b> {{hireRequestVM.positionTitle}}
-            <br/>
-            <span id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</span>
-            <br/>
-            <b>Applying Contractor:</b> {{hireRequestVM.contractorName}}
-            <br/>
-            <span *ngIf="thisLoginType == 'client'">
-                <b>Applying Contractor's Description:</b> {{hireRequestVM.contractorDescription}}
-                <br/>
-            </span>
-            <b>Status:</b> {{hireRequestVM.requestStatus}}
-            <br/>
-            <span *ngIf="thisLoginType == 'contractor'">
-                <button class="button" (click)="deleteHireRequest(hireRequestVM)">Withdraw Hire Request</button>
-            </span>
-            <span *ngIf="thisLoginType == 'client' && hireRequestVM.requestStatus == 'Pending'">
-                <button class="button" (click)="approveHireRequest(hireRequestVM)">Approve</button> | 
-                <button class="button" (click)="denyHireRequest(hireRequestVM)">Deny</button>
-            </span>
-        </div>
-    </div>
-    
-</ul>
 <a (click)="goBack()" class="button">Back</a> 
