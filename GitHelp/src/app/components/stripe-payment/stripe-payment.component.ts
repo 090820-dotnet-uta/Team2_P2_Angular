@@ -40,16 +40,16 @@ takePayment(productName: string, amount: number, token: any) {
   };
   
   
- 
+
 
   this.http
-    .post( "https://githelp.azurewebsites.net/api/StripePayment", body)
+    .post( "https://localhost:5001/api/StripePayment", body)
     .toPromise()
     .then(res => {
       console.log("ok");
     })
     .catch(error => {
-      this.takePayment = error.message;
+      console.log(error.message);
     });
 }
 
@@ -63,27 +63,28 @@ takePayment(productName: string, amount: number, token: any) {
       
 
   var handler = (<any>window).StripeCheckout.configure({
-    key: 'pk_test_51He61ZCIJStw0TfUavdgaagOU0HkIFp8fcrM1BzvVu6o8OtwXlIsyin6l62zLDPbpkNLJMPbECs9x7TXRwV3OW1T00rs3UY7CT',
+    key: 'pk_live_51He61ZCIJStw0TfUvCbQYRsa3aPZ6QNTxFqnwu4IkTTah3WgQl72s8xZCkngOoSRU8XGDFXPU4aTpPabl8XIr57500SdTxxbkF',
     locale: 'auto',
     amount: amount,
     currency: 'usd',
     token: tokenCallback,
-    product: productName
+    product: productName,
+   
   });
 
-  
   handler.open({
     name: 'GitHelp',
     description: 'Project',
-    amount: amount * 100
+    amount: amount
   });
 
     
 }
 
+
 pay(){
-  this.payment("githelp", 5, (token: any) =>
-      this.takePayment("githelp", 5, token)
+  this.payment("githelp", 50, (token: any) =>
+      this.takePayment("githelp", 50, token)
   );
 }
 
