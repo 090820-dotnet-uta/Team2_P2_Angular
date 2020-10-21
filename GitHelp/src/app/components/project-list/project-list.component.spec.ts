@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ProjectListComponent } from './project-list.component';
 import  { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NavbarComponent } from '../navbar/navbar.component';
+
 describe('ProjectListComponent', () => {
   let component: ProjectListComponent;
   let fixture: ComponentFixture<ProjectListComponent>;
@@ -10,7 +12,7 @@ describe('ProjectListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [ ProjectListComponent ]
+      declarations: [ ProjectListComponent, NavbarComponent ]
     })
     .compileComponents();
   });

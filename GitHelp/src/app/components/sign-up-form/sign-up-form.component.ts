@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 
 export class SignUpFormComponent implements OnInit {
+  testCheckVar: boolean;
 
   constructor(
     private router: Router,
@@ -17,6 +18,7 @@ export class SignUpFormComponent implements OnInit {
 
   ngOnInit() {
     this.service.formModel.reset();
+    this.testCheckVar = true;
   }
 
   onSubmit() {

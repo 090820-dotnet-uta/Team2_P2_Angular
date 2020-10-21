@@ -8,7 +8,7 @@ import { SignUpFormComponent } from './components/sign-up-form/sign-up-form.comp
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 
@@ -25,6 +25,7 @@ import { PositionsComponent } from './components/positions/positions.component';
 import { ProjectService } from './components/services/project.service';
 import { HireRequestsComponent } from './components/hire-requests/hire-requests.component';
 import { StripePaymentComponent } from './components/stripe-payment/stripe-payment.component';
+import { UserService } from './components/services/user.service';
 
 
 
@@ -46,7 +47,11 @@ import { StripePaymentComponent } from './components/stripe-payment/stripe-payme
     StripePaymentComponent,
   ],
     imports: [
-    RouterModule,
+    RouterModule.forRoot(
+      [
+        { path: "", component: SignUpFormComponent}
+      ]
+    ),
     BrowserModule,
     AppRoutingModule,
       
@@ -62,7 +67,7 @@ import { StripePaymentComponent } from './components/stripe-payment/stripe-payme
     // )
 
   ],
-  providers: [ProjectService],
+  providers: [ProjectService, UserService, FormsModule, FormBuilder],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

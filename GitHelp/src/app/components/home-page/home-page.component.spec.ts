@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { User } from '../models/User';
 import { HomePageComponent } from './home-page.component';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
@@ -12,7 +13,7 @@ describe('HomePageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ HomePageComponent ]
+      declarations: [ HomePageComponent, NavbarComponent]
     })
     .compileComponents();
   });

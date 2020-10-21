@@ -3,6 +3,7 @@ import  { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PositionsComponent } from './positions.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 
 describe('PositionsComponent', () => {
@@ -12,7 +13,7 @@ describe('PositionsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports : [HttpClientTestingModule, RouterTestingModule,FormsModule, ReactiveFormsModule],
-      declarations: [ PositionsComponent ]
+      declarations: [ PositionsComponent, NavbarComponent ]
     })
     .compileComponents();
   });

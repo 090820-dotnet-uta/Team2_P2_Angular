@@ -51,16 +51,20 @@ export class ProjectsComponent implements OnInit, OnChanges {
     }
   }
   
-  getProject(): void {
+  getProject(): any {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.projectService.requestProject("id")
-      .subscribe(p => this.project = p);
+    return this.projectService.requestProject("id")
+      .subscribe(p => {
+        this.project = p
+      });
   }
 
   //Run the update method from service to save project changes
   updateProject(): void {
     this.projectService.updateProject(this.project)
-      .subscribe(() => this.goBack());
+      .subscribe(res => {
+      this.goBack();
+      });
   }
 
   goBack(): void {

@@ -3,12 +3,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from './user.service';
 import  { HttpClientTestingModule } from '@angular/common/http/testing';
 
+import {ReactiveFormsModule} from '@angular/forms';
+
+
 describe('UserService', () => {
   let service: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule]});
+      imports: [
+        RouterTestingModule, 
+        HttpClientTestingModule,
+        ReactiveFormsModule
+      ]});
     service = TestBed.inject(UserService);
   });
 
