@@ -11,5 +11,7 @@
       this.clientName = clientName;
       this.contractorName = contractorName;
       this.requestStatus = requestStatus;
+      this.projectName = "-";
+      this.positionTitle = "-"; 
     }
   }

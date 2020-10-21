@@ -80,7 +80,7 @@ export class PositionService {
   getProjectPositionByProjPosId(ProjPosId: number): Observable<ProjectPositions> {
     const queryURL = this.projectPositionURL +"/"+ ProjPosId;
     console.log("Querying "+ queryURL)
-    return this.http.get<ProjectPositions>(queryURL)
+    return this.http.get<ProjectPosition[]>(queryURL) 
       .pipe(
         tap(_ => this.log('fetched ProjectPositions')),
         catchError(this.handleError<ProjectPositions>('getProjectPositionsByProject', ))

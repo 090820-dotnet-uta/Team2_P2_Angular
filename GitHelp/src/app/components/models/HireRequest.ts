@@ -4,6 +4,11 @@ export class HireRequest {
     clientId: string;
     contractorId: string;
     requestStatus: string;
-    // thisClient	null
-    // thisContractor	null
+    constructor(positionId: number, clientId: string, contractorId: string, hireRequestId?: number){
+      this.positionId = positionId;
+      this.clientId = clientId;
+      this.contractorId = contractorId;
+      this.requestStatus = "Pending";
+      this.hireRequestId = hireRequestId; 
+    }
   }

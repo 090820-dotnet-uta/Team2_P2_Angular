@@ -66,7 +66,7 @@ export class PositionsComponent implements OnInit {
     const id = shitake[2];
     this.projId = id;
     localStorage.setItem("latestProjId", id);
-    console.log("New stored latestProjId: ", id)
+    console.log("New stored latestProjId: ", id) 
     console.log(this.projId);
 
 

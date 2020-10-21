@@ -7,7 +7,7 @@ import { HireRequest } from '../models/HireRequest';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class HireRequestService {
   private dbUrl = "https://githelp.azurewebsites.net/api/HireRequests";

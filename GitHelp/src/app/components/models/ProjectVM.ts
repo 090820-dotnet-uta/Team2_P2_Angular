@@ -35,4 +35,4 @@ export class ProjectVM {
       this.description = description;
 >>>>>>> ae33080da91edce0cbb6908a6c5425dc42afae44
     }
-  }
+  } 
