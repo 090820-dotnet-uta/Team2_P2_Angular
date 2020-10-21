@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NgxStripeModule } from 'ngx-stripe';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpFormComponent } from './components/sign-up-form/sign-up-form.component';
@@ -54,7 +55,7 @@ import { UserService } from './components/services/user.service';
     ),
     BrowserModule,
     AppRoutingModule,
-      
+    NgxStripeModule.forRoot('pk_live_51He61ZCIJStw0TfUvCbQYRsa3aPZ6QNTxFqnwu4IkTTah3WgQl72s8xZCkngOoSRU8XGDFXPU4aTpPabl8XIr57500SdTxxbkF'),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
