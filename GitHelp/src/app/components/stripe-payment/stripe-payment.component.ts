@@ -31,7 +31,7 @@ export class StripePaymentComponent implements OnInit {
   pay(amount) {    
  
   var handler = (<any>window).StripeCheckout.configure({
-    key: "pk_test_51He61ZCIJStw0TfUavdgaagOU0HkIFp8fcrM1BzvVu6o8OtwXlIsyin6l62zLDPbpkNLJMPbECs9x7TXRwV3OW1T00rs3UY7CT",
+    key: 'pk_live_51He61ZCIJStw0TfUvCbQYRsa3aPZ6QNTxFqnwu4IkTTah3WgQl72s8xZCkngOoSRU8XGDFXPU4aTpPabl8XIr57500SdTxxbkF',
     locale: 'auto',
     token: function (token: any, router: Router) {
       console.log(token)
