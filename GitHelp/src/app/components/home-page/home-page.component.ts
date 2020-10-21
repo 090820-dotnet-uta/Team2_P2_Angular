@@ -15,8 +15,9 @@ export class HomePageComponent implements OnInit {
   Users: User[] = [];
   Contractors: Contractor[] = [];
   LoginInfos: LoginInfo[] =[];
-  display: number;
-  loggedInUser: string;
+  //Dummy data, remove! Replace with loggedInUser localstorage
+  userType : number;
+  loggedInUser: User | Contractor;
   
   constructor(
     private utilmethodsService: UtilmethodsService
@@ -25,9 +26,6 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     let loginChecksOut = this.utilmethodsService.loginCheck("any");
-    this.loggedInUser = localStorage.getItem("loginType");
-    console.log("loggedInUser is type ", this.loggedInUser)
-    this.CliOrCon(this.loggedInUser);
     //Dummy data, remove later!
     // let user = new User();
     // user.firstName = 'bob';
@@ -37,16 +35,17 @@ export class HomePageComponent implements OnInit {
     // console.log(user instanceof User)
   }
 
-  CliOrCon(loggedInUser: string) : void
+  CliOrCon(loggedInUser: User | Contractor) : number
   {
-      if(loggedInUser === "client")
+      if(loggedInUser instanceof User)
       {
-          this.display = 1;
+          this.userType = 1;
       }
-      else if(loggedInUser === "contractor")
+      else
       {
-        this.display = 2;
+        this.userType = 2;
       }
+      return this.userType;
   }
 
   
