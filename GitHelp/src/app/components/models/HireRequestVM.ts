@@ -9,6 +9,7 @@ import { HireRequest } from './HireRequest';
     contractorName: string;
     projectName: string;
     positionTitle: string;
+    contractorDescription: string;
     originalHireRequest: HireRequest;
     
     constructor(ProjectPositionId: number, clientName: string, contractorName: string, requestStatus: string){

@@ -17,8 +17,12 @@
             <br/>
             <span id={{hireRequestVM.clientName}}><b>Client:</b> {{hireRequestVM.clientName}}</span>
             <br/>
-            <b>Contractor:</b> {{hireRequestVM.contractorName}}
+            <b>Applying Contractor:</b> {{hireRequestVM.contractorName}}
             <br/>
+            <span *ngIf="thisLoginType == 'client'">
+                <b>Applying Contractor's Description:</b> {{hireRequestVM.contractorDescription}}
+                <br/>
+            </span>
             <b>Status:</b> {{hireRequestVM.requestStatus}}
             <br/>
             <span *ngIf="thisLoginType == 'contractor'">

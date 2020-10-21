@@ -120,6 +120,11 @@ export class HireRequestsComponent implements OnInit {
           console.log("Got other user:"+ otherUser.userName);
           // console.log(this.hireRequestVMs)
           this.hireRequestVMs[hrInc][userType+"Name"] = otherUser.userName;
+          if(userType == "contractor"){
+            this.hireRequestVMs[hrInc].contractorDescription = otherUser.description;
+          }
+          console.log("aaa")
+          console.log(this.hireRequestVMs);
         });
     }
   }
@@ -128,8 +133,6 @@ export class HireRequestsComponent implements OnInit {
     this.positionService.getProjectPositionByProjPosId(ProjPosId)
       .subscribe(
         projPos => {
-          console.log("aaa")
-          console.log(projPos)
           console.log("Got ProjectPosition:"+ this.positionDict[projPos.positionId]);
           this.hireRequestVMs[hrInc].positionTitle = this.positionDict[projPos.positionId];
           this.getProjectName(hrInc, projPos.projectId)
@@ -173,19 +176,17 @@ export class HireRequestsComponent implements OnInit {
   }
 
   approveProjectPosition(thisHireRequestVM: HireRequestViewModel): void{
-    console.log("AAA")
-    console.log(thisHireRequestVM)
+    // console.log(thisHireRequestVM)
     this.positionService.getProjectPositionByProjPosId(thisHireRequestVM.ProjectPositionId)
     .subscribe(
       projPos => {
-        console.log("aaa")
-        console.log(projPos)
+        // console.log(projPos)
         projPos.contractorId = thisHireRequestVM.originalHireRequest.contractorId;
-        console.log(projPos)
+        // console.log(projPos)
         this.positionService.updateProjectPosition(projPos)
           .subscribe(
             anyRet => {
-              console.log("bbb")
+              console.log("Return:")
               console.log(anyRet)
             });
       });
