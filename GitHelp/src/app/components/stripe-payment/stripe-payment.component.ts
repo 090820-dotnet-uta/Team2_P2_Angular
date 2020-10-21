@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaderResponse, HttpResponse, HttpRequest } from "@angular/common/http";
+import { send } from 'process';
 
 @Component({
   selector: 'app-stripe-payment',
@@ -8,14 +10,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class StripePaymentComponent implements OnInit {
   projectId: string;
+  token : any;
   cost: number;
-  constructor(private router: Router) {}
-
+  constructor(private router: Router, private http: HttpClient) {}
+  
   ngOnInit(): void {
     this.loadStripe();
     
   }
-
+private url = "https://githelp.azurewebsites.net/api/StripePayment"
   
   loadStripe() {
      
@@ -28,31 +31,63 @@ export class StripePaymentComponent implements OnInit {
     }
 }
 
-  pay(amount) {    
+
+takePayment(productName: string, amount: number, token: any) {
+  let body = {
+    tokenId: token.id,
+    productName: productName,
+    amount: amount
+  };
+  
+  
  
+
+  this.http
+    .post( "https://githelp.azurewebsites.net/api/StripePayment", body)
+    .toPromise()
+    .then(res => {
+      console.log("ok");
+    })
+    .catch(error => {
+      this.takePayment = error.message;
+    });
+}
+
+
+
+
+
+
+  payment(productName: string, amount: number, tokenCallback) {    
+
+      
+
   var handler = (<any>window).StripeCheckout.configure({
-    key: 'pk_live_51He61ZCIJStw0TfUvCbQYRsa3aPZ6QNTxFqnwu4IkTTah3WgQl72s8xZCkngOoSRU8XGDFXPU4aTpPabl8XIr57500SdTxxbkF',
+    key: 'pk_test_51He61ZCIJStw0TfUavdgaagOU0HkIFp8fcrM1BzvVu6o8OtwXlIsyin6l62zLDPbpkNLJMPbECs9x7TXRwV3OW1T00rs3UY7CT',
     locale: 'auto',
     amount: amount,
     currency: 'usd',
-    token: function (token: any, router: Router) {
-      console.log(token)
-     
-    //  alert('Token Created!!');
-    
-    }
-     
+    token: tokenCallback,
+    product: productName
   });
 
+  
   handler.open({
     name: 'GitHelp',
     description: 'Project',
     amount: amount * 100
   });
 
- 
-
+    
 }
+
+pay(){
+  this.payment("githelp", 5, (token: any) =>
+      this.takePayment("githelp", 5, token)
+  );
+}
+
+  
 
 gohome(){
 
