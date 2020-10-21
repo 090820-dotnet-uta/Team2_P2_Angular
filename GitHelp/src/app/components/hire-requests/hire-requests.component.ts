@@ -165,6 +165,7 @@ export class HireRequestsComponent implements OnInit {
     console.log("b")
     let thisHireRequest = thisHireRequestVM.originalHireRequest;
     thisHireRequest.requestStatus = newStatus;
+    console.log("BBBBBBBBBBBBBBBBB")
     this.hireRequestService.updateHireRequest(thisHireRequest).subscribe(res => {
       console.log("Update succesful")
       if(newStatus == "Approved"){
