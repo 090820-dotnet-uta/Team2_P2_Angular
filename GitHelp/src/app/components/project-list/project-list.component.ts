@@ -157,7 +157,7 @@ export class ProjectListComponent implements OnInit {
               thisProjPosVM.contractorId = theseProjectPositions[p2Inc].contractorId;
             }
             theseProjectPositionsVM.push(thisProjPosVM)
-          }
+          } 
           this.projectVMs[pInc].positions = theseProjectPositionsVM;
         }
       });

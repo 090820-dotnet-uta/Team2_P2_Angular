@@ -20,4 +20,4 @@ export class ProjectVM {
       this.projectName = projectName;
       this.description = description;
     }
-  }
+  } 

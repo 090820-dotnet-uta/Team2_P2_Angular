@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { HireRequest } from '../models/HireRequest';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class HireRequestService {
   //What kind of info to return with http

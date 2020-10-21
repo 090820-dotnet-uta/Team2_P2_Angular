@@ -191,7 +191,7 @@ export class HireRequestsComponent implements OnInit {
       });
   }
 
-  deleteHireRequest(thisHireRequestVM: HireRequestViewModel): void {
+  deleteHireRequest(thisHireRequestVM: HireRequestViewModel): void { 
     this.hireRequestVMs = this.hireRequestVMs.filter(p => p !== thisHireRequestVM);
     this.hireRequestService.deleteHireRequest(thisHireRequestVM.originalHireRequest).subscribe(res => {
       console.log("Deletion succesful")

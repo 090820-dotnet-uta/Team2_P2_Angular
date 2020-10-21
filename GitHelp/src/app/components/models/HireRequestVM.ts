@@ -17,6 +17,6 @@ import { HireRequest } from './HireRequest';
       this.contractorName = contractorName;
       this.requestStatus = requestStatus;
       this.projectName = "-";
-      this.positionTitle = "-";
+      this.positionTitle = "-"; 
     }
   }

@@ -8,6 +8,6 @@ export class PositionVM {
       this.positionId = positionId;
       this.positionTitle = positionTitle;
       this.Description = Description;
-      this.positionFieldName = positionFieldName;
+      this.positionFieldName = positionFieldName; 
     }
   }

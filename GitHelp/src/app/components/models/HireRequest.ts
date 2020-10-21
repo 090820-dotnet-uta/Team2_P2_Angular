@@ -9,6 +9,6 @@ export class HireRequest {
       this.clientId = clientId;
       this.contractorId = contractorId;
       this.requestStatus = "Pending";
-      this.hireRequestId = hireRequestId;
+      this.hireRequestId = hireRequestId; 
     }
   }
