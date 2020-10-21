@@ -26,10 +26,13 @@
       </span>
       <ul *ngFor="let ppos of p.positions">
         Position: {{ppos.positionTitle}}
-        <span *ngIf="loginType == 'contractor'">
-          | 
+        <span *ngIf="ppos.contractorId">
+          [Position Filled]
+        </span>
+        <span *ngIf="loginType == 'contractor' && !ppos.contractorId">
+
           <button (click)="RequestPosition(ppos.projectPositionsId, p.userId)">Request Position</button>
-      </span>
+        </span>
       </ul>
     </li>
   </ul>

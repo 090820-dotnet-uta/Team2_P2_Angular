@@ -2,7 +2,7 @@ export class ProjectPositionVM {
     projectPositionsId: number;
     projectId: string;
     positionId: string;
-    contractorId?:number;
+    contractorId?:string;
     positionTitle:string;
     constructor(projectPositionsId: number, projectId: string, positionId : string, positionTitle: string, contractorId = 0){
         this.projectPositionsId = projectPositionsId;

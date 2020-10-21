@@ -147,12 +147,16 @@ export class ProjectListComponent implements OnInit {
           console.log(theseProjectPositions);
           let theseProjectPositionsVM = [];
           for(let p2Inc = 0; p2Inc < theseProjectPositions.length; p2Inc ++){
-            theseProjectPositionsVM.push(new ProjectPositionVM(
+            let thisProjPosVM = new ProjectPositionVM(
               theseProjectPositions[p2Inc].projectPositionsId,
               theseProjectPositions[p2Inc].projectId,
               theseProjectPositions[p2Inc].positionId,
               this.positionDict[theseProjectPositions[p2Inc].positionId],
-            ))
+            )
+            if(theseProjectPositions[p2Inc].contractorId){
+              thisProjPosVM.contractorId = theseProjectPositions[p2Inc].contractorId;
+            }
+            theseProjectPositionsVM.push(thisProjPosVM)
           }
           this.projectVMs[pInc].positions = theseProjectPositionsVM;
         }

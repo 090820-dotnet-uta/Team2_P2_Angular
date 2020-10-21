@@ -139,10 +139,12 @@ export class PositionService {
     return queryReturn;
   }
 
-  /** PUT: update the POSITION on the server (Only available to Clients) */
+  /** PUT: update the ProjectPosition on the server (Done when accepting a hire request) */
   updateProjectPosition(projectposition: ProjectPosition): Observable<any> {
     console.log("Inside updateProjectPosition");
-    return this.http.put(this.positionURL, ProjectPosition, this.httpOptions).pipe(
+    let thisUrl = this.projectPositionURL + "/" + projectposition.projectPositionsId;
+    console.log("Updating "+ thisUrl);
+    return this.http.put(thisUrl, projectposition, this.httpOptions).pipe(
       tap(_ => this.log(`updated projectposition with ProjectId=${projectposition.projectId} and positionId=${projectposition.positionId}`)),
       catchError(this.handleError<any>('updateProjectPosition'))
     );

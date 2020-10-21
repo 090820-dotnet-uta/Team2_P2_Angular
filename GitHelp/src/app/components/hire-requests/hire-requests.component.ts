@@ -160,11 +160,35 @@ export class HireRequestsComponent implements OnInit {
   updateHireRequest(thisHireRequestVM: HireRequestViewModel, newStatus: string): void {
     let thisHireRequest = thisHireRequestVM.originalHireRequest;
     thisHireRequest.requestStatus = newStatus;
-    // this.hireRequestVMs = this.hireRequestVMs.filter(p => p !== thisHireRequestVM);
-    this.hireRequestService.updateHireRequest(thisHireRequest).subscribe(res => {
-      console.log("Update succesful")
-      this.getHireRequests();
-    });
+    if(newStatus == "Approved"){
+      this.approveProjectPosition(thisHireRequestVM);
+    }
+    // this.hireRequestService.updateHireRequest(thisHireRequest).subscribe(res => {
+    //   console.log("Update succesful")
+    //   if(newStatus == "Approved"){
+    //     // this.positionService.updateProjectPosition();
+    //   }
+    //   this.getHireRequests();
+    // });
+  }
+
+  approveProjectPosition(thisHireRequestVM: HireRequestViewModel): void{
+    console.log("AAA")
+    console.log(thisHireRequestVM)
+    this.positionService.getProjectPositionByProjPosId(thisHireRequestVM.ProjectPositionId)
+    .subscribe(
+      projPos => {
+        console.log("aaa")
+        console.log(projPos)
+        projPos.contractorId = thisHireRequestVM.originalHireRequest.contractorId;
+        console.log(projPos)
+        this.positionService.updateProjectPosition(projPos)
+          .subscribe(
+            anyRet => {
+              console.log("bbb")
+              console.log(anyRet)
+            });
+      });
   }
 
   deleteHireRequest(thisHireRequestVM: HireRequestViewModel): void {
