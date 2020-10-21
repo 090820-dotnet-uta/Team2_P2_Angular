@@ -27,8 +27,27 @@ steps:
 - script: npx ng build --prod
   workingDirectory: $(appDir)
   displayName: npx ng build
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'p2clients'
+    organization: 'szh953'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'szh953_p2'
+    cliProjectName: 'p2'
+    cliSources: '$(appDir)/src'
+    extraProperties: |
+      sonar.coverage.exclusions=**/*.spec.ts, **/*.html, **/*.css
+      sonar.typescript.lcov.reportPaths=$(appDir)/coverage/$(appDir)/lcov.info
 
 
+- script: npx ng test --browsers ChromeHeadless --no-watch --code-coverage
+  workingDirectory: $(appDir)
+  continueOnError: true
+  displayName: ng test
+
+
+- task: SonarCloudAnalyze@1
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
