@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 
 import { Project } from '../models/Project';
 import { User } from '../models/User';
-import { MessageService } from '../services/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +31,6 @@ export class ProjectService {
   constructor(
     
     private http: HttpClient,
-    private messageService: MessageService,
   
   ) { 
     this.http.get<Project[]>(this.projectURL).subscribe(p => {
@@ -42,12 +40,6 @@ export class ProjectService {
 
   //---------------------EXTRA METHODS -----------------------------------
 
-  
-  //Use messageService to log information about ProjectService
-  private log(message: string) {
-    this.messageService.add(`ProjectService: ${message}`);
-  }
-
   //process in which errors with Projectservice are handled
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -56,7 +48,7 @@ export class ProjectService {
       console.error(error); // log to console instead
   
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      console.log(`${operation} failed: ${error.message}`);
   
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -94,7 +86,7 @@ export class ProjectService {
     console.log(url)
     // console.log(this.http.get<Client>(url))
     return this.http.get<Project>(url).pipe(
-      tap(_ => this.log(`fetched project by projectid=${id}`)),
+      tap(_ => console.log(`fetched project by projectid=${id}`)),
       catchError(this.handleError<Project>(`requestProject ProjectId=${id}`))
     );
   }
@@ -152,7 +144,7 @@ export class ProjectService {
     console.log(url)
     // console.log(this.http.get<Client>(url))
     return this.http.get<Project>(url).pipe(
-      tap(_ => this.log(`fetched project by client id=${id}`)),
+      tap(_ => console.log(`fetched project by client id=${id}`)),
       catchError(this.handleError<Project>(`getClientProjects ClientId=${id}`))
     );
   }
@@ -166,7 +158,7 @@ export class ProjectService {
     console.log(url)
     // console.log(this.http.get<Client>(url))
     return this.http.get<Project>(url).pipe(
-      tap(_ => this.log(`fetched project by contractor id=${id}`)),
+      tap(_ => console.log(`fetched project by contractor id=${id}`)),
       catchError(this.handleError<Project>(`getContractorProjects ContractorId=${id}`))
     );
   }
@@ -182,7 +174,7 @@ export class ProjectService {
     console.log(project);
     return this.http.post<Project>(this.projectURL, project, this.httpOptions)
     .pipe(
-      tap((newProject: Project) => this.log(`added project w/ ProjectId=${newProject.projectId}`)),
+      tap((newProject: Project) => console.log(`added project w/ ProjectId=${newProject.projectId}`)),
       catchError(this.handleError<Project>('addProject'))
     );
   }
@@ -190,7 +182,7 @@ export class ProjectService {
   /** PUT: update the PROJECT on the server (Only available to Clients) */
   updateProject(project: Project): Observable<any> {
     return this.http.put(this.projectURL, project, this.httpOptions).pipe(
-      tap(_ => this.log(`updated project ProjectId=${project.projectId}`)),
+      tap(_ => console.log(`updated project ProjectId=${project.projectId}`)),
       catchError(this.handleError<any>('updateProject'))
     );
   }
@@ -201,7 +193,7 @@ export class ProjectService {
     const url = `${this.projectURL}/${id}`;
 
     return this.http.delete<Project>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted project ProjectId=${id}`)),
+      tap(_ => console.log(`deleted project ProjectId=${id}`)),
       catchError(this.handleError<Project>('deleteProject'))
     );
   }

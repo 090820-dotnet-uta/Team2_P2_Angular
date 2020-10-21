@@ -5,7 +5,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { User } from '../models/User';
-import { MessageService } from '../services/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +23,7 @@ export class UserService {
   constructor(
     private router: Router, 
     private http: HttpClient,
-    private messageService: MessageService
   ) { }
-
-  /** Log a UserService message with the MessageService */
-  private log(message: string) {
-    this.messageService.add(`UserService: ${message}`);
-  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -39,7 +32,7 @@ export class UserService {
       console.error(error); // log to console instead
   
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      console.log(`${operation} failed: ${error.message}`);
   
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -49,7 +42,7 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.dbUrl)
       .pipe(
-        tap(_ => this.log('fetched users')),
+        tap(_ => console.log('fetched users')),
         catchError(this.handleError<User[]>('getUsers', []))
       );
   }
@@ -60,7 +53,7 @@ export class UserService {
     console.log("Getting from "+ url);
     // return this.http.get<User>(url);
     return this.http.get<User>(url).pipe(
-      tap(_ => this.log(`fetched user username=${currentUserName}`)),
+      tap(_ => console.log(`fetched user username=${currentUserName}`)),
       catchError(this.handleError<User>(`getUser username=${currentUserName}`))
     );
   }
@@ -71,7 +64,7 @@ export class UserService {
     console.log("Getting from "+ url);
     // return this.http.get<User>(url);
     return this.http.get<User>(url).pipe(
-      tap(_ => this.log(`fetched user username=${userId}`)),
+      tap(_ => console.log(`fetched user username=${userId}`)),
       catchError(this.handleError<User>(`getUser username=${userId}`))
     );
   }
@@ -97,7 +90,7 @@ export class UserService {
   updateUser(user: User): Observable<any> {
     console.log("aAa");
     return this.http.put(this.dbUrl, user, this.httpOptions).pipe(
-      tap(_ => this.log(`updated user username=${user.userName}`)),
+      tap(_ => console.log(`updated user username=${user.userName}`)),
       catchError(this.handleError<any>('updateUser'))
     );
   }

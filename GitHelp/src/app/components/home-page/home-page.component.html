@@ -19,17 +19,17 @@
                 <!--If the user is a client-->
                 <div *ngIf = 'display === 1'>
                     <div class="menuChoice">
-                        <a class="button">
+                        <a class="button" (click)="goToAddProjects()">
                             Post a New Project
                         </a>
                     </div>
                     <div class="menuChoice">
-                        <a class = "button">
+                        <a class = "button" (click)="gotoprojects()">
                             View Active Projects
                         </a>
                     </div>
                     <div class="menuChoice">
-                        <a class = "button">
+                        <a class = "button" (click)="gotoprojects()">
                             View Past Projects
                         </a>
                     </div>
@@ -38,17 +38,17 @@
                 <!--If the user is a Contractor-->
                 <div *ngIf = 'display === 2'>
                     <div class="menuChoice">
-                        <a class="button">
+                        <a class="button" (click)="gotoprojects()">
                             View Active Projects
                         </a>
                     </div>
                     <div class="menuChoice">
-                        <a class = "button">
+                        <a class = "button" (click)="gotohirerequests()">
                             View Requests
                         </a>
                     </div>
                     <div class="menuChoice">
-                        <a class = "button">
+                        <a class = "button" (click)="goToPastProjects()">
                             View Past Projects
                         </a>
                     </div>

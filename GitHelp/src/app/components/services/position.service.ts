@@ -4,7 +4,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Position } from '../models/Position';
 import { ProjectPosition } from '../models/ProjectPosition';
-import { MessageService } from '../services/message.service';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/Project';
 import { HireRequest } from '../models/HireRequest';
@@ -30,16 +29,9 @@ export class PositionService {
   //Making use of HttpClient and messageService so they need to be part of the constructor
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
   ) { }
 
   //---------------------EXTRA METHODS -----------------------------------
-
-
-  //Use messageService to log information about this position service
-  private log(message: string) {
-    this.messageService.add(`PositionService: ${message}`);
-  }
 
   //process in which errors with PositionService are handled
   private handleError<T>(operation = 'operation', result?: T) {
@@ -53,7 +45,7 @@ export class PositionService {
         console.error(error); // log to console instead
     
         // TODO: better job of transforming error for user consumption
-        this.log(`${operation} failed: ${error.message}`);
+        console.log(`${operation} failed: ${error.message}`);
       }
   
       // Let the app keep running by returning an empty result.
@@ -69,7 +61,7 @@ export class PositionService {
   getAllProjectPositions(): Observable<ProjectPosition[]> {
     return this.http.get<ProjectPosition[]>(this.projectPositionURL)
       .pipe(
-        tap(_ => this.log('fetched Positions')),
+        tap(_ => console.log('fetched Positions')),
         catchError(this.handleError<ProjectPosition[]>('getAllPositions', []))
       );
   }
@@ -81,7 +73,7 @@ export class PositionService {
     console.log("Querying "+ queryURL)
     return this.http.get<ProjectPosition[]>(queryURL) 
       .pipe(
-        tap(_ => this.log('fetched ProjectPositions')),
+        tap(_ => console.log('fetched ProjectPositions')),
         catchError(this.handleError<ProjectPosition[]>('getProjectPositionsByProject', []))
       );
   }
@@ -92,7 +84,7 @@ export class PositionService {
     console.log("Querying "+ queryURL)
     return this.http.get<ProjectPosition>(queryURL)
       .pipe(
-        tap(_ => this.log('fetched ProjectPositions')),
+        tap(_ => console.log('fetched ProjectPositions')),
         catchError(this.handleError<ProjectPosition>('getProjectPositionsByProject', ))
       );
   }
@@ -101,7 +93,7 @@ export class PositionService {
    getAllPositions(): Observable<Position[]> {
     return this.http.get<Position[]>(this.positionURL)
       .pipe(
-        tap(_ => this.log('fetched Positions')),
+        tap(_ => console.log('fetched Positions')),
         catchError(this.handleError<Position[]>('getAllPositions', []))
       );
   }
@@ -123,7 +115,7 @@ export class PositionService {
     console.log(url)
     // console.log(this.http.get<Client>(url))
     return this.http.get<Position[]>(url).pipe(
-      tap(_ => this.log(`fetched contractor id=${id}`)),
+      tap(_ => console.log(`fetched contractor id=${id}`)),
       catchError(this.handleError<Position[]>(`getContractorPositions ContractorId=${id}`))
     );
   }
@@ -145,7 +137,7 @@ export class PositionService {
     let thisUrl = this.projectPositionURL + "/" + projectposition.projectPositionsId;
     console.log("Updating "+ thisUrl);
     return this.http.put(thisUrl, projectposition, this.httpOptions).pipe(
-      tap(_ => this.log(`updated projectposition with ProjectId=${projectposition.projectId} and positionId=${projectposition.positionId}`)),
+      tap(_ => console.log(`updated projectposition with ProjectId=${projectposition.projectId} and positionId=${projectposition.positionId}`)),
       catchError(this.handleError<any>('updateProjectPosition'))
     );
   }
@@ -157,7 +149,7 @@ export class PositionService {
     const url = `${this.positionURL}/${id}`;
 
     return this.http.delete<Position>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted position PositionId=${id}`)),
+      tap(_ => console.log(`deleted position PositionId=${id}`)),
       catchError(this.handleError<Position>('deletePosition'))
     );
   }

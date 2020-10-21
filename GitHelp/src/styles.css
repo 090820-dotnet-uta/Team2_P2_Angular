@@ -4,7 +4,7 @@ body{
   /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
 	background-size: 400%;
     animation: gradient 15s ease infinite; */
-    background-color: rgb(191, 225, 255);
+    background-color:rgb(228, 226, 226);
 }
 div{
     margin: 5px;
@@ -13,9 +13,9 @@ div{
     position: relative;
 }
 h1{
-  text-shadow: 3px 3px 3px #795bff;
+  /* text-shadow: -3px 3px 2px rgb(19, 18, 18); */
   color: black;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   font-size: 45px;
   font-weight: 700;
   font-family: 'Prata', serif;
@@ -29,18 +29,14 @@ STYLE FOR BUTTONS
 .button{
     Border: 3px outset #241f5c;
     border-radius: 20px;
-    background: repeating-radial-gradient(
-      circle,
-      #606dbc,
-      #606dbc 10px,
-      #465298 10px,
-      #465298 20px
-    );
+    background-color: #606dbc;
+
     text-align: center;
-    color: aliceblue;
+    color: black;
     font-size: large;
     font-family: 'Lato', sans-serif;
     font-weight: 500;
+
     cursor: pointer;
     padding: 10px;
     padding-left: 15px;
@@ -52,14 +48,9 @@ STYLE FOR BUTTONS
 
 .button:hover{
     border-style: inset;
-    border-color: #795bff;
-    background: repeating-radial-gradient(
-      circle,
-      #465298,
-      #465298 10px,
-      #606dbc 10px,
-      #606dbc 20px
-    );
+    border-color: #ffe79b;
+    background-color:  #ffe79b;
+
     cursor: pointer;
 
     position: relative;
@@ -106,9 +97,15 @@ STYLING FOR FORMS
 background-size: 400%;
   animation: gradient 15s ease infinite; */
 
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: repeating-linear-gradient(
+    45deg,
+    #606dbc,
+    #606dbc 10px,
+    #465298 10px,
+    #465298 20px
+  );
   background-size: 400%;
-  animation: gradient 15s ease infinite;
+  /* animation: gradient 15s ease infinite; */
   border-radius: 50px;
   border: 3px solid #795bff;
 
