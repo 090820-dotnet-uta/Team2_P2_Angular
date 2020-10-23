@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ProjectListComponent } from './project-list.component';
 import  { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('ProjectListComponent', () => {
   let component: ProjectListComponent;
@@ -11,7 +12,7 @@ describe('ProjectListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, ReactiveFormsModule],
       declarations: [ ProjectListComponent, NavbarComponent ]
     })
     .compileComponents();

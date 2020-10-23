@@ -27,6 +27,6 @@ import { StripePaymentComponent } from './stripe-payment.component';
 
   it('should contain stripe checkout', () => { 
     
-    expect(h1.textContent).toContain('Stripe Checkout');
+    expect(h1.textContent).toContain('posting fee');
   });
 });
